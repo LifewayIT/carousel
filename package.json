@@ -18,5 +18,13 @@
   "bugs": {
     "url": "https://github.com/LifewayIT/carousel/issues"
   },
-  "homepage": "https://github.com/LifewayIT/carousel#readme"
+  "homepage": "https://github.com/LifewayIT/carousel#readme",
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "styled-components": "^5.1.0"
+  },
+  "devDependencies": {
+    "react": "^16.13.1",
+    "styled-components": "^5.2.0"
+  }
 }
