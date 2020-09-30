@@ -1,0 +1,22 @@
+{
+  "name": "@lifeway/carousel",
+  "version": "0.0.1",
+  "description": "A reusable, responsive, and adaptive carousel for react",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LifewayIT/carousel.git"
+  },
+  "keywords": [
+    "react",
+    "carousel"
+  ],
+  "author": "Corinth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LifewayIT/carousel/issues"
+  },
+  "homepage": "https://github.com/LifewayIT/carousel#readme"
+}
