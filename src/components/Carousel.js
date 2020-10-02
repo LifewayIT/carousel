@@ -1,4 +1,5 @@
 import React, { useRef, useLayoutEffect, useState } from 'react';
+import { number, func, node } from 'prop-types';
 import styled from 'styled-components';
 import CarouselArrow from './CarouselArrow';
 import {
@@ -453,6 +454,12 @@ const Carousel = ({ selected, onSelect, children, ...props }) => {
       </DotContainer>
     </Container>
   );
+};
+
+Carousel.propTypes = {
+  selected: number,
+  onSelect: func.isRequired,
+  children: node
 };
 
 export default Carousel;

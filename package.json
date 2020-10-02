@@ -27,6 +27,7 @@
   "homepage": "https://github.com/LifewayIT/carousel#readme",
   "peerDependencies": {
     "react": "^16.8.0",
+    "prop-types": "^15.7.0",
     "styled-components": "^5.1.0"
   },
   "devDependencies": {
@@ -60,6 +61,7 @@
     "jest-extended": "^0.11.5",
     "jest-junit": "^11.1.0",
     "jest-watch-typeahead": "^0.6.1",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-is": "^16.13.1",
     "styled-components": "^5.2.0"
