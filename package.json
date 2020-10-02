@@ -1,0 +1,50 @@
+{
+  "name": "@lifeway/carousel",
+  "version": "0.0.1",
+  "description": "A reusable, responsive, and adaptive carousel for react",
+  "scripts": {
+    "build": "babel ./src --out-dir ./lib --source-maps",
+    "test": "echo \"TBD\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LifewayIT/carousel.git"
+  },
+  "keywords": [
+    "react",
+    "carousel"
+  ],
+  "author": "Corinth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LifewayIT/carousel/issues"
+  },
+  "homepage": "https://github.com/LifewayIT/carousel#readme",
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "styled-components": "^5.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "babel-plugin-styled-components": "^1.11.1",
+    "eslint": "^7.10.0",
+    "eslint-config-corinth": "github:LifewayIT/eslint-config-corinth",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.0.2",
+    "eslint-plugin-jest-dom": "^3.2.3",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.21.2",
+    "eslint-plugin-react-hooks": "^4.1.2",
+    "eslint-plugin-testing-library": "^3.9.0",
+    "react": "^16.13.1",
+    "styled-components": "^5.2.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.11.2",
+    "core-js": "^3.6.5"
+  }
+}
