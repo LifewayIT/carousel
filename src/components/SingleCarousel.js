@@ -27,13 +27,13 @@ const scrollIntoView = (container, el, smooth = true) => {
   if (!container || !el) return;
 
   scrollTo(container, alignAtCenter(container, el), smooth);
-}
+};
 
 
 
 const SingleCarousel = ({ selected, onSelect, children }) => {
   const containerRef = useRef();
-  
+
   useLayoutEffect(() => {
     if (!containerRef.current) return;
     const container = containerRef.current;
