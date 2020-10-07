@@ -1,26 +1,36 @@
+const path = require('path');
+
 module.exports = {
-  ...require('../jest.common'),
-  displayName: 'CLIENT',
+  rootDir: path.join(__dirname, '..'),
+  moduleDirectories: [
+    'node_modules',
+    path.join(__dirname, 'src'),
+    __dirname,
+  ],
   testEnvironment: 'jest-environment-jsdom',
   setupFilesAfterEnv: [
     'jest-extended',
-    '<rootDir>/test/client/setupAfterEnv.js',
+    '<rootDir>/test/setupAfterEnv.js',
   ],
   testMatch: [
     '**/__integration_tests__/**/*.spec.js',
     '**/__tests__/**/*.spec.js',
   ],
   moduleNameMapper: {
-    '\\.(css)$': '<rootDir>/test/client/mocks/style.js',
+    '\\.(css)$': '<rootDir>/test/mocks/style.js',
     '\\.(png|jpg|jpeg|gif|ttf|eot|svg|ico|webmanifest|xml)$':
-      '<rootDir>/test/client/mocks/file.js',
+      '<rootDir>/test/mocks/file.js',
   },
+  watchPlugins: [
+    'jest-watch-typeahead/filename',
+    'jest-watch-typeahead/testname',
+  ],
   reporters: [
     'default',
     [
       'jest-junit',
       {
-        outputDirectory: './reports/client/tests',
+        outputDirectory: './reports/tests',
         outputName: 'junit.xml',
         ancestorSeparator: ' › ',
         addFileAttribute: true,
@@ -32,5 +42,5 @@ module.exports = {
   ],
   coveragePathIgnorePatterns: ['<rootDir>/test/'],
   collectCoverageFrom: ['<rootDir>/src/**/*.js'],
-  coverageDirectory: './reports/client/coverage',
+  coverageDirectory: './reports/coverage',
 };
