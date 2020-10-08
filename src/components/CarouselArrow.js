@@ -1,9 +1,10 @@
 import React from 'react';
+import { bool, func } from 'prop-types';
 import styled from 'styled-components';
 import { color, shadow, device, space } from '../utils/styleguide';
 
 import ChevronLeft from '../../svg/chevron-left.svg';
-import ChevronRight from '../../svg/sprite/chevron-right.svg';
+import ChevronRight from '../../svg/chevron-right.svg';
 
 const Arrow = styled.button`
   position: absolute;
@@ -102,6 +103,12 @@ const CarouselArrow = ({ left, right, onClick, ...props }) => {
       {right && <img src={ChevronRight} alt="page right" />}
     </Arrow>
   );
+};
+
+CarouselArrow.propTypes = {
+  left: bool,
+  right: bool,
+  onClick: func
 };
 
 export default CarouselArrow;
