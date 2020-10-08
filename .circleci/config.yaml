@@ -1,0 +1,32 @@
+version: 2.1
+
+orbs:
+  npm: lifeway/npm-tools@0.0.6
+
+common:
+  run-on-master: &run-on-master
+    filters:
+      branches:
+        only: master
+
+workflows:
+  pr-checks:
+    jobs:
+      - npm/install:
+          <<: *run-on-pr
+      - npm/audit:
+          <<: *run-on-pr
+          requires:
+            - npm/install
+      - npm/run-script:
+          <<: *run-on-pr
+          name: test
+          script: test:ci
+          requires:
+            - npm/install
+      - npm/run-script:
+          <<: *run-on-pr
+          name: lint
+          script: lint
+          requires:
+            - npm/install

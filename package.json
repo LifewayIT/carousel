@@ -7,7 +7,9 @@
     "start": "npm run storybook",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
+    "lint": "eslint ./src",
     "test": "jest",
+    "test:ci": "jest --ci --coverage --runInBand",
     "test:coverage": "npm test -- --coverage",
     "test:watch": "jest --watch"
   },
