@@ -21,7 +21,7 @@ const Container = styled.div`
 `;
 
 const getTiles = container => Array.from(container.children);
-const getTile = (container, num) => getTiles(container)[num]
+const getTile = (container, num) => getTiles(container)[num];
 
 const scrollIntoView = (container, el, smooth = true) => {
   if (!container || !el) return;
