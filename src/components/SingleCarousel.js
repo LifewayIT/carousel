@@ -6,6 +6,7 @@ import {
   scrollTo
 } from './utils';
 import { useResizeEffect } from '../hooks/layout';
+import { func, node, number } from 'prop-types';
 
 const Container = styled.div`
   overflow: hidden;
@@ -20,19 +21,19 @@ const Container = styled.div`
 `;
 
 const getTiles = container => Array.from(container.children);
-const getTile = (container, num) => getTiles(container)[num]
+const getTile = (container, num) => getTiles(container)[num];
 
 const scrollIntoView = (container, el, smooth = true) => {
   if (!container || !el) return;
 
   scrollTo(container, alignAtCenter(container, el), smooth);
-}
+};
 
 
 
 const SingleCarousel = ({ selected, onSelect, children }) => {
   const containerRef = useRef();
-  
+
   useLayoutEffect(() => {
     if (!containerRef.current) return;
     const container = containerRef.current;
@@ -75,6 +76,12 @@ const SingleCarousel = ({ selected, onSelect, children }) => {
       {children}
     </Container>
   );
+};
+
+SingleCarousel.propTypes = {
+  selected: number,
+  onSelect: func.isRequired,
+  children: node
 };
 
 export default SingleCarousel;

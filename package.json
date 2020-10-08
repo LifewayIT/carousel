@@ -4,7 +4,12 @@
   "description": "A reusable, responsive, and adaptive carousel for react",
   "scripts": {
     "build": "babel ./src --out-dir ./lib --source-maps",
-    "test": "echo \"TBD\""
+    "start": "npm run storybook",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "test": "jest",
+    "test:coverage": "npm test -- --coverage",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -22,6 +27,7 @@
   "homepage": "https://github.com/LifewayIT/carousel#readme",
   "peerDependencies": {
     "react": "^16.8.0",
+    "prop-types": "^15.7.0",
     "styled-components": "^5.1.0"
   },
   "devDependencies": {
@@ -30,17 +36,34 @@
     "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
+    "@storybook/addon-actions": "^6.0.26",
+    "@storybook/addon-essentials": "^6.0.26",
+    "@storybook/addon-links": "^6.0.26",
+    "@storybook/react": "^6.0.26",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.0.4",
+    "@testing-library/react-hooks": "^3.4.2",
+    "@testing-library/user-event": "^12.1.7",
+    "babel-jest": "^26.5.2",
+    "babel-loader": "^8.1.0",
     "babel-plugin-styled-components": "^1.11.1",
     "eslint": "^7.10.0",
     "eslint-config-corinth": "github:LifewayIT/eslint-config-corinth",
+    "eslint-import-resolver-jest": "^3.0.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.0.2",
+    "eslint-plugin-jest": "^24.1.0",
     "eslint-plugin-jest-dom": "^3.2.3",
     "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-react": "^7.21.2",
+    "eslint-plugin-react": "^7.21.3",
     "eslint-plugin-react-hooks": "^4.1.2",
     "eslint-plugin-testing-library": "^3.9.0",
+    "jest": "^26.5.2",
+    "jest-extended": "^0.11.5",
+    "jest-junit": "^12.0.0",
+    "jest-watch-typeahead": "^0.6.1",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
+    "react-is": "^16.13.1",
     "styled-components": "^5.2.0"
   },
   "dependencies": {

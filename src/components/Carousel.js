@@ -1,4 +1,5 @@
 import React, { useRef, useLayoutEffect, useState } from 'react';
+import { number, func, node } from 'prop-types';
 import styled from 'styled-components';
 import CarouselArrow from './CarouselArrow';
 import {
@@ -154,7 +155,7 @@ const scrollIntoView = (container, tile, smooth = true) => {
     const nextLeftTile = tiles.find(tile => leftEdgeOffset(tile) >= projectedLeftEdge) ?? tile;
     scrollTo(container, alignAtTargetZoneLeftEdge(container, targetOffset, nextLeftTile), true);
   }
-}
+};
 
 const scrollTileIntoView = (container, num, smooth) => {
   const tile = getTile(container, num);
@@ -311,7 +312,7 @@ const Carousel = ({ selected, onSelect, children, ...props }) => {
     if (newPages.current !== pages.current || newPages.total !== pages.total) {
       setPages(newPages);
     }
-  }
+  };
 
   const updateTargetZoneOffset = () => {
     if (!containerRef.current) return;
@@ -382,7 +383,7 @@ const Carousel = ({ selected, onSelect, children, ...props }) => {
   };
 
   const tileProps = (num) => ({
-    className: num === selected ? `selected` : '',
+    className: num === selected ? 'selected' : '',
     onClick: () => {
       onSelect(num);
     },
@@ -453,6 +454,12 @@ const Carousel = ({ selected, onSelect, children, ...props }) => {
       </DotContainer>
     </Container>
   );
+};
+
+Carousel.propTypes = {
+  selected: number,
+  onSelect: func.isRequired,
+  children: node
 };
 
 export default Carousel;
