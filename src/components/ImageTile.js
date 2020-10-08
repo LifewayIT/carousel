@@ -1,4 +1,5 @@
 import React from 'react';
+import { node, string } from 'prop-types';
 import styled from 'styled-components';
 import { device } from '../utils/styleguide';
 
@@ -61,6 +62,12 @@ const ImageTile = ({ src, alt, children, ...props }) => {
       {children}
     </TileButton>
   );
+};
+
+ImageTile.propTypes = {
+  src: string,
+  alt: string,
+  children: node
 };
 
 export default ImageTile;
