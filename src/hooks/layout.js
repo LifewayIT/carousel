@@ -8,29 +8,30 @@ export const useIsInitialLayoutEffect = (effectFn, deps) => {
     isInitial.current = false;
 
     return effectFn(currentIsInitial);
-  }, deps);
+  }, deps); // eslint-disable-line react-hooks/exhaustive-deps
 };
 
 export const useResizeEffect = (elRef, fn) => {
-  if (!window.ResizeObserver) return;
-
   const effectFn = useRef();
   effectFn.current = fn;
 
   useLayoutEffect(() => {
+    if (!window.ResizeObserver) return;
+
     if (elRef.current) {
       const observer = new window.ResizeObserver((...args) => effectFn.current(...args));
-  
-      observer.observe(elRef.current);
-  
-      return () => observer.unobserve(elRef.current);
+
+      const el = elRef.current;
+      observer.observe(el);
+
+      return () => observer.unobserve(el);
     }
-  }, [elRef.current]);
-}
+  }, [elRef]);
+};
 
 const getTarget = (targetRef, root) => {
   if ('current' in targetRef) {
-    return targetRef.current
+    return targetRef.current;
   } else if (typeof targetRef === 'function') {
     return targetRef(root);
   } else {
@@ -39,23 +40,25 @@ const getTarget = (targetRef, root) => {
 };
 
 export const useIntersectionEffect = (rootRef, targetRef, options, fn) => {
-  if (!window.IntersectionObserver) return;
-
   const effectFn = useRef();
   effectFn.current = fn;
 
+  const { rootMargin, threshold } = options;
+
   useLayoutEffect(() => {
+    if (!window.IntersectionObserver) return;
+
     const target = getTarget(targetRef, rootRef?.current);
 
     if (target) {
       const observer = new window.IntersectionObserver(
         (...args) => effectFn.current(...args),
-        { root: rootRef?.current, ...options }
+        { root: rootRef?.current, rootMargin, threshold }
       );
-  
+
       observer.observe(target);
-  
+
       return () => observer.unobserve(target);
     }
-  }, [rootRef?.current, options.rootMargin, options.threshold, targetRef, targetRef.current]);
+  }, [rootRef, targetRef, rootMargin, threshold]);
 };

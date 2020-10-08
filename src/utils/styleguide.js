@@ -123,15 +123,15 @@ const shadow = {
   medium: '0 4px 8px rgba(0,0,0,0.25)',
   button: '0 5px 10px rgba(50,50,93,.11), 0 2.5px 5px rgba(0,0,0,.08)',
   buttonHover: '0 7.5px 15px rgba(50, 50, 93, 0.1), 0 5px 10px rgba(0, 0, 0, 0.08)'
-}
+};
 
 const transform = {
   buttonHover: 'translateY(-1px)'
-}
+};
 
 const border = {
   radius: '4px'
-}
+};
 
 export {
   device,
@@ -142,4 +142,4 @@ export {
   shadow,
   border,
   transform
-}
+};

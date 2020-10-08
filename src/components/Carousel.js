@@ -166,7 +166,7 @@ const scrollTileToCenter = (container, num, smooth = true) => {
   const tile = getTile(container, num);
   if (!container || !tile) return;
 
-  scrollTo(container, alignAtCenter(container, tile), smooth)
+  scrollTo(container, alignAtCenter(container, tile), smooth);
 };
 
 const pageLeft = (container) => {
@@ -196,7 +196,7 @@ const pageRight = (container) => {
   if (!container) return;
 
   const targetOffset = getTileTargetZoneOffsets(container);
-  const targetRightEdge = targetZoneRightEdge(container, targetOffset)
+  const targetRightEdge = targetZoneRightEdge(container, targetOffset);
 
   const tiles = getTiles(container);
   const rightTiles = tiles
@@ -216,7 +216,7 @@ const getRawStartPoints = (tiles, targetWidth, targetOffset, maxPosition) => {
     return [];
   }
 
-  const unboundedNextStart = leftEdgeOffset(tiles[0]) - targetOffset.left; 
+  const unboundedNextStart = leftEdgeOffset(tiles[0]) - targetOffset.left;
   const nextStart = Math.min(unboundedNextStart, maxPosition);
 
   const projectedTargetRightEdge = nextStart + targetOffset.left + targetWidth;
@@ -230,7 +230,7 @@ const getRawEndPoints = (tiles, targetWidth, targetOffset, minPosition) => {
     return [];
   }
 
-  const unboundedNextEnd = rightEdgeOffset(tiles[tiles.length - 1]) - targetOffset.left; 
+  const unboundedNextEnd = rightEdgeOffset(tiles[tiles.length - 1]) - targetOffset.left;
   const nextEnd = Math.max(unboundedNextEnd, minPosition);
 
   const projectedTargetLeftEdge = nextEnd + targetOffset.left - targetWidth;
@@ -406,7 +406,7 @@ const Carousel = ({ selected, onSelect, children, ...props }) => {
     (entries) => {
       const lastEntry = entries[entries.length - 1];
       if (lastEntry.isIntersecting !== onEdge.left) {
-        setOnEdge(prev => ({ ...prev, left: lastEntry.isIntersecting }))
+        setOnEdge(prev => ({ ...prev, left: lastEntry.isIntersecting }));
       }
     }
   );
@@ -418,7 +418,7 @@ const Carousel = ({ selected, onSelect, children, ...props }) => {
     (entries) => {
       const lastEntry = entries[entries.length - 1];
       if (lastEntry.isIntersecting !== onEdge.right) {
-        setOnEdge(prev => ({ ...prev, right: lastEntry.isIntersecting }))
+        setOnEdge(prev => ({ ...prev, right: lastEntry.isIntersecting }));
       }
     }
   );

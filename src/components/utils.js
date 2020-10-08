@@ -24,28 +24,28 @@ export const centerOffset = (el) => el &&
 */
 
 export const getTargetZoneOffsets = (container, meaningfulChildren) => {
-    const first = meaningfulChildren[0];
-    const last = meaningfulChildren[meaningfulChildren.length - 1];
+  const first = meaningfulChildren[0];
+  const last = meaningfulChildren[meaningfulChildren.length - 1];
 
-    return {
-      left: leftEdgeOffset(first) ?? 0,
-      right: container.scrollWidth - (rightEdgeOffset(last) ?? 0)
-    }
+  return {
+    left: leftEdgeOffset(first) ?? 0,
+    right: container.scrollWidth - (rightEdgeOffset(last) ?? 0)
   };
+};
 
 export const targetZoneLeftEdge = (container, targetOffset) =>
   scrollPosition(container) + targetOffset.left;
 
 export const targetZoneRightEdge = (container, targetOffset) =>
-  scrollPosition(container) + container.clientWidth - targetOffset.right
+  scrollPosition(container) + container.clientWidth - targetOffset.right;
 
 export const projectTargetZoneLeftEdge = (scrollPosition, targetOffset) =>
-  scrollPosition + targetOffset.left; 
+  scrollPosition + targetOffset.left;
 
 
 /*
   the position the container should be scrolled to to align it
-  as requested with the given element 
+  as requested with the given element
 */
 
 export const alignAtTargetZoneLeftEdge = (container, targetOffset, el) =>
@@ -84,7 +84,7 @@ export const getFirstFocusableElement = (el) => {
   } else {
     return el?.querySelector(focusable);
   }
-}
+};
 
 
 /*
@@ -129,7 +129,7 @@ const scrollToSmooth = (el, position) => {
   a fallback for manually smooth scrolling
 */
 
-const ease = x => 0.5 * (1 - Math.cos(Math.PI * x)); 
+const ease = x => 0.5 * (1 - Math.cos(Math.PI * x));
 
 const DURATION = 500;
 
