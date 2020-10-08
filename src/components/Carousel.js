@@ -241,6 +241,13 @@ const getRawEndPoints = (tiles, targetWidth, targetOffset, minPosition) => {
 };
 
 const getScaledWeightedAverage = (list1, list2, leftRatio, rightRatio) => {
+  if (list1.length === 0) {
+    return [];
+  } else if (list1.length === 1) {
+    const ratio = (leftRatio + rightRatio) / 2;
+    return [list1[0] * (1 - ratio) + list2[0] * ratio];
+  }
+
   const total = list1.length - 1;
   const progress = (n) => n / total;
   const ratio = (n) => (1 - progress(n)) * leftRatio + progress(n) * rightRatio;
@@ -281,7 +288,7 @@ const calculatePages = (container, pagePoints) => {
 
   const numberOfPages = pagePoints.length + 1;
   const currentPosition = scrollPosition(container);
-  const currentPage = getCurrentPage(currentPosition, pagePoints); 
+  const currentPage = getCurrentPage(currentPosition, pagePoints);
 
   return {
     total: numberOfPages,
@@ -449,6 +456,7 @@ const Carousel = ({ selected, onSelect, children, ...props }) => {
       />
       <DotContainer>
         {[...Array(pages.total)].map((_, num) => (
+          // eslint-disable-next-line react/no-array-index-key
           <Dot key={`page-${num}`} active={num + 1 === pages.current} />
         ))}
       </DotContainer>
