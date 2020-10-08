@@ -4,10 +4,10 @@ orbs:
   npm: lifeway/npm-tools@0.0.6
 
 common:
-  run-on-master: &run-on-master
+  run-on-pr: &run-on-pr
     filters:
       branches:
-        only: master
+        ignore: master
 
 workflows:
   pr-checks:
