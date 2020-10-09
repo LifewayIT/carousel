@@ -13,5 +13,10 @@ module.exports = {
     '@babel/plugin-transform-runtime',
     'babel-plugin-styled-components',
   ],
-  retainLines: true
+  retainLines: true,
+  ignore: [
+    '**/__integration_tests__/**',
+    '**/__tests__/**',
+    /\.stories\./
+  ]
 };

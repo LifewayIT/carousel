@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "outDir": "./lib/",
+    "incremental": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+
+    "target": "es5",
+    "module": "commonjs",
+    "jsx": "react",
+
+    "allowJs": false,
+    "isolatedModules": true,
+
+    "strict": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "src",
+    "test"
+  ],
+  "exclude": [
+    "*.stories.*",
+    "__integration_tests__",
+    "__tests__"
+  ]
+}
