@@ -4,6 +4,10 @@ module.exports = {
   ],
   overrides: [
     {
+      files: ['*.ts', '*.tsx'],
+      extends: ['corinth/typescript']
+    },
+    {
       files: ['*.spec.js'],
       settings: {
         'import/resolver': {
