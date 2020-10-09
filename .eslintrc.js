@@ -16,8 +16,9 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.ts', '*.tsx'],
-      extends: ['corinth/typescript']
+      files: ['**/*.js'],
+      excludedFiles: ['src/**/*.js'],
+      extends: ['corinth/node']
     },
     {
       files: ['*.spec.js'],
@@ -30,9 +31,8 @@ module.exports = {
       }
     },
     {
-      files: ['**/*.js'],
-      excludedFiles: ['src/**/*.js'],
-      extends: ['corinth/node']
-    }
+      files: ['*.ts', '*.tsx'],
+      extends: ['corinth/typescript']
+    },
   ]
 };
