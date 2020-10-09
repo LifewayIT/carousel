@@ -30,7 +30,8 @@ module.exports = {
       }
     },
     {
-      files: ['*', '!./src/**/*'],
+      files: ['**/*.js'],
+      excludedFiles: ['src/**/*.js'],
       extends: ['corinth/node']
     }
   ]
