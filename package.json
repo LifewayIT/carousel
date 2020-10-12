@@ -31,7 +31,6 @@
   "homepage": "https://github.com/LifewayIT/carousel#readme",
   "peerDependencies": {
     "react": "^16.8.0",
-    "prop-types": "^15.7.0",
     "styled-components": "^5.1.0"
   },
   "devDependencies": {
