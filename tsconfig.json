@@ -12,11 +12,12 @@
 
     "allowJs": false,
     "isolatedModules": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
 
     "strict": true,
     "noImplicitAny": false,
     "noImplicitReturns": true,
-    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
   },
   "include": [
