@@ -32,7 +32,11 @@ module.exports = {
     },
     {
       files: ['*.ts', '*.tsx'],
-      extends: ['corinth/typescript']
+      extends: ['corinth/typescript'],
+      rules: {
+        /* bug in ts-eslint; it doesn't take into account types. Also, ts itself handles this. */
+        '@typescript-eslint/no-unused-vars': 'off'
+      }
     },
   ]
 };
