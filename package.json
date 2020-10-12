@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "A reusable, responsive, and adaptive carousel for react",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "npm run build:ts; npm run build:js",
     "build:js": "babel ./src --out-dir ./lib --config-file ./babel.build.config.js",
