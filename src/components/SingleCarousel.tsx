@@ -1,4 +1,11 @@
-import React, { ReactElement, ReactNode, useLayoutEffect, useRef } from 'react';
+import React, {
+  FocusEventHandler,
+  KeyboardEventHandler,
+  ReactElement,
+  ReactNode,
+  useLayoutEffect,
+  useRef
+} from 'react';
 import styled from 'styled-components';
 import { useResizeEffect } from '../hooks/layout';
 import {
@@ -22,7 +29,7 @@ const Container = styled.div`
 const getTiles = (container: HTMLElement) => Array.from(container.children) as HTMLElement[];
 const getTile = (container: HTMLElement, num: number): HTMLElement | undefined => getTiles(container)[num];
 
-const scrollIntoView = (container, el, smooth = true) => {
+const scrollIntoView = (container: HTMLElement | undefined, el: HTMLElement | undefined, smooth = true) => {
   if (!container || !el) return;
 
   scrollTo(container, alignAtCenter(container, el), smooth);
@@ -55,7 +62,7 @@ const SingleCarousel = ({ selected = 0, onSelect = () => undefined, children }: 
     scrollIntoView(containerRef.current, getTile(containerRef.current, selected), false);
   });
 
-  const scrollFocusedElementIntoView = (evt) => {
+  const scrollFocusedElementIntoView: FocusEventHandler = (evt) => {
     if (!containerRef.current) return;
     const container = containerRef.current;
 
@@ -66,7 +73,7 @@ const SingleCarousel = ({ selected = 0, onSelect = () => undefined, children }: 
     onSelect(focusedNum);
   };
 
-  const onKeyDown = (e) => {
+  const onKeyDown: KeyboardEventHandler = (e) => {
     const container = containerRef.current;
     if (e.key === 'ArrowLeft') {
       const prev = Math.max(selected - 1, 0);

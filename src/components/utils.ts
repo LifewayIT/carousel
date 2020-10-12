@@ -103,11 +103,11 @@ export const isTouchscreen = (): boolean => window.matchMedia('(hover: none), (h
   a fallback for manually smooth scrolling
 */
 
-const ease = x => 0.5 * (1 - Math.cos(Math.PI * x));
+const ease = (x: number) => 0.5 * (1 - Math.cos(Math.PI * x));
 
 const DURATION = 500;
 
-const fallbackSmoothScroll = (el, position) => {
+const fallbackSmoothScroll = (el: HTMLElement, position: number) => {
   const start = el.scrollLeft;
   const end = position;
   const distance = end - start;
@@ -137,7 +137,7 @@ const fallbackSmoothScroll = (el, position) => {
   scroll the element (horizontally) to the specified position
   uses fallbacks if browser doesn't support el.scrollTo() or smooth scrolling
 */
-const scrollToImmediate = (el, position) => {
+const scrollToImmediate = (el: HTMLElement, position: number) => {
   if (el.scrollTo) {
     el.scrollTo({ left: position, behavior: 'auto' });
   } else {
@@ -145,7 +145,7 @@ const scrollToImmediate = (el, position) => {
   }
 };
 
-const scrollToSmooth = (el, position) => {
+const scrollToSmooth = (el: HTMLElement, position: number) => {
   if (el.scrollTo && supportsSmoothScroll) {
     el.scrollTo({ left: position, behavior: 'smooth' });
   } else {
