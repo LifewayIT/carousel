@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 
 type InitialEffectCallback = (initial: boolean) => ReturnType<React.EffectCallback>;
 export const useIsInitialLayoutEffect = (effectFn: InitialEffectCallback, deps: React.DependencyList | undefined): void => {
@@ -12,7 +12,7 @@ export const useIsInitialLayoutEffect = (effectFn: InitialEffectCallback, deps: 
   }, deps); // eslint-disable-line react-hooks/exhaustive-deps
 };
 
-export const useResizeEffect = (elRef: React.MutableRefObject<Element>, fn: ResizeObserverCallback): void => {
+export const useResizeEffect = (elRef: React.RefObject<Element>, fn: ResizeObserverCallback): void => {
   const effectFn = useRef<ResizeObserverCallback>();
   effectFn.current = fn;
 
@@ -36,18 +36,18 @@ export const useResizeEffect = (elRef: React.MutableRefObject<Element>, fn: Resi
 
 interface getTarget {
   (
-    targetRef: React.MutableRefObject<Element> | ((root: Element) => Element) | Element,
+    targetRef: React.RefObject<Element> | ((root: Element) => Element) | Element,
     root: Element
   ): Element;
 
   (
-    targetRef: React.MutableRefObject<Element> | Element,
+    targetRef: React.RefObject<Element> | Element,
     root: undefined
   ): Element;
 }
 
 const getTarget: getTarget = (
-  targetRef: React.MutableRefObject<Element> | ((root: Element) => Element) | Element,
+  targetRef: React.RefObject<Element> | ((root: Element) => Element) | Element,
   root: Element | undefined
 ) => {
   if ('current' in targetRef) {
@@ -62,23 +62,23 @@ const getTarget: getTarget = (
 
 interface useIntersectionEffect {
   (
-    rootRef: React.MutableRefObject<Element>,
-    targetRef: React.MutableRefObject<Element> | ((root: Element) => Element) | Element,
+    rootRef: React.RefObject<Element>,
+    targetRef: React.RefObject<Element> | ((root: Element) => Element) | Element,
     options: IntersectionObserverInit | undefined,
     fn: IntersectionObserverCallback
   ): void;
 
   (
     rootRef: undefined,
-    targetRef: React.MutableRefObject<Element> | Element,
+    targetRef: React.RefObject<Element> | Element,
     options: IntersectionObserverInit | undefined,
     fn: IntersectionObserverCallback
   ): void;
 }
 
 export const useIntersectionEffect: useIntersectionEffect = (
-  rootRef: React.MutableRefObject<Element> | undefined,
-  targetRef: React.MutableRefObject<Element> | ((root: Element) => Element) | Element,
+  rootRef: React.RefObject<Element> | undefined,
+  targetRef: React.RefObject<Element> | ((root: Element) => Element) | Element,
   options: IntersectionObserverInit | undefined,
   fn: IntersectionObserverCallback
 ): void => {
@@ -92,7 +92,7 @@ export const useIntersectionEffect: useIntersectionEffect = (
 
     const target = rootRef?.current
       ? getTarget(targetRef, rootRef?.current)
-      : getTarget(targetRef as React.MutableRefObject<Element> | Element, rootRef?.current as undefined);
+      : getTarget(targetRef as React.RefObject<Element> | Element, rootRef?.current as undefined);
 
     if (target) {
       const observer = new window.IntersectionObserver(

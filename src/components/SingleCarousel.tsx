@@ -1,12 +1,11 @@
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { ReactElement, ReactNode, useLayoutEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { useResizeEffect } from '../hooks/layout';
 import {
   alignAtCenter,
   getFirstFocusableElement,
   scrollTo
 } from './utils';
-import { useResizeEffect } from '../hooks/layout';
-import { func, node, number } from 'prop-types';
 
 const Container = styled.div`
   overflow: hidden;
@@ -20,8 +19,8 @@ const Container = styled.div`
   }
 `;
 
-const getTiles = container => Array.from(container.children);
-const getTile = (container, num) => getTiles(container)[num];
+const getTiles = (container: HTMLElement) => Array.from(container.children) as HTMLElement[];
+const getTile = (container: HTMLElement, num: number): HTMLElement | undefined => getTiles(container)[num];
 
 const scrollIntoView = (container, el, smooth = true) => {
   if (!container || !el) return;
@@ -30,9 +29,17 @@ const scrollIntoView = (container, el, smooth = true) => {
 };
 
 
+type Props = {
+  /** the index of the child that is currently selected. defaults to 0 */
+  selected?: number;
+  /** handler for when a child is selected */
+  onSelect?: (nextSelected: number) => void;
+  /** the children to render */
+  children?: ReactNode;
+};
 
-const SingleCarousel = ({ selected, onSelect, children }) => {
-  const containerRef = useRef();
+const SingleCarousel = ({ selected = 0, onSelect = () => undefined, children }: Props): ReactElement => {
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     if (!containerRef.current) return;
@@ -44,6 +51,7 @@ const SingleCarousel = ({ selected, onSelect, children }) => {
   }, [selected]);
 
   useResizeEffect(containerRef, () => {
+    if (!containerRef.current) return;
     scrollIntoView(containerRef.current, getTile(containerRef.current, selected), false);
   });
 
@@ -63,11 +71,17 @@ const SingleCarousel = ({ selected, onSelect, children }) => {
     if (e.key === 'ArrowLeft') {
       const prev = Math.max(selected - 1, 0);
       onSelect(prev);
-      getFirstFocusableElement(getTile(container, prev))?.focus();
+
+      if (container) {
+        getFirstFocusableElement(getTile(container, prev))?.focus();
+      }
     } else if (e.key === 'ArrowRight') {
       const next = Math.min(selected + 1, React.Children.count(children) - 1);
       onSelect(next);
-      getFirstFocusableElement(getTile(container, next))?.focus();
+
+      if (container) {
+        getFirstFocusableElement(getTile(container, next))?.focus();
+      }
     }
   };
 
@@ -76,12 +90,6 @@ const SingleCarousel = ({ selected, onSelect, children }) => {
       {children}
     </Container>
   );
-};
-
-SingleCarousel.propTypes = {
-  selected: number,
-  onSelect: func.isRequired,
-  children: node
 };
 
 export default SingleCarousel;
