@@ -1,5 +1,4 @@
-import React, { useRef, useLayoutEffect, useState } from 'react';
-import { number, func, node } from 'prop-types';
+import React, { useRef, useLayoutEffect, useState, ReactNode, HTMLAttributes, ReactElement, KeyboardEventHandler, UIEventHandler } from 'react';
 import styled from 'styled-components';
 import CarouselArrow from './CarouselArrow';
 import {
@@ -15,7 +14,8 @@ import {
   scrollTo,
   isTouchscreen,
   projectTargetZoneLeftEdge,
-  alignAtCenter
+  alignAtCenter,
+  TargetZoneOffsets
 } from './utils';
 import {
   useResizeEffect,
@@ -43,7 +43,7 @@ const Margin = styled.div`
   }
 `;
 
-const ScrollContainer = styled.ul`
+const ScrollContainer = styled.ul<{ targetZoneOffset: TargetZoneOffsets }>`
   overflow-x: scroll;
 
   &::-webkit-scrollbar {
@@ -110,7 +110,7 @@ const DotContainer = styled.div`
   }
 `;
 
-const Dot = styled.div`
+const Dot = styled.div<{ active: boolean }>`
   width: ${space._8};
   height: ${space._8};
 
@@ -122,22 +122,24 @@ const Dot = styled.div`
 
 const scrollSnapEnabled = isTouchscreen;
 
-const getTiles = container =>
+type OptionalHTMLElement = HTMLElement | undefined | null;
+
+const getTiles = (container: OptionalHTMLElement) =>
   Array.from(container?.children ?? [])
-    .filter(child => !child.hasAttribute('data-carousel-skip'));
+    .filter(child => !child.hasAttribute('data-carousel-skip')) as HTMLElement[];
 
-const getTile = (container, num) => getTiles(container)[num];
+const getTile = (container: OptionalHTMLElement, num: number) => getTiles(container)[num];
 
-const getTileTargetZoneOffsets = (container) => {
+const getTileTargetZoneOffsets = (container: HTMLElement) => {
   const tiles = getTiles(container);
   return getTargetZoneOffsets(container, tiles);
 };
 
-const getLeftMargin = (container) => container.children[0];
-const getRightMargin = (container) => container.children[container.children.length - 1];
+const getLeftMargin = (container: Element) => container.children[0];
+const getRightMargin = (container: Element) => container.children[container.children.length - 1];
 
 
-const scrollIntoView = (container, tile, smooth = true) => {
+const scrollIntoView = (container: OptionalHTMLElement, tile: OptionalHTMLElement, smooth = true) => {
   if (!container || !tile) return;
 
   const targetOffset = getTileTargetZoneOffsets(container);
@@ -157,19 +159,19 @@ const scrollIntoView = (container, tile, smooth = true) => {
   }
 };
 
-const scrollTileIntoView = (container, num, smooth) => {
+const scrollTileIntoView = (container: OptionalHTMLElement, num: number, smooth?: boolean) => {
   const tile = getTile(container, num);
   scrollIntoView(container, tile, smooth);
 };
 
-const scrollTileToCenter = (container, num, smooth = true) => {
+const scrollTileToCenter = (container: OptionalHTMLElement, num: number, smooth = true) => {
   const tile = getTile(container, num);
   if (!container || !tile) return;
 
   scrollTo(container, alignAtCenter(container, tile), smooth);
 };
 
-const pageLeft = (container) => {
+const pageLeft = (container: OptionalHTMLElement) => {
   if (!container) return;
 
   const targetOffset = getTileTargetZoneOffsets(container);
@@ -192,7 +194,7 @@ const pageLeft = (container) => {
   }
 };
 
-const pageRight = (container) => {
+const pageRight = (container: OptionalHTMLElement) => {
   if (!container) return;
 
   const targetOffset = getTileTargetZoneOffsets(container);
@@ -211,7 +213,7 @@ const pageRight = (container) => {
   }
 };
 
-const getRawStartPoints = (tiles, targetWidth, targetOffset, maxPosition) => {
+const getRawStartPoints = (tiles: HTMLElement[], targetWidth: number, targetOffset: TargetZoneOffsets, maxPosition: number): number[] => {
   if (tiles.length < 1) {
     return [];
   }
@@ -225,7 +227,7 @@ const getRawStartPoints = (tiles, targetWidth, targetOffset, maxPosition) => {
   return [nextStart, ...getRawStartPoints(offPageTiles, targetWidth, targetOffset, maxPosition)];
 };
 
-const getRawEndPoints = (tiles, targetWidth, targetOffset, minPosition) => {
+const getRawEndPoints = (tiles: HTMLElement[], targetWidth: number, targetOffset: TargetZoneOffsets, minPosition: number): number[] => {
   if (tiles.length < 1) {
     return [];
   }
@@ -240,7 +242,7 @@ const getRawEndPoints = (tiles, targetWidth, targetOffset, minPosition) => {
   return [...getRawEndPoints(offPageTiles, targetWidth, targetOffset, minPosition), nextPagePoint];
 };
 
-const getScaledWeightedAverage = (list1, list2, leftRatio, rightRatio) => {
+const getScaledWeightedAverage = (list1: number[], list2: number[], leftRatio: number, rightRatio: number) => {
   if (list1.length === 0) {
     return [];
   } else if (list1.length === 1) {
@@ -249,18 +251,20 @@ const getScaledWeightedAverage = (list1, list2, leftRatio, rightRatio) => {
   }
 
   const total = list1.length - 1;
-  const progress = (n) => n / total;
-  const ratio = (n) => (1 - progress(n)) * leftRatio + progress(n) * rightRatio;
+  const progress = (n: number) => n / total;
+  const ratio = (n: number) => (1 - progress(n)) * leftRatio + progress(n) * rightRatio;
   return list1.map((item1, i) => (item1 * (1 - ratio(i)) + list2[i] * ratio(i)));
 };
 
-const getCurrentPage = (currentPosition, pageSplitPoints) => {
+const getCurrentPage = (currentPosition: number, pageSplitPoints: number[]) => {
   const pageIndex = pageSplitPoints.findIndex(splitPoint => currentPosition < splitPoint);
   return pageIndex === -1 ? pageSplitPoints.length + 1 : pageIndex + 1;
 };
 
 
-const calculatePagePoints = (container) => {
+type PagePoints = number[] | undefined;
+
+const calculatePagePoints = (container: HTMLElement): PagePoints => {
   const tiles = getTiles(container);
   const targetOffset = getTileTargetZoneOffsets(container);
   const targetZoneWidth = container.clientWidth - targetOffset.left - targetOffset.right;
@@ -281,7 +285,7 @@ const calculatePagePoints = (container) => {
 };
 
 
-const calculatePages = (container, pagePoints) => {
+const calculatePages = (container: HTMLElement, pagePoints: PagePoints) => {
   if (pagePoints === undefined) {
     return { total: 0, current: 0 };
   }
@@ -297,24 +301,34 @@ const calculatePages = (container, pagePoints) => {
 };
 
 
-const Carousel = ({ selected, onSelect, children, ...props }) => {
-  const containerRef = useRef();
+type Props = {
+  selected?: number,
+  onSelect?: (nextSelected: number) => void,
+  children?: ReactNode
+} & HTMLAttributes<HTMLDivElement>;
+
+const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props }: Props): ReactElement => {
+  const containerRef = useRef<HTMLUListElement>(null);
   const [targetOffset, setTargetOffset] = useState({ left: 0, right: 0 });
   const [onEdge, setOnEdge] = useState({ left: false, right: false });
   const noScroll = onEdge.left && onEdge.right;
 
-  const [pagePoints, setPagePoints] = useState(undefined);
+  const [pagePoints, setPagePoints] = useState<PagePoints>(undefined);
   const [pages, setPages] = useState({ current: 0, total: 0 });
 
   const updatePagePoints = () => {
-    const newPagePoints = calculatePagePoints(containerRef.current);
+    const newPagePoints = containerRef.current
+      ? calculatePagePoints(containerRef.current)
+      : undefined;
+
     setPagePoints(newPagePoints);
     return pagePoints;
   };
 
-  const updatePages = (pagePnts) => {
+  const updatePages = (pagePnts: PagePoints) => {
     if (!containerRef.current) return;
     const container = containerRef.current;
+
     const newPages = calculatePages(container, pagePnts);
     if (newPages.current !== pages.current || newPages.total !== pages.total) {
       setPages(newPages);
@@ -322,9 +336,10 @@ const Carousel = ({ selected, onSelect, children, ...props }) => {
   };
 
   const updateTargetZoneOffset = () => {
-    if (!containerRef.current) return;
-    const container = containerRef.current;
-    const newTargetOffset = getTileTargetZoneOffsets(container);
+    const newTargetOffset = containerRef.current
+      ? getTileTargetZoneOffsets(containerRef.current)
+      : { left: 0, right: 0 };
+
     if (newTargetOffset.left !== targetOffset.left || newTargetOffset.right !== targetOffset.right) {
       setTargetOffset(newTargetOffset);
     }
@@ -338,6 +353,8 @@ const Carousel = ({ selected, onSelect, children, ...props }) => {
 
 
   useIsInitialLayoutEffect((isInitial) => {
+    if (!containerRef.current) return;
+
     if (isInitial) {
       scrollTileToCenter(containerRef.current, selected, false);
     } else {
@@ -357,14 +374,18 @@ const Carousel = ({ selected, onSelect, children, ...props }) => {
     updateLayoutProperties();
 
     /* scroll-snapping on chrome jumps to random position in list when images load */
-    scrollTileToCenter(containerRef.current, selected, false);
+    if (containerRef.current) {
+      scrollTileToCenter(containerRef.current, selected, false);
+    }
   };
 
-  const onScroll = () => {
+  const onScroll: UIEventHandler = () => {
     updatePages(pagePoints);
   };
 
-  const arrowKeyDown = (e) => {
+  const arrowKeyDown: KeyboardEventHandler = (e) => {
+    if (!containerRef.current) return;
+
     if (e.key === 'ArrowLeft') {
       pageLeft(containerRef.current);
     } else if (e.key === 'ArrowRight') {
@@ -372,24 +393,26 @@ const Carousel = ({ selected, onSelect, children, ...props }) => {
     }
   };
 
-  const scrollKeyDown = (e) => {
+  const scrollKeyDown: KeyboardEventHandler = (e) => {
     const container = containerRef.current;
     if (e.key === 'ArrowLeft') {
       e.preventDefault();
 
       const prev = Math.max(selected - 1, 0);
       onSelect(prev);
+
       getFirstFocusableElement(getTile(container, prev))?.focus();
     } else if (e.key === 'ArrowRight') {
       e.preventDefault();
 
       const next = Math.min(selected + 1, React.Children.count(children) - 1);
       onSelect(next);
+
       getFirstFocusableElement(getTile(container, next))?.focus();
     }
   };
 
-  const tileProps = (num) => ({
+  const tileProps = (num: number) => ({
     className: num === selected ? 'selected' : '',
     onClick: () => {
       onSelect(num);
@@ -462,12 +485,6 @@ const Carousel = ({ selected, onSelect, children, ...props }) => {
       </DotContainer>
     </Container>
   );
-};
-
-Carousel.propTypes = {
-  selected: number,
-  onSelect: func.isRequired,
-  children: node
 };
 
 export default Carousel;

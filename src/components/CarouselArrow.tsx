@@ -1,12 +1,17 @@
-import React from 'react';
-import { bool, func } from 'prop-types';
+import React, { ButtonHTMLAttributes, MouseEventHandler, ReactElement } from 'react';
 import styled from 'styled-components';
-import { color, shadow, device, space } from '../utils/styleguide';
+import { color, device, shadow, space } from '../utils/styleguide';
 
 import ChevronLeft from '../../svg/chevron-left.svg';
 import ChevronRight from '../../svg/chevron-right.svg';
 
-const Arrow = styled.button`
+type ArrowProps = {
+  left?: boolean;
+  right?: boolean;
+  hide?: boolean;
+};
+
+const Arrow = styled.button<ArrowProps>`
   position: absolute;
   display: block;
 
@@ -90,7 +95,18 @@ const Arrow = styled.button`
   }
 `;
 
-const CarouselArrow = ({ left, right, onClick, ...props }) => {
+type Props = {
+  /** shows the left arrow icon. One of 'left' or 'right' must be specified */
+  left?: boolean;
+  /** shows the right arrow icon. One of 'left' or 'right' must be specified */
+  right?: boolean;
+  /** hide the arrow */
+  hide?: boolean;
+  /** handler for when the arrow button is clicked */
+  onClick: MouseEventHandler<HTMLElement>;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
+
+const CarouselArrow = ({ left, right, onClick, ...props }: Props): ReactElement => {
   if (!left && !right) {
     throw new Error('either "left" or "right" prop is required');
   } else if (left && right) {
@@ -103,12 +119,6 @@ const CarouselArrow = ({ left, right, onClick, ...props }) => {
       {right && <img src={ChevronRight} alt="page right" />}
     </Arrow>
   );
-};
-
-CarouselArrow.propTypes = {
-  left: bool,
-  right: bool,
-  onClick: func
 };
 
 export default CarouselArrow;

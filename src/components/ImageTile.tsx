@@ -1,5 +1,4 @@
-import React from 'react';
-import { node, string } from 'prop-types';
+import React, { ButtonHTMLAttributes, ReactElement, ReactNode } from 'react';
 import styled from 'styled-components';
 import { device } from '../utils/styleguide';
 
@@ -55,19 +54,22 @@ const TileImage = styled.img`
   }
 `;
 
-const ImageTile = ({ src, alt, children, ...props }) => {
+type Props = {
+  /** the source url of the image */
+  src: string;
+  /** the alt text for the image */
+  alt: string;
+  /** child nodes to render inside of the button (helpful for banners, markers, etc) */
+  children?: ReactNode;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
+
+const ImageTile = ({ src, alt, children, ...props }: Props): ReactElement => {
   return (
     <TileButton {...props}>
       <TileImage src={src} alt={alt} />
       {children}
     </TileButton>
   );
-};
-
-ImageTile.propTypes = {
-  src: string,
-  alt: string,
-  children: node
 };
 
 export default ImageTile;
