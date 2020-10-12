@@ -1,5 +1,4 @@
-import React, { useRef, useLayoutEffect, useState } from 'react';
-import { number, func, node } from 'prop-types';
+import React, { useRef, useLayoutEffect, useState, ReactNode, HTMLAttributes, ReactElement } from 'react';
 import styled from 'styled-components';
 import CarouselArrow from './CarouselArrow';
 import {
@@ -15,7 +14,8 @@ import {
   scrollTo,
   isTouchscreen,
   projectTargetZoneLeftEdge,
-  alignAtCenter
+  alignAtCenter,
+  TargetZoneOffsets
 } from './utils';
 import {
   useResizeEffect,
@@ -43,7 +43,7 @@ const Margin = styled.div`
   }
 `;
 
-const ScrollContainer = styled.ul`
+const ScrollContainer = styled.ul<{ targetZoneOffset: TargetZoneOffsets }>`
   overflow-x: scroll;
 
   &::-webkit-scrollbar {
@@ -110,7 +110,7 @@ const DotContainer = styled.div`
   }
 `;
 
-const Dot = styled.div`
+const Dot = styled.div<{ active: boolean }>`
   width: ${space._8};
   height: ${space._8};
 
@@ -122,9 +122,9 @@ const Dot = styled.div`
 
 const scrollSnapEnabled = isTouchscreen;
 
-const getTiles = container =>
+const getTiles = (container: HTMLElement) =>
   Array.from(container?.children ?? [])
-    .filter(child => !child.hasAttribute('data-carousel-skip'));
+    .filter(child => !child.hasAttribute('data-carousel-skip')) as HTMLElement[];
 
 const getTile = (container, num) => getTiles(container)[num];
 
@@ -157,7 +157,7 @@ const scrollIntoView = (container, tile, smooth = true) => {
   }
 };
 
-const scrollTileIntoView = (container, num, smooth) => {
+const scrollTileIntoView = (container, num, smooth?) => {
   const tile = getTile(container, num);
   scrollIntoView(container, tile, smooth);
 };
@@ -297,8 +297,14 @@ const calculatePages = (container, pagePoints) => {
 };
 
 
-const Carousel = ({ selected, onSelect, children, ...props }) => {
-  const containerRef = useRef();
+type Props = {
+  selected?: number,
+  onSelect?: (nextSelected: number) => void,
+  children?: ReactNode
+} & HTMLAttributes<HTMLDivElement>;
+
+const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props }: Props): ReactElement => {
+  const containerRef = useRef<HTMLUListElement>(null);
   const [targetOffset, setTargetOffset] = useState({ left: 0, right: 0 });
   const [onEdge, setOnEdge] = useState({ left: false, right: false });
   const noScroll = onEdge.left && onEdge.right;
@@ -462,12 +468,6 @@ const Carousel = ({ selected, onSelect, children, ...props }) => {
       </DotContainer>
     </Container>
   );
-};
-
-Carousel.propTypes = {
-  selected: number,
-  onSelect: func.isRequired,
-  children: node
 };
 
 export default Carousel;

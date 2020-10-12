@@ -1,4 +1,4 @@
-// known issue: import/extensions rule incorrectly warns on importing ts files without an extension (see https://github.com/benmosher/eslint-plugin-import/issues/1857))
+// known issue: import/extensions rule incorrectly warns on importing ts/tsx files without an extension (see https://github.com/benmosher/eslint-plugin-import/issues/1857)
 
 module.exports = {
   extends: [
@@ -35,7 +35,10 @@ module.exports = {
       extends: ['corinth/typescript'],
       rules: {
         /* bug in ts-eslint; it doesn't take into account types. Also, ts itself handles this. */
-        '@typescript-eslint/no-unused-vars': 'off'
+        '@typescript-eslint/no-unused-vars': 'off',
+        'import/extensions': ['error', 'ignorePackages',
+          { js: 'never', jsx: 'never', ts: 'never', tsx: 'never' },
+        ]
       }
     },
   ]
