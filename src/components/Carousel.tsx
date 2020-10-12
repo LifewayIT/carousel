@@ -325,7 +325,7 @@ const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props
     return pagePoints;
   };
 
-  const updatePages = (pagePnts: number[] | undefined) => {
+  const updatePages = (pagePnts: PagePoints) => {
     if (!containerRef.current) return;
     const container = containerRef.current;
 
