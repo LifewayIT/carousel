@@ -24,6 +24,15 @@ common:
 
 
 jobs:
+  check-changelog:
+    executor: node
+    steps:
+      - checkout
+      - run:
+          name: ensure changelog has been modified
+          command: |
+            ! git diff -s --exit-code upstream/master -- CHANGELOG.md
+
   publish:
     executor: node
     steps:
@@ -77,13 +86,9 @@ workflows:
           script: build:check
           requires:
             - npm/install
-      - npm/run-script:
+      - check-changelog:
           <<: *run-on-pr
-          <<: *setup
-          name: changelog:check
-          script: changelog:check
-          requires:
-            - npm/install
+          context: *team-context
       - publish:
           <<: *run-on-master
           context: *team-context
