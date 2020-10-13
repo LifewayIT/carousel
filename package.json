@@ -8,6 +8,7 @@
     "lib",
     "svg",
     "src",
+    "docs/demo",
     "!src/**/*.stories.js",
     "!src/**/__integration_tests__",
     "!src/**/__tests__"
