@@ -6,4 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+No unreleased changes :fire:
+
+## v0.0.1 - (10/13/2020)
+
 Initial Release; includes several prebuilt react components: `Carousel`, `SingleCarousel`, `CarouselArrow`, and `ImageTile`.
