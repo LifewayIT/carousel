@@ -82,6 +82,8 @@ workflows:
           <<: *setup
           name: changelog:check
           script: changelog:check
+          requires:
+            - npm/install
       - publish:
           <<: *run-on-master
           context: *team-context
