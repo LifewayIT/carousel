@@ -3,30 +3,96 @@ version: 2.1
 orbs:
   npm: lifeway/npm-tools@0.0.6
 
+executors:
+  node:
+    docker:
+      - image: circleci/node:12
+
 common:
   run-on-pr: &run-on-pr
     filters:
       branches:
         ignore: master
+  run-on-master: &run-on-master
+    filters:
+      branches:
+        only: master
+  context: &team-context rundmg
+  setup: &setup
+    executor: node
+    context: *team-context
+
+
+jobs:
+  check-changelog:
+    executor: node
+    steps:
+      - checkout
+      - run:
+          name: ensure changelog has been modified
+          command: |
+            ! git diff -s --exit-code upstream/master -- CHANGELOG.md
+
+  publish:
+    executor: node
+    steps:
+      - attach_workspace:
+          at: ./
+      - run:
+          name: check if version exists
+          command: |
+            VERSION_EXISTS=$(npm run version:check)
+
+            if [ -z "$VERSION_EXISTS" ]; then
+              echo "Current version has not been published yet, proceeding"
+            else
+              exit_message="Current version has already been published."
+              echo "echo '${exit_message}'" >> $BASH_ENV
+              echo "exit 0;" >> $BASH_ENV
+
+              source $BASH_ENV
+            fi
+      - run:
+          name: npm/publish
+          command: npm publish
 
 workflows:
-  pr-checks:
+  check-and-release:
     jobs:
       - npm/install:
-          <<: *run-on-pr
-      - npm/audit:
-          <<: *run-on-pr
+          <<: *setup
+      - npm/run-script:
+          <<: *setup
+          name: audit
+          script: audit
           requires:
             - npm/install
       - npm/run-script:
-          <<: *run-on-pr
+          <<: *setup
           name: test
           script: test:ci
           requires:
             - npm/install
       - npm/run-script:
-          <<: *run-on-pr
+          <<: *setup
           name: lint
           script: lint
           requires:
             - npm/install
+      - npm/run-script:
+          <<: *run-on-pr
+          <<: *setup
+          name: build:check
+          script: build:check
+          requires:
+            - npm/install
+      - check-changelog:
+          <<: *run-on-pr
+          context: *team-context
+      - publish:
+          <<: *run-on-master
+          context: *team-context
+          requires:
+            - audit
+            - test
+            - lint
