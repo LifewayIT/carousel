@@ -32,3 +32,13 @@ workflows:
           script: lint
           requires:
             - npm/install
+      - npm/run-script:
+          <<: *run-on-pr
+          name: build:check
+          script: build:check
+          requires:
+            - npm/install
+      - npm/run-script:
+          <<: *run-on-pr
+          name: changelog:check
+          script: changelog:check
