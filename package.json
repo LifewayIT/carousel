@@ -13,20 +13,21 @@
     "!src/**/__tests__"
   ],
   "scripts": {
-    "audit": "audit-ci --high",
-    "build": "tsc --project ./tsconfig.build.json",
-    "build:check": "npm run build -- --noEmit",
-    "changelog:check": "./scripts/file-changed.sh",
     "start": "npm run storybook",
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook",
+    "build": "tsc --project ./tsconfig.build.json",
+    "build:check": "npm run build -- --noEmit",
+    "changelog:check": "./scripts/file-changed.sh",
+    "audit": "audit-ci --high",
     "lint": "eslint .",
     "test": "jest",
     "test:ci": "jest --ci --coverage --runInBand",
     "test:coverage": "npm test -- --coverage",
     "test:watch": "jest --watch",
     "validate": "npm-run-all --parallel build:check test audit lint changelog:check",
-    "version:check": "node ./scripts/version-check.js"
+    "version:check": "node ./scripts/version-check.js",
+    "prepublishOnly": "npm run version:check"
   },
   "repository": {
     "type": "git",
