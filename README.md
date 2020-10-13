@@ -1,5 +1,7 @@
 # Carousel
 [![CircleCI Build](https://img.shields.io/circleci/build/github/LifewayIT/carousel/master?token=b67a6d07fbdd18e4b0283491299a0331a2c8c504)](https://app.circleci.com/pipelines/github/LifewayIT/carousel)
+[![NPM Version](https://img.shields.io/npm/v/@lifeway/carousel)](https://www.npmjs.com/package/@lifeway/carousel)
+[![NPM Downloads](https://img.shields.io/npm/dm/@lifeway/carousel)](https://www.npmjs.com/package/@lifeway/carousel)
 
 A reusable, responsive, and adaptive carousel for react
 
@@ -9,7 +11,7 @@ A reusable, responsive, and adaptive carousel for react
 
 ## Usage
 
-This package is not yet deployed to NPM, but will be soon! Stay tuned!!!
+This package is on npm: [`@lifeway/carousel`](https://www.npmjs.com/package/@lifeway/carousel) :fire:
 
 ## Development
 
