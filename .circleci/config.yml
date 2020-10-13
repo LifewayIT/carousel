@@ -14,8 +14,10 @@ workflows:
     jobs:
       - npm/install:
           <<: *run-on-pr
-      - npm/audit:
+      - npm/run-script:
           <<: *run-on-pr
+          name: audit
+          script: audit
           requires:
             - npm/install
       - npm/run-script:
