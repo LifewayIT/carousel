@@ -4,6 +4,14 @@
   "description": "A reusable, responsive, and adaptive carousel for react",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "svg",
+    "src",
+    "!src/**/*.stories.js",
+    "!src/**/__integration_tests__",
+    "!src/**/__tests__"
+  ],
   "scripts": {
     "build": "tsc --project ./tsconfig.build.json",
     "start": "npm run storybook",
