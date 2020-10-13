@@ -15,6 +15,7 @@
   "scripts": {
     "build": "tsc --project ./tsconfig.build.json",
     "build:check": "npm run build -- --noEmit",
+    "changelog:check": "./scripts/file-changed.sh",
     "start": "npm run storybook",
     "storybook": "start-storybook -p 6006",
     "storybook:build": "build-storybook",
