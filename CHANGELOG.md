@@ -5,34 +5,34 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 <!-- template for unreleased section -->
-<!-- ## [Unreleased]
+<!-- ## :package: [Unreleased]
 No unreleased changes :fire: -->
 
-## [Unreleased]
+## :package: [Unreleased]
 
-### Added
+### :rocket: Added
  - Add story for `PageIndicator`
  - Add static classnames to every dom node rendered by a carousel component
 
-### Fixed
+### :hammer_and_wrench: Fixed
  - Update `SingleCarousel` to forward dom attributes to the base dom node
 
 
 ## v0.1.0 - (10/22/2020)
 
-### Added
+### :rocket: Added
  - Add visual tests (and included them in the `validate` script)
  - Expose hooks in the index file so they can be imported directly
  - Allow components & hooks to be imported through `@lifeway-carousel/lib/components` and `@lifeway-carousel/lib/hooks` respectively
 
-### Fixed
+### :hammer_and_wrench: Fixed
  - Allow running `npm install` without setting up an npm auth token
 
-### Docs
+### :open_book: Docs
  - Update README with info on publishing a new package version
  - Update README to include visual test script
 
-### Internal
+### :ghost: Internal
  - Add visual tests to pipeline
  - Move all logic to reusable hooks
 
@@ -40,14 +40,14 @@ No unreleased changes :fire: -->
 ## v0.0.2 - (10/14/2020)
 Get README up to date
 
-### Fixed
+### :hammer_and_wrench: Fixed
  - Fix Carousel's `onSelect` prop type.
  - Include the README's screenshot in the npm package
 
-### Docs
+### :open_book: Docs
  - Update the README to include installation & usage info (and also get other info up to date)
 
-### Internal
+### :ghost: Internal
  - Fix version check in pipeline so that package actually gets deployed :grin:
 
 
