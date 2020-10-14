@@ -22,8 +22,9 @@ import {
   useIntersectionEffect,
   useIsInitialLayoutEffect
 } from '../hooks/layout';
-import { device, space, color } from '../utils/styleguide';
+import { device, space } from '../utils/styleguide';
 import { usePages } from '../hooks/usePages';
+import PageIndicator from './PageIndicator';
 
 
 const Container = styled.div`
@@ -91,35 +92,6 @@ const ScrollContainer = styled.ul<{ targetZoneOffset: TargetZoneOffsets }>`
   }
 `;
 
-const DotContainer = styled.div`
-  position: absolute;
-  bottom: ${space._16};
-  left: 0;
-  right: 0;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-
-  & > * {
-    margin: 0 ${space._4};
-  }
-
-  @media ${device._768} {
-    bottom: ${space._48};
-  }
-`;
-
-const Dot = styled.div<{ active: boolean }>`
-  width: ${space._8};
-  height: ${space._8};
-
-  border-radius: 50%;
-  background-color: ${color.gray600};
-
-  opacity: ${props => props.active ? '1' : '.325'};
-`;
 
 const scrollSnapEnabled = isTouchscreen;
 
@@ -222,6 +194,14 @@ type Props = {
 } & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>;
 
 const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props }: Props): ReactElement => {
+  /*
+    hooks/functionality:
+     - selected
+     - scrolling
+     - arrows?
+     - * pages
+  */
+
   const containerRef = useRef<HTMLUListElement>(null);
   const [targetOffset, setTargetOffset] = useState({ left: 0, right: 0 });
   const [onEdge, setOnEdge] = useState({ left: false, right: false });
@@ -370,12 +350,7 @@ const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props
         onClick={() => pageRight(containerRef.current)}
         onKeyDown={arrowKeyDown}
       />
-      <DotContainer>
-        {[...Array(pages.total)].map((_, num) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <Dot key={`page-${num}`} active={num + 1 === pages.current} />
-        ))}
-      </DotContainer>
+      <PageIndicator {...pages} />
     </Container>
   );
 };
