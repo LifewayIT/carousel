@@ -41,9 +41,7 @@ jobs:
       - run:
           name: check if version exists
           command: |
-            VERSION_DOES_NOT_EXIST=$(npm run version:check)
-
-            if [ -z "$VERSION_DOES_NOT_EXIST" ]; then
+            if npm run version:check; then
               echo "Current version has not been published yet, proceeding"
             else
               exit_message="Current version has already been published."

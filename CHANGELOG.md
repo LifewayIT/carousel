@@ -18,6 +18,9 @@ Get README up to date
 ### Docs
  - Update the README to include installation & usage info (and also get other info up to date)
 
+### Internal
+ - Fix version check in pipeline so that package actually gets deployed :grin:
+
 ## v0.0.1 - (10/13/2020)
 
 Initial Release; includes several prebuilt react components: `Carousel`, `SingleCarousel`, `CarouselArrow`, and `ImageTile`.
