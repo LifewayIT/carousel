@@ -305,7 +305,7 @@ type Props = {
   selected?: number,
   onSelect?: (nextSelected: number) => void,
   children?: ReactNode
-} & HTMLAttributes<HTMLDivElement>;
+} & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>;
 
 const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props }: Props): ReactElement => {
   const containerRef = useRef<HTMLUListElement>(null);

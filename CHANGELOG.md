@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+ - Fix Carousel's `onSelect` prop type.
  - Include the README's screenshot in the npm package
 
 ## v0.0.1 - (10/13/2020)
