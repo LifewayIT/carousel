@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No unreleased changes :fire:
 
+## v0.0.2 - (10/14/2020)
+Get README up to date
+
+### Fixed
+ - Fix Carousel's `onSelect` prop type.
+ - Include the README's screenshot in the npm package
+
+### Docs
+ - Update the README to include installation & usage info (and also get other info up to date)
+
 ## v0.0.1 - (10/13/2020)
 
 Initial Release; includes several prebuilt react components: `Carousel`, `SingleCarousel`, `CarouselArrow`, and `ImageTile`.
