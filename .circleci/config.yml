@@ -75,6 +75,12 @@ workflows:
             - npm/install
       - npm/run-script:
           <<: *setup
+          name: visual-test
+          script: test:visual
+          requires:
+            - npm/install
+      - npm/run-script:
+          <<: *setup
           name: lint
           script: lint
           requires:
