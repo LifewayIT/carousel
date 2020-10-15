@@ -13,6 +13,9 @@ No unreleased changes :fire: -->
 ### Fixed
  - Allow running `npm install` without setting up an npm auth token
 
+### Docs
+ - Update README with info on publishing a new package version
+
 ## v0.0.2 - (10/14/2020)
 Get README up to date
 

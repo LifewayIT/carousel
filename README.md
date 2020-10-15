@@ -116,3 +116,25 @@ npm run validate      # runs all of the above checks
 ```
 
 All of these checks (or variants thereof) are run on PRs, since we want to keep the repo healthy!
+
+### Publishing a New Version
+
+To create a new version, simply run:
+
+```sh
+npm version [patch/major/minor]
+```
+
+And don't forget to update the `CHANGELOG` (mark the "unreleased" changes with the version number & date).
+
+
+The CI will automatically publish the new version to NPM, so you just have to make a PR & let the CI do it's thing!
+
+
+If for some reason you need to manually publish this package, please triple-check that everything is updated (`CHANGELOG` in particular) & working (use `npm run validate`),
+and then just run the following:
+
+```sh
+npm login
+npm publish
+```
