@@ -98,12 +98,16 @@ const calculatePages = (container: HTMLElement, pagePoints: PagePoints) => {
   };
 };
 
-type usePagesResult = {
-  current: number;
+export interface Pages {
   total: number;
+  current: number;
+}
+
+type usePagesResult = Pages & {
   onLayoutUpdate: () => void;
   onScroll: () => void;
 };
+
 export const usePages = (containerRef: React.RefObject<HTMLElement>): usePagesResult => {
   const [pagePoints, setPagePoints] = useState<PagePoints>(undefined);
   const [pages, setPages] = useState({ current: 0, total: 0 });
@@ -142,3 +146,17 @@ export const usePages = (containerRef: React.RefObject<HTMLElement>): usePagesRe
     onScroll
   };
 };
+
+
+interface IndicatorProps {
+  key: string;
+  num: number;
+  active: boolean;
+}
+
+export const usePageIndicator = (pages: Pages): IndicatorProps[] =>
+  [...Array(pages.total)].map((_, num) => ({
+    key: `page-${num}`,
+    num,
+    active: num + 1 === pages.current
+  }));

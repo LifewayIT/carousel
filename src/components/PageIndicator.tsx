@@ -1,18 +1,18 @@
 import React, { ReactElement } from 'react';
 import styled from 'styled-components';
+import { Pages, usePageIndicator } from '../hooks/usePages';
 import { device, space, color } from '../utils/styleguide';
 
-interface Props {
-  total: number;
-  current: number;
-}
+type Props = Pages;
 
-const PageIndicator = ({ total, current }: Props): ReactElement => {
+const PageIndicator = (pages: Props): ReactElement => {
+  const indicators = usePageIndicator(pages);
+
   return (
     <DotContainer>
-      {[...Array(total)].map((_, num) => (
+      {indicators.map((indicator) => (
         // eslint-disable-next-line react/no-array-index-key
-        <Dot key={`page-${num}`} active={num + 1 === current} />
+        <Dot {...indicator} key={indicator.key}  />
       ))}
     </DotContainer>
   );
