@@ -95,11 +95,11 @@ All unit tests are co-located with the corresponding source file in a `__tests__
 There are several npm scripts to run tests, with `npm test` being the main one (rather obviously :P)
 
 ```sh
-npm test                # run the tests for development
-npm run test:ci         # run the tests for use in a CI environment
-npm run test:coverage   # run the tests with coverage
-npm run test:watch      # run the tests in watch mode
-npm run test:visual     # runs the visual test
+npm test                # run the unit/integration tests for development
+npm run test:ci         # run the unit/integration tests for use in a CI environment
+npm run test:coverage   # run the unit/integration tests with coverage
+npm run test:watch      # run the unit/integration tests in watch mode
+npm run test:visual     # runs the visual tests
 ```
 
 **Note:** The visual tests require the environment variable `APPLITOOLS_API_KEY`.
@@ -111,6 +111,7 @@ There are several npm scripts that are used to check the "health" of the current
 ```sh
 npm run build:check   # check that everything type checks & builds properly
 npm test              # run the unit/integration tests
+npm test:visual       # runs the visual tests
 npm run lint          # lints the codebase
 npm run audit         # check for security vulnerabilities
 # or npm audit

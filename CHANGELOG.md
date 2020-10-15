@@ -10,6 +10,9 @@ No unreleased changes :fire: -->
 
 ## [Unreleased]
 
+### Added
+ - Added visual tests (and included them in the `validate` script)
+
 ### Fixed
  - Allow running `npm install` without setting up an npm auth token
 
