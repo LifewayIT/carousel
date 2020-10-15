@@ -52,7 +52,9 @@ jobs:
             fi
       - run:
           name: npm/publish
-          command: npm publish
+          command: |
+            npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+            npm publish
 
 workflows:
   check-and-release:
