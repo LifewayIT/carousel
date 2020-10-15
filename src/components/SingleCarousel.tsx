@@ -99,6 +99,17 @@ const useSelectWithArrowKeys = (containerRef: RefObject<HTMLElement>, { selected
   return { onKeyDown };
 };
 
+const useSingleCarousel = (containerRef: RefObject<HTMLElement>, props: HookProps) => {
+  useKeepSelectedTileInView(containerRef, props.selected);
+  const focusProps = useSelectOnFocus(containerRef, props.onSelect);
+  const keyProps = useSelectWithArrowKeys(containerRef, props);
+
+  return {
+    ...focusProps,
+    ...keyProps
+  };
+};
+
 type Props = {
   /** the index of the child that is currently selected. defaults to 0 */
   selected?: number;
@@ -111,12 +122,10 @@ type Props = {
 const SingleCarousel = ({ selected = 0, onSelect = () => undefined, children }: Props): ReactElement => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useKeepSelectedTileInView(containerRef, selected);
-  const focusProps = useSelectOnFocus(containerRef, onSelect);
-  const keyProps = useSelectWithArrowKeys(containerRef, { selected, onSelect, children });
+  const carouselProps = useSingleCarousel(containerRef, { selected, onSelect, children });
 
   return (
-    <Container ref={containerRef} {...focusProps} {...keyProps}>
+    <Container ref={containerRef} {...carouselProps}>
       {children}
     </Container>
   );
