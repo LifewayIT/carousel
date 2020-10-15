@@ -165,6 +165,5 @@ export const scrollTo = (el: HTMLElement, position: number, smooth: boolean): vo
   } else {
     scrollToImmediate(el, position);
   }
-
 };
 
