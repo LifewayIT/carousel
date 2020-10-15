@@ -99,7 +99,10 @@ npm test                # run the tests for development
 npm run test:ci         # run the tests for use in a CI environment
 npm run test:coverage   # run the tests with coverage
 npm run test:watch      # run the tests in watch mode
+npm run test:visual     # runs the visual test
 ```
+
+**Note:** The visual tests require the environment variable `APPLITOOLS_API_KEY`.
 
 ### Validation
 

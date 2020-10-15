@@ -15,6 +15,10 @@ No unreleased changes :fire: -->
 
 ### Docs
  - Update README with info on publishing a new package version
+ - Update README to include visual test script
+
+### Internal
+ - Add visual tests to pipeline
 
 ## v0.0.2 - (10/14/2020)
 Get README up to date
