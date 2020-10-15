@@ -3,6 +3,7 @@ import React, {
   KeyboardEventHandler,
   ReactElement,
   ReactNode,
+  RefObject,
   useLayoutEffect,
   useRef
 } from 'react';
@@ -36,18 +37,13 @@ const scrollIntoView = (container: HTMLElement | undefined, el: HTMLElement | un
 };
 
 
-type Props = {
-  /** the index of the child that is currently selected. defaults to 0 */
-  selected?: number;
-  /** handler for when a child is selected */
-  onSelect?: (nextSelected: number) => void;
-  /** the children to render */
+type HookProps = {
+  selected: number;
+  onSelect: (nextSelected: number) => void;
   children?: ReactNode;
 };
 
-const SingleCarousel = ({ selected = 0, onSelect = () => undefined, children }: Props): ReactElement => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
+const useKeepSelectedTileInView = (containerRef: RefObject<HTMLElement>, selected: number) => {
   useLayoutEffect(() => {
     if (!containerRef.current) return;
     const container = containerRef.current;
@@ -61,7 +57,9 @@ const SingleCarousel = ({ selected = 0, onSelect = () => undefined, children }: 
     if (!containerRef.current) return;
     scrollIntoView(containerRef.current, getTile(containerRef.current, selected), false);
   });
+};
 
+const useSelectOnFocus = (containerRef: RefObject<HTMLElement>, onSelect: (selected: number) => void) => {
   const scrollFocusedElementIntoView: FocusEventHandler = (evt) => {
     if (!containerRef.current) return;
     const container = containerRef.current;
@@ -73,6 +71,12 @@ const SingleCarousel = ({ selected = 0, onSelect = () => undefined, children }: 
     onSelect(focusedNum);
   };
 
+  return {
+    onFocus: scrollFocusedElementIntoView
+  };
+};
+
+const useSelectWithArrowKeys = (containerRef: RefObject<HTMLElement>, { selected, onSelect, children }: HookProps) => {
   const onKeyDown: KeyboardEventHandler = (e) => {
     const container = containerRef.current;
     if (e.key === 'ArrowLeft') {
@@ -92,8 +96,27 @@ const SingleCarousel = ({ selected = 0, onSelect = () => undefined, children }: 
     }
   };
 
+  return { onKeyDown };
+};
+
+type Props = {
+  /** the index of the child that is currently selected. defaults to 0 */
+  selected?: number;
+  /** handler for when a child is selected */
+  onSelect?: (nextSelected: number) => void;
+  /** the children to render */
+  children?: ReactNode;
+};
+
+const SingleCarousel = ({ selected = 0, onSelect = () => undefined, children }: Props): ReactElement => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useKeepSelectedTileInView(containerRef, selected);
+  const focusProps = useSelectOnFocus(containerRef, onSelect);
+  const keyProps = useSelectWithArrowKeys(containerRef, { selected, onSelect, children });
+
   return (
-    <Container ref={containerRef} onFocus={scrollFocusedElementIntoView} onKeyDown={onKeyDown}>
+    <Container ref={containerRef} {...focusProps} {...keyProps}>
       {children}
     </Container>
   );
