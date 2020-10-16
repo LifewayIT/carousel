@@ -25,6 +25,7 @@
     "test:ci": "jest --ci --coverage --runInBand",
     "test:coverage": "npm test -- --coverage",
     "test:watch": "jest --watch",
+    "pretest:visual": "mkdir -p ./reports/visual",
     "test:visual": "eyes-storybook --exit-code",
     "validate": "npm-run-all --parallel build:check test test:visual audit lint",
     "version:check": "node ./scripts/version-check.js",

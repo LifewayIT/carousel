@@ -34,6 +34,22 @@ jobs:
           command: |
             ! git diff -s --exit-code upstream/master -- CHANGELOG.md
 
+  client-test:
+    executor: node
+    steps:
+      - attach_workspace:
+          at: ./
+      - npm/npm-run-script:
+          script: test:ci
+      - store_artifacts:
+          path: ./reports/tests
+          destination: tests
+      - store_artifacts:
+          path: ./reports/coverage
+          destination: coverage
+      - store_test_results:
+          path: ./reports/tests
+
   visual-test:
     docker:
       - image: circleci/node:12
@@ -44,6 +60,11 @@ jobs:
       - puppeteer/install
       - npm/npm-run-script:
           script: test:visual
+      - store_artifacts:
+          path: ./reports/visual
+          destination: visual
+      - store_test_results:
+          path: ./reports/visual
 
   publish:
     executor: node
@@ -79,10 +100,8 @@ workflows:
           script: audit
           requires:
             - npm/install
-      - npm/run-script:
-          <<: *setup
-          name: test
-          script: test:ci
+      - client-test:
+          context: *team-context
           requires:
             - npm/install
       - visual-test:
@@ -110,5 +129,5 @@ workflows:
           context: *team-context
           requires:
             - audit
-            - test
+            - client-test
             - lint
