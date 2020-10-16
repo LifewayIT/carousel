@@ -117,7 +117,7 @@ workflows:
       - npm/run-script:
           <<: *run-on-pr
           <<: *setup
-          name: build:check
+          name: check-build
           script: build:check
           requires:
             - npm/install
