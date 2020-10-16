@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Carousel from './Carousel';
 import ImageTile from './ImageTile';
+import { waitFor } from '@testing-library/react';
 
 export default {
   component: Carousel,
@@ -13,6 +14,19 @@ export default {
     layout: 'padded',
     actions: {
       handles: ['keydown', 'focusin']
+    },
+    eyes: {
+      runBefore: async ({ rootEl }) => {
+        const list = rootEl.querySelector('ul');
+
+        await waitFor(() => {
+          const images = Array.from(list.querySelectorAll('img'));
+          if (images.some(img => !img.complete)) throw new Error('not ready: images not loaded');
+        });
+
+        /* disable scroll snapping because it is messing up applitools :grimace: */
+        list.style.scrollSnapType = 'none';
+      }
     }
   }
 };
