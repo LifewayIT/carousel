@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   npm: lifeway/npm-tools@0.0.6
+  puppeteer: threetreeslight/puppeteer@0.1.2
 
 executors:
   node:
@@ -32,6 +33,17 @@ jobs:
           name: ensure changelog has been modified
           command: |
             ! git diff -s --exit-code upstream/master -- CHANGELOG.md
+
+  visual-test:
+    docker:
+      - image: circleci/node:12
+        environment:
+          NODE_ENV: development
+    steps:
+      - checkout
+      - puppeteer/install
+      - npm/npm-run-script:
+          script: test:visual
 
   publish:
     executor: node
@@ -73,10 +85,8 @@ workflows:
           script: test:ci
           requires:
             - npm/install
-      - npm/run-script:
-          <<: *setup
-          name: visual-test
-          script: test:visual
+      - visual-test:
+          context: *team-context
           requires:
             - npm/install
       - npm/run-script:
