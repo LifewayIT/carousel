@@ -25,7 +25,9 @@
     "test:ci": "jest --ci --coverage --runInBand",
     "test:coverage": "npm test -- --coverage",
     "test:watch": "jest --watch",
-    "validate": "npm-run-all --parallel build:check test audit lint",
+    "pretest:visual": "mkdir -p ./reports/visual",
+    "test:visual": "eyes-storybook --exit-code",
+    "validate": "npm-run-all --parallel build:check test test:visual audit lint",
     "version:check": "node ./scripts/version-check.js",
     "prepack": "npm run build",
     "prepublishOnly": "npm run version:check"
@@ -49,6 +51,7 @@
     "styled-components": "^5.1.0"
   },
   "devDependencies": {
+    "@applitools/eyes-storybook": "^3.9.0",
     "@babel/cli": "^7.11.6",
     "@babel/core": "^7.11.6",
     "@babel/plugin-transform-runtime": "^7.11.5",

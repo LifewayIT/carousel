@@ -95,11 +95,14 @@ All unit tests are co-located with the corresponding source file in a `__tests__
 There are several npm scripts to run tests, with `npm test` being the main one (rather obviously :P)
 
 ```sh
-npm test                # run the tests for development
-npm run test:ci         # run the tests for use in a CI environment
-npm run test:coverage   # run the tests with coverage
-npm run test:watch      # run the tests in watch mode
+npm test                # run the unit/integration tests for development
+npm run test:ci         # run the unit/integration tests for use in a CI environment
+npm run test:coverage   # run the unit/integration tests with coverage
+npm run test:watch      # run the unit/integration tests in watch mode
+npm run test:visual     # runs the visual tests
 ```
+
+**Note:** The visual tests require the environment variable `APPLITOOLS_API_KEY`.
 
 ### Validation
 
@@ -108,6 +111,7 @@ There are several npm scripts that are used to check the "health" of the current
 ```sh
 npm run build:check   # check that everything type checks & builds properly
 npm test              # run the unit/integration tests
+npm test:visual       # runs the visual tests
 npm run lint          # lints the codebase
 npm run audit         # check for security vulnerabilities
 # or npm audit
@@ -116,3 +120,25 @@ npm run validate      # runs all of the above checks
 ```
 
 All of these checks (or variants thereof) are run on PRs, since we want to keep the repo healthy!
+
+### Publishing a New Version
+
+To create a new version, simply run:
+
+```sh
+npm version [patch/major/minor]
+```
+
+And don't forget to update the `CHANGELOG` (mark the "unreleased" changes with the version number & date).
+
+
+The CI will automatically publish the new version to NPM, so you just have to make a PR & let the CI do it's thing!
+
+
+If for some reason you need to manually publish this package, please triple-check that everything is updated (`CHANGELOG` in particular) & working (use `npm run validate`),
+and then just run the following:
+
+```sh
+npm login
+npm publish
+```

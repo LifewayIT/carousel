@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Carousel from './Carousel';
 import ImageTile from './ImageTile';
+import { waitFor } from '@testing-library/react';
 
 export default {
   component: Carousel,
@@ -13,6 +14,24 @@ export default {
     layout: 'padded',
     actions: {
       handles: ['keydown', 'focusin']
+    },
+    eyes: {
+      runBefore: async ({ rootEl }) => {
+        const list = rootEl.querySelector('ul');
+
+        /*
+          disable scroll snapping because it causes the container to be scrolled to a random position
+          this issue is handled in the code, but it doesn't run on applitools (it uses a static dom snapshot)
+        */
+        list.style.scrollSnapType = 'none';
+
+        /* wait for images to load (with a short buffer afterward) because the page indicators change based off of the image widths */
+        await waitFor(() => {
+          const images = Array.from(list.querySelectorAll('img'));
+          if (images.some(img => !img.complete)) throw new Error('not ready: images not loaded');
+        });
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      }
     }
   }
 };

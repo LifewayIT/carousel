@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   npm: lifeway/npm-tools@0.0.6
+  puppeteer: threetreeslight/puppeteer@0.1.2
 
 executors:
   node:
@@ -33,6 +34,38 @@ jobs:
           command: |
             ! git diff -s --exit-code upstream/master -- CHANGELOG.md
 
+  client-test:
+    executor: node
+    steps:
+      - attach_workspace:
+          at: ./
+      - npm/npm-run-script:
+          script: test:ci
+      - store_artifacts:
+          path: ./reports/tests
+          destination: tests
+      - store_artifacts:
+          path: ./reports/coverage
+          destination: coverage
+      - store_test_results:
+          path: ./reports/tests
+
+  visual-test:
+    docker:
+      - image: circleci/node:12
+        environment:
+          NODE_ENV: development
+    steps:
+      - checkout
+      - puppeteer/install
+      - npm/npm-run-script:
+          script: test:visual
+      - store_artifacts:
+          path: ./reports/visual
+          destination: visual
+      - store_test_results:
+          path: ./reports/visual
+
   publish:
     executor: node
     steps:
@@ -52,7 +85,9 @@ jobs:
             fi
       - run:
           name: npm/publish
-          command: npm publish
+          command: |
+            npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+            npm publish
 
 workflows:
   check-and-release:
@@ -65,10 +100,12 @@ workflows:
           script: audit
           requires:
             - npm/install
-      - npm/run-script:
-          <<: *setup
-          name: test
-          script: test:ci
+      - client-test:
+          context: *team-context
+          requires:
+            - npm/install
+      - visual-test:
+          context: *team-context
           requires:
             - npm/install
       - npm/run-script:
@@ -80,7 +117,7 @@ workflows:
       - npm/run-script:
           <<: *run-on-pr
           <<: *setup
-          name: build:check
+          name: check-build
           script: build:check
           requires:
             - npm/install
@@ -92,5 +129,6 @@ workflows:
           context: *team-context
           requires:
             - audit
-            - test
+            - client-test
+            - visual-test
             - lint
