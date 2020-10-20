@@ -1,7 +1,7 @@
-import { EffectCallback, RefObject, useLayoutEffect } from 'react';
+import { DependencyList, EffectCallback, RefObject, useLayoutEffect } from 'react';
 import { useResizeEffect } from './useResizeEffect';
 
-type useLayoutChange = (containerRef: RefObject<HTMLElement>, fn: EffectCallback, deps: unknown[]) =>
+type useLayoutChange = (containerRef: RefObject<HTMLElement>, fn: EffectCallback, deps: DependencyList) =>
   { onLoad: () => void };
 
 export const useLayoutChange: useLayoutChange = (containerRef, fn, deps) => {

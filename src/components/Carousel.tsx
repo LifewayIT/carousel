@@ -1,4 +1,4 @@
-import React, { useRef, useState, ReactNode, HTMLAttributes, ReactElement, KeyboardEventHandler, UIEventHandler, RefObject, FocusEventHandler, EffectCallback, ReactEventHandler } from 'react';
+import React, { useRef, useState, ReactNode, HTMLAttributes, ReactElement, KeyboardEventHandler, UIEventHandler, RefObject, FocusEventHandler, EffectCallback, ReactEventHandler, DependencyList } from 'react';
 import styled from 'styled-components';
 import CarouselArrow from './CarouselArrow';
 import { useIntersectionEffect } from '../hooks/layout/useIntersectionEffect';
@@ -21,7 +21,6 @@ import {
 } from '../utils/layout';
 import { isTouchscreen } from '../utils/featureQueries';
 import { scrollTo } from '../utils/scroll';
-import { getFirstFocusableElement } from '../utils/dom';
 import { useSelectWithArrowKeys } from '../hooks/select/useSelectWithArrowKeys';
 
 
@@ -194,7 +193,7 @@ const useScrollSelectedIntoView = (containerRef: RefObject<HTMLElement>, selecte
     } else {
       scrollTileIntoView(containerRef.current, selected);
     }
-  }, [selected]);
+  }, [containerRef, selected]);
 };
 
 const useScrollSnapLoadingFix = (containerRef: RefObject<HTMLElement>, selected: number) => {
@@ -330,7 +329,7 @@ type HookProps = {
   onSelect: (nextSelected: number) => void;
   numTiles: number;
 };
-const useCarousel = (containerRef: RefObject<HTMLElement>, { selected, onSelect, numTiles }: HookProps, layoutDeps: unknown[]) => {
+const useCarousel = (containerRef: RefObject<HTMLElement>, { selected, onSelect, numTiles }: HookProps, layoutDeps: DependencyList) => {
 
   const pages = usePages(containerRef);
   const paging = usePaging(containerRef, pageByVisibility);
