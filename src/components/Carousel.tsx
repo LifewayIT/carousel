@@ -213,9 +213,9 @@ const useScrollSnapLoadingFix = (containerRef: RefObject<HTMLElement>, selected:
 type ArrowKeyHookProps = {
   selected: number;
   onSelect: (nextSelected: number) => void;
-  children?: ReactNode;
+  numTiles: number;
 };
-const useSelectWithArrowKeys = (containerRef: RefObject<HTMLElement>, { selected, onSelect, children }: ArrowKeyHookProps) => {
+const useSelectWithArrowKeys = (containerRef: RefObject<HTMLElement>, { selected, onSelect, numTiles }: ArrowKeyHookProps) => {
   const onKeyDown: KeyboardEventHandler = (e) => {
     const container = containerRef.current;
     if (e.key === 'ArrowLeft') {
@@ -228,7 +228,7 @@ const useSelectWithArrowKeys = (containerRef: RefObject<HTMLElement>, { selected
     } else if (e.key === 'ArrowRight') {
       e.preventDefault();
 
-      const next = Math.min(selected + 1, React.Children.count(children) - 1);
+      const next = Math.min(selected + 1, numTiles - 1);
       onSelect(next);
 
       getFirstFocusableElement(getTile(container, next))?.focus();
@@ -365,14 +365,12 @@ const useLayoutChange = (containerRef: RefObject<HTMLElement>, fn: EffectCallbac
 };
 
 
-type Props = {
-  selected?: number,
-  onSelect?: (nextSelected: number) => void,
-  children?: ReactNode
-} & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>;
-
-const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props }: Props): ReactElement => {
-  const containerRef = useRef<HTMLUListElement>(null);
+type HookProps = {
+  selected: number;
+  onSelect: (nextSelected: number) => void;
+  numTiles: number;
+};
+const useCarousel = (containerRef: RefObject<HTMLElement>, { selected, onSelect, numTiles }: HookProps, layoutDeps: unknown[]) => {
 
   const pages = usePages(containerRef);
   const paging = usePaging(containerRef, pageByVisibility);
@@ -380,7 +378,7 @@ const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props
 
   useScrollSelectedIntoView(containerRef, selected);
   const ssFix = useScrollSnapLoadingFix(containerRef, selected);
-  const arrowKeys = useSelectWithArrowKeys(containerRef, { selected, onSelect, children });
+  const arrowKeys = useSelectWithArrowKeys(containerRef, { selected, onSelect, numTiles });
 
   const onEdge = useScrollEdges(containerRef);
   const [targetOffset, targetZone] = useTargetZone(containerRef);
@@ -389,7 +387,7 @@ const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props
   const layout = useLayoutChange(containerRef, () => {
     pages.onLayoutUpdate();
     targetZone.onLayoutUpdate();
-  }, [children]);
+  }, layoutDeps);
 
   const onLoad: ReactEventHandler = () => {
     layout.onLoad();
@@ -402,38 +400,63 @@ const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props
 
   const tileProps = useCarouselTile(containerRef, { selected, onSelect });
 
+  return {
+    props: {
+      arrow: {
+        left: {
+          left: true,
+          hide: onEdge.both,
+          disabled: onEdge.left,
+          onClick: paging.pageLeft,
+          onKeyDown: pageArrowKeys.onKeyDown
+        },
+        right: {
+          right: true,
+          hide: onEdge.both,
+          disabled: onEdge.right,
+          onClick: paging.pageRight,
+          onKeyDown: pageArrowKeys.onKeyDown
+        }
+      },
+      scrollContainer: {
+        onKeyDown: arrowKeys.onKeyDown,
+        onScroll,
+        onLoad,
+        targetZoneOffset: targetOffset
+      },
+      tile: tileProps,
+    },
+    pages
+  };
+};
+
+
+type Props = {
+  selected?: number,
+  onSelect?: (nextSelected: number) => void,
+  children?: ReactNode
+} & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>;
+
+const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props }: Props): ReactElement => {
+  const containerRef = useRef<HTMLUListElement>(null);
+
+  const numTiles = React.Children.count(children);
+  const carousel = useCarousel(containerRef, { selected, onSelect, numTiles }, [children]);
+
   return (
     <Container {...props}>
-      <CarouselArrow
-        left
-        hide={onEdge.both}
-        disabled={onEdge.left}
-        onClick={paging.pageLeft}
-        onKeyDown={pageArrowKeys.onKeyDown}
-      />
-      <ScrollContainer
-        ref={containerRef}
-        onKeyDown={arrowKeys.onKeyDown}
-        onScroll={onScroll}
-        onLoad={onLoad}
-        targetZoneOffset={targetOffset}
-      >
+      <CarouselArrow {...carousel.props.arrow.left} />
+      <ScrollContainer ref={containerRef} {...carousel.props.scrollContainer}>
         <Margin data-carousel-skip />
         {React.Children.map(children, (child, num) => (
-          <li {...tileProps(num)}>
+          <li {...carousel.props.tile(num)}>
             {child}
           </li>
         ))}
         <Margin data-carousel-skip />
       </ScrollContainer>
-      <CarouselArrow
-        right
-        hide={onEdge.both}
-        disabled={onEdge.right}
-        onClick={paging.pageRight}
-        onKeyDown={pageArrowKeys.onKeyDown}
-      />
-      <PageIndicator {...pages} />
+      <CarouselArrow {...carousel.props.arrow.right} />
+      <PageIndicator {...carousel.pages} />
     </Container>
   );
 };
