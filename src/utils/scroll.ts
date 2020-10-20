@@ -1,5 +1,5 @@
 import { prefersReducedMotion, supportsSmoothScroll } from './featureQueries';
-import { scrollPosition } from './layout';
+import { alignAtCenter, scrollPosition } from './layout';
 
 /*
   a fallback for manually smooth scrolling
@@ -67,5 +67,15 @@ export const scrollTo = (el: HTMLElement, position: number, smooth: boolean): vo
   } else {
     scrollToImmediate(el, position);
   }
+};
+
+
+/*
+  scroll the element (horizontally) so that the target element is centered (or as close to) in the container
+*/
+export const scrollToCenter = (container: HTMLElement | undefined, target: HTMLElement | undefined, smooth = true): void => {
+  if (!container || !target) return;
+
+  scrollTo(container, alignAtCenter(container, target), smooth);
 };
 

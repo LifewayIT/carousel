@@ -1,6 +1,4 @@
 import React, {
-  FocusEventHandler,
-  KeyboardEventHandler,
   ReactElement,
   ReactNode,
   RefObject,
@@ -9,9 +7,10 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import { useResizeEffect } from '../hooks/layout/useResizeEffect';
-import { alignAtCenter } from '../utils/layout';
-import { scrollTo } from '../utils/scroll';
-import { getFirstFocusableElement } from '../utils/dom';
+import { scrollToCenter } from '../utils/scroll';
+import { useSelectOnFocus } from '../hooks/select/useSelectOnFocus';
+import { useSelectWithArrowKeys } from '../hooks/select/useSelectWithArrowKeys';
+import { getTile } from '../utils/tiles';
 
 const Container = styled.div`
   overflow: hidden;
@@ -24,16 +23,6 @@ const Container = styled.div`
     flex: 0 0 auto;
   }
 `;
-
-const getTiles = (container: HTMLElement) => Array.from(container.children) as HTMLElement[];
-const getTile = (container: HTMLElement, num: number): HTMLElement | undefined => getTiles(container)[num];
-
-const scrollIntoView = (container: HTMLElement | undefined, el: HTMLElement | undefined, smooth = true) => {
-  if (!container || !el) return;
-
-  scrollTo(container, alignAtCenter(container, el), smooth);
-};
-
 
 type HookProps = {
   selected: number;
@@ -48,53 +37,13 @@ const useKeepSelectedTileInView = (containerRef: RefObject<HTMLElement>, selecte
 
     const selectedTile = getTile(container, selected);
 
-    scrollIntoView(container, selectedTile);
+    scrollToCenter(container, selectedTile);
   }, [selected]);
 
   useResizeEffect(containerRef, () => {
     if (!containerRef.current) return;
-    scrollIntoView(containerRef.current, getTile(containerRef.current, selected), false);
+    scrollToCenter(containerRef.current, getTile(containerRef.current, selected), false);
   });
-};
-
-const useSelectOnFocus = (containerRef: RefObject<HTMLElement>, onSelect: (selected: number) => void) => {
-  const scrollFocusedElementIntoView: FocusEventHandler = (evt) => {
-    if (!containerRef.current) return;
-    const container = containerRef.current;
-
-    const tiles = getTiles(container);
-    const focusedNum = tiles.findIndex(tile => tile.contains(evt.target));
-
-    scrollIntoView(container, tiles[focusedNum]);
-    onSelect(focusedNum);
-  };
-
-  return {
-    onFocus: scrollFocusedElementIntoView
-  };
-};
-
-const useSelectWithArrowKeys = (containerRef: RefObject<HTMLElement>, { selected, onSelect, numTiles }: HookProps) => {
-  const onKeyDown: KeyboardEventHandler = (e) => {
-    const container = containerRef.current;
-    if (e.key === 'ArrowLeft') {
-      const prev = Math.max(selected - 1, 0);
-      onSelect(prev);
-
-      if (container) {
-        getFirstFocusableElement(getTile(container, prev))?.focus();
-      }
-    } else if (e.key === 'ArrowRight') {
-      const next = Math.min(selected + 1, numTiles - 1);
-      onSelect(next);
-
-      if (container) {
-        getFirstFocusableElement(getTile(container, next))?.focus();
-      }
-    }
-  };
-
-  return { onKeyDown };
 };
 
 const useSingleCarousel = (containerRef: RefObject<HTMLElement>, props: HookProps) => {

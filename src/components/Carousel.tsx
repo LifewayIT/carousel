@@ -22,6 +22,7 @@ import {
 import { isTouchscreen } from '../utils/featureQueries';
 import { scrollTo } from '../utils/scroll';
 import { getFirstFocusableElement } from '../utils/dom';
+import { useSelectWithArrowKeys } from '../hooks/select/useSelectWithArrowKeys';
 
 
 const Container = styled.div`
@@ -183,7 +184,7 @@ const pageRight = (container: OptionalHTMLElement) => {
   }
 };
 
-
+/* scrolling */
 const useScrollSelectedIntoView = (containerRef: RefObject<HTMLElement>, selected: number) => {
   useIsInitialLayoutEffect((isInitial) => {
     if (!containerRef.current) return;
@@ -207,36 +208,6 @@ const useScrollSnapLoadingFix = (containerRef: RefObject<HTMLElement>, selected:
   return { onLoad };
 };
 
-type ArrowKeyHookProps = {
-  selected: number;
-  onSelect: (nextSelected: number) => void;
-  numTiles: number;
-};
-const useSelectWithArrowKeys = (containerRef: RefObject<HTMLElement>, { selected, onSelect, numTiles }: ArrowKeyHookProps) => {
-  const onKeyDown: KeyboardEventHandler = (e) => {
-    const container = containerRef.current;
-    if (e.key === 'ArrowLeft') {
-      e.preventDefault();
-
-      const prev = Math.max(selected - 1, 0);
-      onSelect(prev);
-
-      getFirstFocusableElement(getTile(container, prev))?.focus();
-    } else if (e.key === 'ArrowRight') {
-      e.preventDefault();
-
-      const next = Math.min(selected + 1, numTiles - 1);
-      onSelect(next);
-
-      getFirstFocusableElement(getTile(container, next))?.focus();
-    }
-  };
-
-  return {
-    onKeyDown
-  };
-};
-
 const useScrollFocusedIntoView = (containerRef: RefObject<HTMLElement>) => {
   const onFocus: FocusEventHandler = (e) => {
     const tiles = getTiles(containerRef.current);
@@ -250,6 +221,8 @@ const useScrollFocusedIntoView = (containerRef: RefObject<HTMLElement>) => {
   return { onFocus };
 };
 
+
+/* paging */
 type PagingMethod = { pageLeft: (el: HTMLElement) => void; pageRight: (el: HTMLElement) => void };
 const pageByVisibility = { pageLeft, pageRight };
 
@@ -281,6 +254,7 @@ const usePageWithArrowKeys = (containerRef: RefObject<HTMLElement>, paging: Pagi
 };
 
 
+/* carousel */
 type CarouselTileHookProps = {
   selected: number;
   onSelect: (nextSelected: number) => void;
@@ -300,6 +274,7 @@ const useCarouselTile = (containerRef: RefObject<HTMLElement>, { selected, onSel
 };
 
 
+/* layout */
 const useScrollEdges = (containerRef: RefObject<HTMLElement>) => {
   const [onEdge, setOnEdge] = useState({ left: false, right: false });
 
