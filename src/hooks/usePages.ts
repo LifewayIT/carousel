@@ -6,16 +6,8 @@ import {
   getTargetZoneOffsets,
   TargetZoneOffsets
 } from '../utils/layout';
+import { getTiles } from '../utils/tiles';
 
-/* TODO - generalize this? pass in parameter??? */
-const getTiles = (container: HTMLElement | undefined | null) =>
-  Array.from(container?.children ?? [])
-    .filter(child => !child.hasAttribute('data-carousel-skip')) as HTMLElement[];
-
-const getTileTargetZoneOffsets = (container: HTMLElement) => {
-  const tiles = getTiles(container);
-  return getTargetZoneOffsets(container, tiles);
-};
 
 const getRawStartPoints = (tiles: HTMLElement[], targetWidth: number, targetOffset: TargetZoneOffsets, maxPosition: number): number[] => {
   if (tiles.length < 1) {
@@ -70,7 +62,7 @@ type PagePoints = number[] | undefined;
 
 const calculatePagePoints = (container: HTMLElement): PagePoints => {
   const tiles = getTiles(container);
-  const targetOffset = getTileTargetZoneOffsets(container);
+  const targetOffset = getTargetZoneOffsets(container, tiles);
   const targetZoneWidth = container.clientWidth - targetOffset.left - targetOffset.right;
 
   if (targetZoneWidth === 0) {
