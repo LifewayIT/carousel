@@ -1,3 +1,5 @@
+import { getTiles } from "./tiles";
+
 /*
   scrollLeft is a decimal on some browsers/devices
   rounding it to an integer avoids some nefarious edge cases
@@ -35,6 +37,11 @@ export const getTargetZoneOffsets = (container: HTMLElement, meaningfulChildren:
     left: leftEdgeOffset(first) ?? 0,
     right: container.scrollWidth - (rightEdgeOffset(last) ?? 0)
   };
+};
+
+export const getTileTargetZoneOffsets = (container: HTMLElement): TargetZoneOffsets => {
+  const tiles = getTiles(container);
+  return getTargetZoneOffsets(container, tiles);
 };
 
 export const targetZoneLeftEdge = (container: HTMLElement, targetOffset: TargetZoneOffsets): number =>

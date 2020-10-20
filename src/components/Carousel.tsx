@@ -2,7 +2,6 @@ import React, { useRef, useState, ReactNode, HTMLAttributes, ReactElement, Keybo
 import styled from 'styled-components';
 import CarouselArrow from './CarouselArrow';
 import { useIntersectionEffect } from '../hooks/layout/useIntersectionEffect';
-import { useIsInitialLayoutEffect } from '../hooks/layout/useIsInitialLayoutEffect';
 import { device, space } from '../utils/styleguide';
 import { usePages } from '../hooks/usePages';
 import PageIndicator from './PageIndicator';
@@ -14,14 +13,16 @@ import {
   targetZoneLeftEdge,
   targetZoneRightEdge,
   TargetZoneOffsets,
-  alignAtCenter,
   alignAtTargetZoneLeftEdge,
   alignAtTargetZoneRightEdge,
   projectTargetZoneLeftEdge,
 } from '../utils/layout';
 import { isTouchscreen } from '../utils/featureQueries';
-import { scrollTo } from '../utils/scroll';
+import { scrollIntoView, scrollTo } from '../utils/scroll';
 import { useSelectWithArrowKeys } from '../hooks/select/useSelectWithArrowKeys';
+import { useScrollSelectedIntoView } from '../hooks/scroll/useScrollSelectedIntoView';
+import { useScrollSnapLoadingFix } from '../hooks/scroll/useScrollSnapLoadingFix';
+import { useScrollFocusedIntoView } from '../hooks/scroll/useScrollFocusedIntoView';
 
 
 const Container = styled.div`
@@ -109,36 +110,9 @@ const getLeftMargin = (container: Element) => container.children[0];
 const getRightMargin = (container: Element) => container.children[container.children.length - 1];
 
 
-const scrollIntoView = (container: OptionalHTMLElement, tile: OptionalHTMLElement, smooth = true) => {
-  if (!container || !tile) return;
-
-  const targetOffset = getTileTargetZoneOffsets(container);
-
-  const isTooFarLeft = leftEdgeOffset(tile) < targetZoneLeftEdge(container, targetOffset);
-  const isTooFarRight = rightEdgeOffset(tile) > targetZoneRightEdge(container, targetOffset);
-
-  if (isTooFarLeft) {
-    scrollTo(container, alignAtTargetZoneLeftEdge(container, targetOffset, tile), smooth);
-  } else if (isTooFarRight && !scrollSnapEnabled()) {
-    scrollTo(container, alignAtTargetZoneRightEdge(container, targetOffset, tile), smooth);
-  } else if (isTooFarRight && scrollSnapEnabled()) {
-    const tiles = getTiles(container);
-    const projectedLeftEdge = projectTargetZoneLeftEdge(alignAtTargetZoneRightEdge(container, targetOffset, tile), targetOffset);
-    const nextLeftTile = tiles.find(tile => leftEdgeOffset(tile) >= projectedLeftEdge) ?? tile;
-    scrollTo(container, alignAtTargetZoneLeftEdge(container, targetOffset, nextLeftTile), true);
-  }
-};
-
 const scrollTileIntoView = (container: OptionalHTMLElement, num: number, smooth?: boolean) => {
   const tile = getTile(container, num);
   scrollIntoView(container, tile, smooth);
-};
-
-const scrollTileToCenter = (container: OptionalHTMLElement, num: number, smooth = true) => {
-  const tile = getTile(container, num);
-  if (!container || !tile) return;
-
-  scrollTo(container, alignAtCenter(container, tile), smooth);
 };
 
 const pageLeft = (container: OptionalHTMLElement) => {
@@ -181,43 +155,6 @@ const pageRight = (container: OptionalHTMLElement) => {
   } else {
     scrollTo(container, alignAtTargetZoneLeftEdge(container, targetOffset, nextTile), true);
   }
-};
-
-/* scrolling */
-const useScrollSelectedIntoView = (containerRef: RefObject<HTMLElement>, selected: number) => {
-  useIsInitialLayoutEffect((isInitial) => {
-    if (!containerRef.current) return;
-
-    if (isInitial) {
-      scrollTileToCenter(containerRef.current, selected, false);
-    } else {
-      scrollTileIntoView(containerRef.current, selected);
-    }
-  }, [containerRef, selected]);
-};
-
-const useScrollSnapLoadingFix = (containerRef: RefObject<HTMLElement>, selected: number) => {
-  const onLoad = () => {
-    /* scroll-snapping on chrome jumps to random position in list when images load */
-    if (containerRef.current) {
-      scrollTileToCenter(containerRef.current, selected, false);
-    }
-  };
-
-  return { onLoad };
-};
-
-const useScrollFocusedIntoView = (containerRef: RefObject<HTMLElement>) => {
-  const onFocus: FocusEventHandler = (e) => {
-    const tiles = getTiles(containerRef.current);
-    const num = tiles.indexOf(e.target as HTMLElement);
-
-    if (num !== -1) {
-      scrollTileIntoView(containerRef.current, num);
-    }
-  };
-
-  return { onFocus };
 };
 
 

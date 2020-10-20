@@ -1,5 +1,10 @@
-import { prefersReducedMotion, supportsSmoothScroll } from './featureQueries';
-import { alignAtCenter, scrollPosition } from './layout';
+import { isTouchscreen, prefersReducedMotion, supportsSmoothScroll } from './featureQueries';
+import { alignAtCenter, alignAtTargetZoneLeftEdge, alignAtTargetZoneRightEdge, getTileTargetZoneOffsets, leftEdgeOffset, projectTargetZoneLeftEdge, rightEdgeOffset, scrollPosition, targetZoneLeftEdge, targetZoneRightEdge } from './layout';
+import { getTiles } from './tiles';
+
+type OptionalHTMLElement = HTMLElement | undefined | null;
+
+const scrollSnapEnabled = isTouchscreen;
 
 /*
   a fallback for manually smooth scrolling
@@ -73,9 +78,31 @@ export const scrollTo = (el: HTMLElement, position: number, smooth: boolean): vo
 /*
   scroll the element (horizontally) so that the target element is centered (or as close to) in the container
 */
-export const scrollToCenter = (container: HTMLElement | undefined, target: HTMLElement | undefined, smooth = true): void => {
+export const scrollToCenter = (container: OptionalHTMLElement, target: OptionalHTMLElement, smooth = true): void => {
   if (!container || !target) return;
 
   scrollTo(container, alignAtCenter(container, target), smooth);
 };
 
+/*
+  scroll the element (horizontally) so that the target is entirely visibile
+*/
+export const scrollIntoView = (container: OptionalHTMLElement, tile: OptionalHTMLElement, smooth = true): void => {
+  if (!container || !tile) return;
+
+  const targetOffset = getTileTargetZoneOffsets(container);
+
+  const isTooFarLeft = leftEdgeOffset(tile) < targetZoneLeftEdge(container, targetOffset);
+  const isTooFarRight = rightEdgeOffset(tile) > targetZoneRightEdge(container, targetOffset);
+
+  if (isTooFarLeft) {
+    scrollTo(container, alignAtTargetZoneLeftEdge(container, targetOffset, tile), smooth);
+  } else if (isTooFarRight && !scrollSnapEnabled()) {
+    scrollTo(container, alignAtTargetZoneRightEdge(container, targetOffset, tile), smooth);
+  } else if (isTooFarRight && scrollSnapEnabled()) {
+    const tiles = getTiles(container);
+    const projectedLeftEdge = projectTargetZoneLeftEdge(alignAtTargetZoneRightEdge(container, targetOffset, tile), targetOffset);
+    const nextLeftTile = tiles.find(tile => leftEdgeOffset(tile) >= projectedLeftEdge) ?? tile;
+    scrollTo(container, alignAtTargetZoneLeftEdge(container, targetOffset, nextLeftTile), true);
+  }
+};
