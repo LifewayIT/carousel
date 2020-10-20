@@ -1,15 +1,20 @@
-import React, { useRef, useState, ReactNode, HTMLAttributes, ReactElement, KeyboardEventHandler, UIEventHandler, RefObject, FocusEventHandler, EffectCallback, ReactEventHandler, DependencyList } from 'react';
+import React, {
+  useRef,
+  ReactNode,
+  HTMLAttributes,
+  ReactElement,
+  UIEventHandler,
+  RefObject,
+  ReactEventHandler,
+  DependencyList
+} from 'react';
 import styled from 'styled-components';
 import CarouselArrow from './CarouselArrow';
-import { useIntersectionEffect } from '../hooks/layout/useIntersectionEffect';
 import { device, space } from '../utils/styleguide';
 import { usePages } from '../hooks/usePages';
 import PageIndicator from './PageIndicator';
 import { useLayoutChange } from '../hooks/layout/useLayoutChange';
-import {
-  getTargetZoneOffsets,
-  TargetZoneOffsets,
-} from '../utils/layout';
+import { TargetZoneOffsets } from '../utils/layout';
 import { useSelectWithArrowKeys } from '../hooks/select/useSelectWithArrowKeys';
 import { useScrollSelectedIntoView } from '../hooks/scroll/useScrollSelectedIntoView';
 import { useScrollSnapLoadingFix } from '../hooks/scroll/useScrollSnapLoadingFix';
@@ -17,6 +22,8 @@ import { useScrollFocusedIntoView } from '../hooks/scroll/useScrollFocusedIntoVi
 import { usePaging } from '../hooks/paging/usePaging';
 import { usePageWithArrowKeys } from '../hooks/paging/usePageWithArrowKeys';
 import { pageByVisibility } from '../hooks/paging/strategies';
+import { useScrolledToEdge } from '../hooks/layout/useScrolledToEdge';
+import { useTargetZone } from '../hooks/layout/useTargetZone';
 
 
 const Container = styled.div`
@@ -85,22 +92,6 @@ const ScrollContainer = styled.ul<{ targetZoneOffset: TargetZoneOffsets }>`
 `;
 
 
-type OptionalHTMLElement = HTMLElement | undefined | null;
-
-const getTiles = (container: OptionalHTMLElement) =>
-  Array.from(container?.children ?? [])
-    .filter(child => !child.hasAttribute('data-carousel-skip')) as HTMLElement[];
-
-const getTileTargetZoneOffsets = (container: HTMLElement) => {
-  const tiles = getTiles(container);
-  return getTargetZoneOffsets(container, tiles);
-};
-
-const getLeftMargin = (container: Element) => container.children[0];
-const getRightMargin = (container: Element) => container.children[container.children.length - 1];
-
-
-/* carousel */
 type CarouselTileHookProps = {
   selected: number;
   onSelect: (nextSelected: number) => void;
@@ -120,57 +111,6 @@ const useCarouselTile = (containerRef: RefObject<HTMLElement>, { selected, onSel
 };
 
 
-/* layout */
-const useScrollEdges = (containerRef: RefObject<HTMLElement>) => {
-  const [onEdge, setOnEdge] = useState({ left: false, right: false });
-
-  useIntersectionEffect(
-    containerRef,
-    getLeftMargin,
-    { threshold: .99 },
-    (entries) => {
-      const lastEntry = entries[entries.length - 1];
-      if (lastEntry.isIntersecting !== onEdge.left) {
-        setOnEdge(prev => ({ ...prev, left: lastEntry.isIntersecting }));
-      }
-    }
-  );
-
-  useIntersectionEffect(
-    containerRef,
-    getRightMargin,
-    { threshold: .99 },
-    (entries) => {
-      const lastEntry = entries[entries.length - 1];
-      if (lastEntry.isIntersecting !== onEdge.right) {
-        setOnEdge(prev => ({ ...prev, right: lastEntry.isIntersecting }));
-      }
-    }
-  );
-
-  return {
-    ...onEdge,
-    both: onEdge.left && onEdge.right
-  };
-};
-
-const useTargetZone = (containerRef: RefObject<HTMLElement>) => {
-  const [targetOffset, setTargetOffset] = useState({ left: 0, right: 0 });
-
-  const onLayoutUpdate = () => {
-    const newTargetOffset = containerRef.current
-      ? getTileTargetZoneOffsets(containerRef.current)
-      : { left: 0, right: 0 };
-
-    if (newTargetOffset.left !== targetOffset.left || newTargetOffset.right !== targetOffset.right) {
-      setTargetOffset(newTargetOffset);
-    }
-  };
-
-  return [targetOffset, { onLayoutUpdate }] as const;
-};
-
-
 type HookProps = {
   selected: number;
   onSelect: (nextSelected: number) => void;
@@ -186,7 +126,7 @@ const useCarousel = (containerRef: RefObject<HTMLElement>, { selected, onSelect,
   const ssFix = useScrollSnapLoadingFix(containerRef, selected);
   const arrowKeys = useSelectWithArrowKeys(containerRef, { selected, onSelect, numTiles });
 
-  const onEdge = useScrollEdges(containerRef);
+  const onEdge = useScrolledToEdge(containerRef);
   const [targetOffset, targetZone] = useTargetZone(containerRef);
 
 
