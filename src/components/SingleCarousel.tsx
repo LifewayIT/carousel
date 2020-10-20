@@ -2,15 +2,12 @@ import React, {
   ReactElement,
   ReactNode,
   RefObject,
-  useLayoutEffect,
   useRef
 } from 'react';
 import styled from 'styled-components';
-import { useResizeEffect } from '../hooks/layout/useResizeEffect';
-import { scrollToCenter } from '../utils/scroll';
 import { useSelectOnFocus } from '../hooks/select/useSelectOnFocus';
 import { useSelectWithArrowKeys } from '../hooks/select/useSelectWithArrowKeys';
-import { getTile } from '../utils/tiles';
+import { useKeepSelectedTileInView } from '../hooks/scroll/useKeepTileInView';
 
 const Container = styled.div`
   overflow: hidden;
@@ -28,22 +25,6 @@ type HookProps = {
   selected: number;
   onSelect: (nextSelected: number) => void;
   numTiles: number;
-};
-
-const useKeepSelectedTileInView = (containerRef: RefObject<HTMLElement>, selected: number) => {
-  useLayoutEffect(() => {
-    if (!containerRef.current) return;
-    const container = containerRef.current;
-
-    const selectedTile = getTile(container, selected);
-
-    scrollToCenter(container, selectedTile);
-  }, [selected]);
-
-  useResizeEffect(containerRef, () => {
-    if (!containerRef.current) return;
-    scrollToCenter(containerRef.current, getTile(containerRef.current, selected), false);
-  });
 };
 
 const useSingleCarousel = (containerRef: RefObject<HTMLElement>, props: HookProps) => {
