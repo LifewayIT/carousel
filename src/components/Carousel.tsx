@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useState, ReactNode, HTMLAttributes, ReactElement, KeyboardEventHandler, UIEventHandler, RefObject, FocusEventHandler, EffectCallback, ReactEventHandler } from 'react';
+import React, { useRef, useState, ReactNode, HTMLAttributes, ReactElement, KeyboardEventHandler, UIEventHandler, RefObject, FocusEventHandler, EffectCallback, ReactEventHandler } from 'react';
 import styled from 'styled-components';
 import CarouselArrow from './CarouselArrow';
 import {
@@ -25,6 +25,7 @@ import {
 import { device, space } from '../utils/styleguide';
 import { usePages } from '../hooks/usePages';
 import PageIndicator from './PageIndicator';
+import { useLayoutChange } from '../hooks/useLayoutChange';
 
 
 const Container = styled.div`
@@ -350,18 +351,6 @@ const useTargetZone = (containerRef: RefObject<HTMLElement>) => {
   };
 
   return [targetOffset, { onLayoutUpdate }] as const;
-};
-
-const useLayoutChange = (containerRef: RefObject<HTMLElement>, fn: EffectCallback, deps: unknown[]) => {
-  useLayoutEffect(fn, deps);
-
-  useResizeEffect(containerRef, fn);
-
-  const onLoad = () => {
-    fn();
-  };
-
-  return { onLoad };
 };
 
 
