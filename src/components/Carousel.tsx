@@ -3,27 +3,13 @@ import React, {
   ReactNode,
   HTMLAttributes,
   ReactElement,
-  UIEventHandler,
-  RefObject,
-  ReactEventHandler,
-  DependencyList
 } from 'react';
 import styled from 'styled-components';
 import CarouselArrow from './CarouselArrow';
 import { device, space } from '../utils/styleguide';
-import { usePages } from '../hooks/usePages';
 import PageIndicator from './PageIndicator';
-import { useLayoutChange } from '../hooks/layout/useLayoutChange';
 import { TargetZoneOffsets } from '../utils/layout';
-import { useSelectWithArrowKeys } from '../hooks/select/useSelectWithArrowKeys';
-import { useScrollSelectedIntoView } from '../hooks/scroll/useScrollSelectedIntoView';
-import { useScrollSnapLoadingFix } from '../hooks/scroll/useScrollSnapLoadingFix';
-import { useScrollFocusedIntoView } from '../hooks/scroll/useScrollFocusedIntoView';
-import { usePaging } from '../hooks/paging/usePaging';
-import { usePageWithArrowKeys } from '../hooks/paging/usePageWithArrowKeys';
-import { pageByVisibility } from '../hooks/paging/strategies';
-import { useScrolledToEdge } from '../hooks/layout/useScrolledToEdge';
-import { useTargetZone } from '../hooks/layout/useTargetZone';
+import { useCarousel } from '../hooks/carousel/useCarousel';
 
 
 const Container = styled.div`
@@ -90,91 +76,6 @@ const ScrollContainer = styled.ul<{ targetZoneOffset: TargetZoneOffsets }>`
     padding: ${space._96} 0;
   }
 `;
-
-
-type CarouselTileHookProps = {
-  selected: number;
-  onSelect: (nextSelected: number) => void;
-};
-const useCarouselTile = (containerRef: RefObject<HTMLElement>, { selected, onSelect }: CarouselTileHookProps) => {
-  const scrollIntoView = useScrollFocusedIntoView(containerRef);
-
-  const tileProps = (num: number) => ({
-    className: num === selected ? 'selected' : '',
-    onClick: () => {
-      onSelect(num);
-    },
-    onFocus: scrollIntoView.onFocus
-  });
-
-  return tileProps;
-};
-
-
-type HookProps = {
-  selected: number;
-  onSelect: (nextSelected: number) => void;
-  numTiles: number;
-};
-const useCarousel = (containerRef: RefObject<HTMLElement>, { selected, onSelect, numTiles }: HookProps, layoutDeps: DependencyList) => {
-
-  const pages = usePages(containerRef);
-  const paging = usePaging(containerRef, pageByVisibility);
-  const pageArrowKeys = usePageWithArrowKeys(containerRef, pageByVisibility);
-
-  useScrollSelectedIntoView(containerRef, selected);
-  const ssFix = useScrollSnapLoadingFix(containerRef, selected);
-  const arrowKeys = useSelectWithArrowKeys(containerRef, { selected, onSelect, numTiles });
-
-  const onEdge = useScrolledToEdge(containerRef);
-  const [targetOffset, targetZone] = useTargetZone(containerRef);
-
-
-  const layout = useLayoutChange(containerRef, () => {
-    pages.onLayoutUpdate();
-    targetZone.onLayoutUpdate();
-  }, layoutDeps);
-
-  const onLoad: ReactEventHandler = () => {
-    layout.onLoad();
-    ssFix.onLoad();
-  };
-
-  const onScroll: UIEventHandler = () => {
-    pages.onScroll();
-  };
-
-  const tileProps = useCarouselTile(containerRef, { selected, onSelect });
-
-  return {
-    props: {
-      arrow: {
-        left: {
-          left: true,
-          hide: onEdge.both,
-          disabled: onEdge.left,
-          onClick: paging.pageLeft,
-          onKeyDown: pageArrowKeys.onKeyDown
-        },
-        right: {
-          right: true,
-          hide: onEdge.both,
-          disabled: onEdge.right,
-          onClick: paging.pageRight,
-          onKeyDown: pageArrowKeys.onKeyDown
-        }
-      },
-      scrollContainer: {
-        onKeyDown: arrowKeys.onKeyDown,
-        onScroll,
-        onLoad,
-        targetZoneOffset: targetOffset
-      },
-      tile: tileProps,
-    },
-    pages
-  };
-};
 
 
 type Props = {

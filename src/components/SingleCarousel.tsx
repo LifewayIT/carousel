@@ -1,13 +1,10 @@
 import React, {
   ReactElement,
   ReactNode,
-  RefObject,
   useRef
 } from 'react';
 import styled from 'styled-components';
-import { useSelectOnFocus } from '../hooks/select/useSelectOnFocus';
-import { useSelectWithArrowKeys } from '../hooks/select/useSelectWithArrowKeys';
-import { useKeepSelectedTileInView } from '../hooks/scroll/useKeepTileInView';
+import { useSingleCarousel } from '../hooks/carousel/useSingleCarousel';
 
 const Container = styled.div`
   overflow: hidden;
@@ -21,24 +18,6 @@ const Container = styled.div`
   }
 `;
 
-type HookProps = {
-  selected: number;
-  onSelect: (nextSelected: number) => void;
-  numTiles: number;
-};
-
-const useSingleCarousel = (containerRef: RefObject<HTMLElement>, props: HookProps) => {
-  useKeepSelectedTileInView(containerRef, props.selected);
-  const focusProps = useSelectOnFocus(containerRef, props.onSelect);
-  const keyProps = useSelectWithArrowKeys(containerRef, props);
-
-  return {
-    props: {
-      ...focusProps,
-      ...keyProps
-    }
-  };
-};
 
 type Props = {
   /** the index of the child that is currently selected. defaults to 0 */
