@@ -1,14 +1,12 @@
 import React, { useRef, useState, ReactNode, HTMLAttributes, ReactElement, KeyboardEventHandler, UIEventHandler, RefObject, FocusEventHandler, EffectCallback, ReactEventHandler } from 'react';
 import styled from 'styled-components';
 import CarouselArrow from './CarouselArrow';
-import {
-  useIntersectionEffect,
-  useIsInitialLayoutEffect
-} from '../hooks/layout';
+import { useIntersectionEffect } from '../hooks/layout/useIntersectionEffect';
+import { useIsInitialLayoutEffect } from '../hooks/layout/useIsInitialLayoutEffect';
 import { device, space } from '../utils/styleguide';
 import { usePages } from '../hooks/usePages';
 import PageIndicator from './PageIndicator';
-import { useLayoutChange } from '../hooks/useLayoutChange';
+import { useLayoutChange } from '../hooks/layout/useLayoutChange';
 import {
   leftEdgeOffset,
   rightEdgeOffset,

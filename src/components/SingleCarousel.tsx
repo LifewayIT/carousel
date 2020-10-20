@@ -8,7 +8,7 @@ import React, {
   useRef
 } from 'react';
 import styled from 'styled-components';
-import { useResizeEffect } from '../hooks/layout';
+import { useResizeEffect } from '../hooks/layout/useResizeEffect';
 import { alignAtCenter } from '../utils/layout';
 import { scrollTo } from '../utils/scroll';
 import { getFirstFocusableElement } from '../utils/dom';
