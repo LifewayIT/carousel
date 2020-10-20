@@ -9,11 +9,9 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import { useResizeEffect } from '../hooks/layout';
-import {
-  alignAtCenter,
-  getFirstFocusableElement,
-  scrollTo
-} from './utils';
+import { alignAtCenter } from '../utils/layout';
+import { scrollTo } from '../utils/scroll';
+import { getFirstFocusableElement } from '../utils/dom';
 
 const Container = styled.div`
   overflow: hidden;

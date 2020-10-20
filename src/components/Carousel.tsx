@@ -2,23 +2,6 @@ import React, { useRef, useState, ReactNode, HTMLAttributes, ReactElement, Keybo
 import styled from 'styled-components';
 import CarouselArrow from './CarouselArrow';
 import {
-  scrollPosition,
-  leftEdgeOffset,
-  rightEdgeOffset,
-  targetZoneLeftEdge,
-  targetZoneRightEdge,
-  alignAtTargetZoneLeftEdge,
-  alignAtTargetZoneRightEdge,
-  getTargetZoneOffsets,
-  getFirstFocusableElement,
-  scrollTo,
-  isTouchscreen,
-  projectTargetZoneLeftEdge,
-  alignAtCenter,
-  TargetZoneOffsets
-} from './utils';
-import {
-  useResizeEffect,
   useIntersectionEffect,
   useIsInitialLayoutEffect
 } from '../hooks/layout';
@@ -26,6 +9,21 @@ import { device, space } from '../utils/styleguide';
 import { usePages } from '../hooks/usePages';
 import PageIndicator from './PageIndicator';
 import { useLayoutChange } from '../hooks/useLayoutChange';
+import {
+  leftEdgeOffset,
+  rightEdgeOffset,
+  getTargetZoneOffsets,
+  targetZoneLeftEdge,
+  targetZoneRightEdge,
+  TargetZoneOffsets,
+  alignAtCenter,
+  alignAtTargetZoneLeftEdge,
+  alignAtTargetZoneRightEdge,
+  projectTargetZoneLeftEdge,
+} from '../utils/layout';
+import { isTouchscreen } from '../utils/featureQueries';
+import { scrollTo } from '../utils/scroll';
+import { getFirstFocusableElement } from '../utils/dom';
 
 
 const Container = styled.div`

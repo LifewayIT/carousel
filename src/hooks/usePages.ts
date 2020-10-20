@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { getTargetZoneOffsets, leftEdgeOffset, rightEdgeOffset, scrollPosition, TargetZoneOffsets } from '../components/utils';
+import {
+  scrollPosition,
+  leftEdgeOffset,
+  rightEdgeOffset,
+  getTargetZoneOffsets,
+  TargetZoneOffsets
+} from '../utils/layout';
 
 /* TODO - generalize this? pass in parameter??? */
 const getTiles = (container: HTMLElement | undefined | null) =>

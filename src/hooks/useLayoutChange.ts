@@ -1,4 +1,4 @@
-import { EffectCallback, ReactEventHandler, RefObject, useLayoutEffect } from 'react';
+import { EffectCallback, RefObject, useLayoutEffect } from 'react';
 import { useResizeEffect } from './layout';
 
 type useLayoutChange = (containerRef: RefObject<HTMLElement>, fn: EffectCallback, deps: unknown[]) =>
