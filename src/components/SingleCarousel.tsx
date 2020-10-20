@@ -40,7 +40,7 @@ const scrollIntoView = (container: HTMLElement | undefined, el: HTMLElement | un
 type HookProps = {
   selected: number;
   onSelect: (nextSelected: number) => void;
-  children?: ReactNode;
+  numTiles: number;
 };
 
 const useKeepSelectedTileInView = (containerRef: RefObject<HTMLElement>, selected: number) => {
@@ -76,7 +76,7 @@ const useSelectOnFocus = (containerRef: RefObject<HTMLElement>, onSelect: (selec
   };
 };
 
-const useSelectWithArrowKeys = (containerRef: RefObject<HTMLElement>, { selected, onSelect, children }: HookProps) => {
+const useSelectWithArrowKeys = (containerRef: RefObject<HTMLElement>, { selected, onSelect, numTiles }: HookProps) => {
   const onKeyDown: KeyboardEventHandler = (e) => {
     const container = containerRef.current;
     if (e.key === 'ArrowLeft') {
@@ -87,7 +87,7 @@ const useSelectWithArrowKeys = (containerRef: RefObject<HTMLElement>, { selected
         getFirstFocusableElement(getTile(container, prev))?.focus();
       }
     } else if (e.key === 'ArrowRight') {
-      const next = Math.min(selected + 1, React.Children.count(children) - 1);
+      const next = Math.min(selected + 1, numTiles - 1);
       onSelect(next);
 
       if (container) {
@@ -105,8 +105,10 @@ const useSingleCarousel = (containerRef: RefObject<HTMLElement>, props: HookProp
   const keyProps = useSelectWithArrowKeys(containerRef, props);
 
   return {
-    ...focusProps,
-    ...keyProps
+    props: {
+      ...focusProps,
+      ...keyProps
+    }
   };
 };
 
@@ -122,10 +124,11 @@ type Props = {
 const SingleCarousel = ({ selected = 0, onSelect = () => undefined, children }: Props): ReactElement => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const carouselProps = useSingleCarousel(containerRef, { selected, onSelect, children });
+  const numTiles = React.Children.count(children);
+  const carousel = useSingleCarousel(containerRef, { selected, onSelect, numTiles });
 
   return (
-    <Container ref={containerRef} {...carouselProps}>
+    <Container ref={containerRef} {...carousel.props}>
       {children}
     </Container>
   );
