@@ -1,10 +1,8 @@
-import { isTouchscreen, prefersReducedMotion, supportsSmoothScroll } from './featureQueries';
+import { scrollSnapEnabled, prefersReducedMotion, supportsSmoothScroll } from './featureQueries';
 import { alignAtCenter, alignAtTargetZoneLeftEdge, alignAtTargetZoneRightEdge, getTileTargetZoneOffsets, leftEdgeOffset, projectTargetZoneLeftEdge, rightEdgeOffset, scrollPosition, targetZoneLeftEdge, targetZoneRightEdge } from './layout';
 import { getTiles } from './tiles';
 
 type OptionalHTMLElement = HTMLElement | undefined | null;
-
-const scrollSnapEnabled = isTouchscreen;
 
 /*
   a fallback for manually smooth scrolling

@@ -7,22 +7,16 @@ import { usePages } from '../hooks/usePages';
 import PageIndicator from './PageIndicator';
 import { useLayoutChange } from '../hooks/layout/useLayoutChange';
 import {
-  leftEdgeOffset,
-  rightEdgeOffset,
   getTargetZoneOffsets,
-  targetZoneLeftEdge,
-  targetZoneRightEdge,
   TargetZoneOffsets,
-  alignAtTargetZoneLeftEdge,
-  alignAtTargetZoneRightEdge,
-  projectTargetZoneLeftEdge,
 } from '../utils/layout';
-import { isTouchscreen } from '../utils/featureQueries';
-import { scrollIntoView, scrollTo } from '../utils/scroll';
 import { useSelectWithArrowKeys } from '../hooks/select/useSelectWithArrowKeys';
 import { useScrollSelectedIntoView } from '../hooks/scroll/useScrollSelectedIntoView';
 import { useScrollSnapLoadingFix } from '../hooks/scroll/useScrollSnapLoadingFix';
 import { useScrollFocusedIntoView } from '../hooks/scroll/useScrollFocusedIntoView';
+import { usePaging } from '../hooks/paging/usePaging';
+import { usePageWithArrowKeys } from '../hooks/paging/usePageWithArrowKeys';
+import { pageByVisibility } from '../hooks/paging/strategies';
 
 
 const Container = styled.div`
@@ -91,15 +85,11 @@ const ScrollContainer = styled.ul<{ targetZoneOffset: TargetZoneOffsets }>`
 `;
 
 
-const scrollSnapEnabled = isTouchscreen;
-
 type OptionalHTMLElement = HTMLElement | undefined | null;
 
 const getTiles = (container: OptionalHTMLElement) =>
   Array.from(container?.children ?? [])
     .filter(child => !child.hasAttribute('data-carousel-skip')) as HTMLElement[];
-
-const getTile = (container: OptionalHTMLElement, num: number) => getTiles(container)[num];
 
 const getTileTargetZoneOffsets = (container: HTMLElement) => {
   const tiles = getTiles(container);
@@ -108,86 +98,6 @@ const getTileTargetZoneOffsets = (container: HTMLElement) => {
 
 const getLeftMargin = (container: Element) => container.children[0];
 const getRightMargin = (container: Element) => container.children[container.children.length - 1];
-
-
-const scrollTileIntoView = (container: OptionalHTMLElement, num: number, smooth?: boolean) => {
-  const tile = getTile(container, num);
-  scrollIntoView(container, tile, smooth);
-};
-
-const pageLeft = (container: OptionalHTMLElement) => {
-  if (!container) return;
-
-  const targetOffset = getTileTargetZoneOffsets(container);
-  const targetLeftEdge = targetZoneLeftEdge(container, targetOffset);
-
-  const tiles = getTiles(container);
-  const leftTiles = tiles
-    .filter(tile => leftEdgeOffset(tile) < targetLeftEdge );
-
-  const nextTile = leftTiles[leftTiles.length - 1];
-
-  if (nextTile == null) {
-    scrollTo(container, 0, true);
-  } else if (scrollSnapEnabled()) {
-    const projectedLeftEdge = projectTargetZoneLeftEdge(alignAtTargetZoneRightEdge(container, targetOffset, nextTile), targetOffset);
-    const nextLeftTile = leftTiles.find(tile => leftEdgeOffset(tile) >= projectedLeftEdge) ?? nextTile;
-    scrollTo(container, alignAtTargetZoneLeftEdge(container, targetOffset, nextLeftTile), true);
-  } else {
-    scrollTo(container, alignAtTargetZoneRightEdge(container, targetOffset, nextTile), true);
-  }
-};
-
-const pageRight = (container: OptionalHTMLElement) => {
-  if (!container) return;
-
-  const targetOffset = getTileTargetZoneOffsets(container);
-  const targetRightEdge = targetZoneRightEdge(container, targetOffset);
-
-  const tiles = getTiles(container);
-  const rightTiles = tiles
-    .filter(tile => rightEdgeOffset(tile) > targetRightEdge);
-
-  const nextTile = rightTiles[0];
-
-  if (nextTile == null) {
-    scrollTo(container, container.scrollWidth - container.clientWidth, true);
-  } else {
-    scrollTo(container, alignAtTargetZoneLeftEdge(container, targetOffset, nextTile), true);
-  }
-};
-
-
-/* paging */
-type PagingMethod = { pageLeft: (el: HTMLElement) => void; pageRight: (el: HTMLElement) => void };
-const pageByVisibility = { pageLeft, pageRight };
-
-const usePaging = (containerRef: RefObject<HTMLElement>, pagingMethod: PagingMethod) => {
-  return {
-    pageLeft: () => {
-      if (!containerRef.current) return;
-      pagingMethod.pageLeft(containerRef.current);
-    },
-    pageRight: () => {
-      if (!containerRef.current) return;
-      pagingMethod.pageRight(containerRef.current);
-    }
-  };
-};
-
-const usePageWithArrowKeys = (containerRef: RefObject<HTMLElement>, paging: PagingMethod) => {
-  const onKeyDown: KeyboardEventHandler = (e) => {
-    if (!containerRef.current) return;
-
-    if (e.key === 'ArrowLeft') {
-      paging.pageLeft(containerRef.current);
-    } else if (e.key === 'ArrowRight') {
-      paging.pageRight(containerRef.current);
-    }
-  };
-
-  return { onKeyDown };
-};
 
 
 /* carousel */
