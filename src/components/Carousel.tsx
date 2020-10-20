@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useState, ReactNode, HTMLAttributes, ReactElement, KeyboardEventHandler, UIEventHandler } from 'react';
+import React, { useRef, useLayoutEffect, useState, ReactNode, HTMLAttributes, ReactElement, KeyboardEventHandler, UIEventHandler, RefObject, FocusEventHandler, EffectCallback, ReactEventHandler } from 'react';
 import styled from 'styled-components';
 import CarouselArrow from './CarouselArrow';
 import {
@@ -187,44 +187,7 @@ const pageRight = (container: OptionalHTMLElement) => {
 };
 
 
-type Props = {
-  selected?: number,
-  onSelect?: (nextSelected: number) => void,
-  children?: ReactNode
-} & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>;
-
-const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props }: Props): ReactElement => {
-  /*
-    hooks/functionality:
-     - selected
-     - scrolling
-     - arrows?
-     - * pages
-  */
-
-  const containerRef = useRef<HTMLUListElement>(null);
-  const [targetOffset, setTargetOffset] = useState({ left: 0, right: 0 });
-  const [onEdge, setOnEdge] = useState({ left: false, right: false });
-  const noScroll = onEdge.left && onEdge.right;
-
-  const pages = usePages(containerRef);
-
-  const updateTargetZoneOffset = () => {
-    const newTargetOffset = containerRef.current
-      ? getTileTargetZoneOffsets(containerRef.current)
-      : { left: 0, right: 0 };
-
-    if (newTargetOffset.left !== targetOffset.left || newTargetOffset.right !== targetOffset.right) {
-      setTargetOffset(newTargetOffset);
-    }
-  };
-
-  const updateLayoutProperties = () => {
-    pages.onLayoutUpdate();
-    updateTargetZoneOffset();
-  };
-
-
+const useScrollSelectedIntoView = (containerRef: RefObject<HTMLElement>, selected: number) => {
   useIsInitialLayoutEffect((isInitial) => {
     if (!containerRef.current) return;
 
@@ -234,39 +197,26 @@ const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props
       scrollTileIntoView(containerRef.current, selected);
     }
   }, [selected]);
+};
 
-  useLayoutEffect(() => {
-    updateLayoutProperties();
-  }, [children]);
-
-  useResizeEffect(containerRef, () => {
-    updateLayoutProperties();
-  });
-
+const useScrollSnapLoadingFix = (containerRef: RefObject<HTMLElement>, selected: number) => {
   const onLoad = () => {
-    updateLayoutProperties();
-
     /* scroll-snapping on chrome jumps to random position in list when images load */
     if (containerRef.current) {
       scrollTileToCenter(containerRef.current, selected, false);
     }
   };
 
-  const onScroll: UIEventHandler = () => {
-    pages.onScroll();
-  };
+  return { onLoad };
+};
 
-  const arrowKeyDown: KeyboardEventHandler = (e) => {
-    if (!containerRef.current) return;
-
-    if (e.key === 'ArrowLeft') {
-      pageLeft(containerRef.current);
-    } else if (e.key === 'ArrowRight') {
-      pageRight(containerRef.current);
-    }
-  };
-
-  const scrollKeyDown: KeyboardEventHandler = (e) => {
+type ArrowKeyHookProps = {
+  selected: number;
+  onSelect: (nextSelected: number) => void;
+  children?: ReactNode;
+};
+const useSelectWithArrowKeys = (containerRef: RefObject<HTMLElement>, { selected, onSelect, children }: ArrowKeyHookProps) => {
+  const onKeyDown: KeyboardEventHandler = (e) => {
     const container = containerRef.current;
     if (e.key === 'ArrowLeft') {
       e.preventDefault();
@@ -285,15 +235,76 @@ const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props
     }
   };
 
+  return {
+    onKeyDown
+  };
+};
+
+const useScrollFocusedIntoView = (containerRef: RefObject<HTMLElement>) => {
+  const onFocus: FocusEventHandler = (e) => {
+    const tiles = getTiles(containerRef.current);
+    const num = tiles.indexOf(e.target as HTMLElement);
+
+    if (num !== -1) {
+      scrollTileIntoView(containerRef.current, num);
+    }
+  };
+
+  return { onFocus };
+};
+
+type PagingMethod = { pageLeft: (el: HTMLElement) => void; pageRight: (el: HTMLElement) => void };
+const pageByVisibility = { pageLeft, pageRight };
+
+const usePaging = (containerRef: RefObject<HTMLElement>, pagingMethod: PagingMethod) => {
+  return {
+    pageLeft: () => {
+      if (!containerRef.current) return;
+      pagingMethod.pageLeft(containerRef.current);
+    },
+    pageRight: () => {
+      if (!containerRef.current) return;
+      pagingMethod.pageRight(containerRef.current);
+    }
+  };
+};
+
+const usePageWithArrowKeys = (containerRef: RefObject<HTMLElement>, paging: PagingMethod) => {
+  const onKeyDown: KeyboardEventHandler = (e) => {
+    if (!containerRef.current) return;
+
+    if (e.key === 'ArrowLeft') {
+      paging.pageLeft(containerRef.current);
+    } else if (e.key === 'ArrowRight') {
+      paging.pageRight(containerRef.current);
+    }
+  };
+
+  return { onKeyDown };
+};
+
+
+type CarouselTileHookProps = {
+  selected: number;
+  onSelect: (nextSelected: number) => void;
+};
+const useCarouselTile = (containerRef: RefObject<HTMLElement>, { selected, onSelect }: CarouselTileHookProps) => {
+  const scrollIntoView = useScrollFocusedIntoView(containerRef);
+
   const tileProps = (num: number) => ({
     className: num === selected ? 'selected' : '',
     onClick: () => {
       onSelect(num);
     },
-    onFocus: () => {
-      scrollTileIntoView(containerRef.current, num);
-    },
+    onFocus: scrollIntoView.onFocus
   });
+
+  return tileProps;
+};
+
+
+const useScrollEdges = (containerRef: RefObject<HTMLElement>) => {
+  const [onEdge, setOnEdge] = useState({ left: false, right: false });
 
   useIntersectionEffect(
     containerRef,
@@ -319,18 +330,90 @@ const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props
     }
   );
 
+  return {
+    ...onEdge,
+    both: onEdge.left && onEdge.right
+  };
+};
+
+const useTargetZone = (containerRef: RefObject<HTMLElement>) => {
+  const [targetOffset, setTargetOffset] = useState({ left: 0, right: 0 });
+
+  const onLayoutUpdate = () => {
+    const newTargetOffset = containerRef.current
+      ? getTileTargetZoneOffsets(containerRef.current)
+      : { left: 0, right: 0 };
+
+    if (newTargetOffset.left !== targetOffset.left || newTargetOffset.right !== targetOffset.right) {
+      setTargetOffset(newTargetOffset);
+    }
+  };
+
+  return [targetOffset, { onLayoutUpdate }] as const;
+};
+
+const useLayoutChange = (containerRef: RefObject<HTMLElement>, fn: EffectCallback, deps: unknown[]) => {
+  useLayoutEffect(fn, deps);
+
+  useResizeEffect(containerRef, fn);
+
+  const onLoad = () => {
+    fn();
+  };
+
+  return { onLoad };
+};
+
+
+type Props = {
+  selected?: number,
+  onSelect?: (nextSelected: number) => void,
+  children?: ReactNode
+} & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>;
+
+const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props }: Props): ReactElement => {
+  const containerRef = useRef<HTMLUListElement>(null);
+
+  const pages = usePages(containerRef);
+  const paging = usePaging(containerRef, pageByVisibility);
+  const pageArrowKeys = usePageWithArrowKeys(containerRef, pageByVisibility);
+
+  useScrollSelectedIntoView(containerRef, selected);
+  const ssFix = useScrollSnapLoadingFix(containerRef, selected);
+  const arrowKeys = useSelectWithArrowKeys(containerRef, { selected, onSelect, children });
+
+  const onEdge = useScrollEdges(containerRef);
+  const [targetOffset, targetZone] = useTargetZone(containerRef);
+
+
+  const layout = useLayoutChange(containerRef, () => {
+    pages.onLayoutUpdate();
+    targetZone.onLayoutUpdate();
+  }, [children]);
+
+  const onLoad: ReactEventHandler = () => {
+    layout.onLoad();
+    ssFix.onLoad();
+  };
+
+  const onScroll: UIEventHandler = () => {
+    pages.onScroll();
+  };
+
+  const tileProps = useCarouselTile(containerRef, { selected, onSelect });
+
   return (
     <Container {...props}>
       <CarouselArrow
         left
-        hide={noScroll}
+        hide={onEdge.both}
         disabled={onEdge.left}
-        onClick={() => pageLeft(containerRef.current)}
-        onKeyDown={arrowKeyDown}
+        onClick={paging.pageLeft}
+        onKeyDown={pageArrowKeys.onKeyDown}
       />
       <ScrollContainer
         ref={containerRef}
-        onKeyDown={scrollKeyDown}
+        onKeyDown={arrowKeys.onKeyDown}
         onScroll={onScroll}
         onLoad={onLoad}
         targetZoneOffset={targetOffset}
@@ -345,10 +428,10 @@ const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props
       </ScrollContainer>
       <CarouselArrow
         right
-        hide={noScroll}
+        hide={onEdge.both}
         disabled={onEdge.right}
-        onClick={() => pageRight(containerRef.current)}
-        onKeyDown={arrowKeyDown}
+        onClick={paging.pageRight}
+        onKeyDown={pageArrowKeys.onKeyDown}
       />
       <PageIndicator {...pages} />
     </Container>
