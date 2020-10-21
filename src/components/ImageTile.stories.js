@@ -21,36 +21,20 @@ Default.args = {
 };
 
 
-const Ribbon = styled.span`
+const Ribbon = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  transform: translateX(30%) translateY(0%) rotate(45deg);
-  transform-origin: top left;
+  transform: translate(50%, -50%) rotate(45deg) translateY(39px);
+
+  width: 200px;
 
   margin: 0.5em;
   padding: 0.5em;
 
   background: #38B2AC;
   color: white;
-
-  &::before, &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    margin: 0 -1px;
-    width: 100%;
-    height: 100%;
-    background: #38B2AC;
-  }
-
-  &::before {
-    right: 100%;
-  }
-
-  &::after {
-    left: 100%;
-  }
+  font-size: 14px;
 `;
 
 const Parent = styled.div`
