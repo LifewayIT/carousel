@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ImageTile } from './ImageTile';
-import { color } from '../utils/styleguide';
 
 export default {
   component: ImageTile,
@@ -32,7 +31,7 @@ const Ribbon = styled.span`
   margin: 0.5em;
   padding: 0.5em;
 
-  background: ${color.teal500};
+  background: #38B2AC;
   color: white;
 
   &::before, &::after {
@@ -42,7 +41,7 @@ const Ribbon = styled.span`
     margin: 0 -1px;
     width: 100%;
     height: 100%;
-    background: ${color.teal500};
+    background: #38B2AC;
   }
 
   &::before {
