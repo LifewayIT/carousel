@@ -63,7 +63,7 @@ type Props = {
   children?: ReactNode;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const ImageTile = ({ src, alt, children, ...props }: Props): ReactElement => {
+export const ImageTile = ({ src, alt, children, ...props }: Props): ReactElement => {
   return (
     <TileButton {...props}>
       <TileImage src={src} alt={alt} />
@@ -71,5 +71,3 @@ const ImageTile = ({ src, alt, children, ...props }: Props): ReactElement => {
     </TileButton>
   );
 };
-
-export default ImageTile;

@@ -1,5 +1,5 @@
 import React from 'react';
-import CarouselArrow from './CarouselArrow';
+import { CarouselArrow } from './CarouselArrow';
 
 export default {
   component: CarouselArrow,

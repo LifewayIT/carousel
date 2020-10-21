@@ -106,7 +106,7 @@ type Props = {
   onClick: MouseEventHandler<HTMLElement>;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const CarouselArrow = ({ left, right, onClick, ...props }: Props): ReactElement => {
+export const CarouselArrow = ({ left, right, onClick, ...props }: Props): ReactElement => {
   if (!left && !right) {
     throw new Error('either "left" or "right" prop is required');
   } else if (left && right) {
@@ -120,5 +120,3 @@ const CarouselArrow = ({ left, right, onClick, ...props }: Props): ReactElement 
     </Arrow>
   );
 };
-
-export default CarouselArrow;

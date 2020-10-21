@@ -5,7 +5,7 @@ import { device, space, color } from '../utils/styleguide';
 
 type Props = Pages;
 
-const PageIndicator = (pages: Props): ReactElement => {
+export const PageIndicator = (pages: Props): ReactElement => {
   const indicators = usePageIndicator(pages);
 
   return (
@@ -17,8 +17,6 @@ const PageIndicator = (pages: Props): ReactElement => {
     </DotContainer>
   );
 };
-
-export default PageIndicator;
 
 
 const DotContainer = styled.div`

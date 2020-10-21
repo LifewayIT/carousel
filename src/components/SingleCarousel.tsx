@@ -28,7 +28,7 @@ type Props = {
   children?: ReactNode;
 };
 
-const SingleCarousel = ({ selected = 0, onSelect = () => undefined, children }: Props): ReactElement => {
+export const SingleCarousel = ({ selected = 0, onSelect = () => undefined, children }: Props): ReactElement => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const numTiles = React.Children.count(children);
@@ -40,5 +40,3 @@ const SingleCarousel = ({ selected = 0, onSelect = () => undefined, children }: 
     </Container>
   );
 };
-
-export default SingleCarousel;

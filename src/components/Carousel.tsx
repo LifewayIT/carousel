@@ -5,9 +5,9 @@ import React, {
   ReactElement,
 } from 'react';
 import styled from 'styled-components';
-import CarouselArrow from './CarouselArrow';
+import { CarouselArrow } from './CarouselArrow';
 import { device, space } from '../utils/styleguide';
-import PageIndicator from './PageIndicator';
+import { PageIndicator } from './PageIndicator';
 import { TargetZoneOffsets } from '../utils/layout';
 import { useCarousel } from '../hooks/carousel/useCarousel';
 
@@ -84,7 +84,7 @@ type Props = {
   children?: ReactNode
 } & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>;
 
-const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props }: Props): ReactElement => {
+export const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props }: Props): ReactElement => {
   const containerRef = useRef<HTMLUListElement>(null);
 
   const numTiles = React.Children.count(children);
@@ -107,5 +107,3 @@ const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props
     </Container>
   );
 };
-
-export default Carousel;

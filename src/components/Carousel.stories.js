@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Carousel from './Carousel';
-import ImageTile from './ImageTile';
+import { Carousel } from './Carousel';
+import { ImageTile } from './ImageTile';
 import { waitFor } from '@testing-library/react';
 
 export default {
