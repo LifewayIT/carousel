@@ -20,18 +20,14 @@ export const useSelectWithArrowKeys: useSelectWithArrowKeys = (containerRef, { s
       const prev = Math.max(selected - 1, 0);
       onSelect(prev);
 
-      // if (container) {
-        getFirstFocusableElement(getTile(container, prev))?.focus();
-      // }
+      getFirstFocusableElement(getTile(container, prev))?.focus();
     } else if (e.key === 'ArrowRight') {
       e.preventDefault();
 
       const next = Math.min(selected + 1, numTiles - 1);
       onSelect(next);
 
-      // if (container) {
-        getFirstFocusableElement(getTile(container, next))?.focus();
-      // }
+      getFirstFocusableElement(getTile(container, next))?.focus();
     }
   };
 

@@ -1,4 +1,4 @@
-import { getTiles } from "./tiles";
+import { getTiles } from './tiles';
 
 /*
   scrollLeft is a decimal on some browsers/devices
