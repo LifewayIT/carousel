@@ -11,10 +11,10 @@ type Props = {
   children?: ReactNode;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-export const ImageTile = ({ src, alt, children, ...props }: Props): ReactElement => {
+export const ImageTile = ({ src, alt, children, className, ...props }: Props): ReactElement => {
   return (
-    <TileButton {...props}>
-      <TileImage src={src} alt={alt} />
+    <TileButton {...props} className={`lwc-image-tile lwc-tile ${className}`}>
+      <TileImage className="lwc-tile-image" src={src} alt={alt} />
       {children}
     </TileButton>
   );
@@ -48,7 +48,7 @@ const TileButton = styled.button`
     }
   }
 
-  .selected & {
+  .lwc-selected & {
     box-shadow:
       0 0 0 4px #38b2ac,
       0 2px 8px 2px rgb(45 55 72 / 25%);

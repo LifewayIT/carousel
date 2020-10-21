@@ -149,12 +149,12 @@ export const usePages = (containerRef: React.RefObject<HTMLElement>): usePagesRe
 interface IndicatorProps {
   key: string;
   num: number;
-  active: boolean;
+  className: string;
 }
 
 export const usePageIndicator = (pages: Pages): IndicatorProps[] =>
   [...Array(pages.total)].map((_, num) => ({
     key: `page-${num}`,
     num,
-    active: num + 1 === pages.current
+    className: num + 1 === pages.current ? 'lwc-current' : ''
   }));

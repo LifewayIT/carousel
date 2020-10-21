@@ -18,23 +18,23 @@ type Props = {
   children?: ReactNode
 } & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>;
 
-export const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props }: Props): ReactElement => {
+export const Carousel = ({ selected = 0, onSelect = () => undefined, children, className, ...props }: Props): ReactElement => {
   const containerRef = useRef<HTMLUListElement>(null);
 
   const numTiles = React.Children.count(children);
   const carousel = useCarousel(containerRef, { selected, onSelect, numTiles }, [children]);
 
   return (
-    <Container {...props}>
+    <Container {...props} className={`lwc-carousel ${className}`}>
       <CarouselArrow {...carousel.props.arrow.left} />
-      <ScrollContainer ref={containerRef} {...carousel.props.scrollContainer}>
-        <Margin data-carousel-skip />
+      <ScrollContainer ref={containerRef} className="lwc-carousel-list" {...carousel.props.scrollContainer}>
+        <Margin className="lwc-margin" data-carousel-skip />
         {React.Children.map(children, (child, num) => (
           <li {...carousel.props.tile(num)}>
             {child}
           </li>
         ))}
-        <Margin data-carousel-skip />
+        <Margin className="lwc-margin" data-carousel-skip />
       </ScrollContainer>
       <CarouselArrow {...carousel.props.arrow.right} />
       <PageIndicator {...carousel.pages} />

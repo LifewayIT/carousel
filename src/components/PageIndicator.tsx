@@ -1,17 +1,17 @@
-import React, { ReactElement } from 'react';
+import React, { HTMLAttributes, ReactElement } from 'react';
 import styled from 'styled-components';
 import { Pages, usePageIndicator } from '../hooks/usePages';
 import { device, space, color } from '../utils/styleguide';
 
-type Props = Pages;
+type Props = Pages & HTMLAttributes<HTMLDivElement>;
 
-export const PageIndicator = (pages: Props): ReactElement => {
-  const indicators = usePageIndicator(pages);
+export const PageIndicator = ({ current, total, className, ...props }: Props): ReactElement => {
+  const indicators = usePageIndicator({ current, total });
 
   return (
-    <DotContainer>
+    <DotContainer {...props} className={`lwc-page-indicator ${className}`}>
       {indicators.map((indicator) => (
-        <Dot {...indicator} key={indicator.key}  />
+        <Dot {...indicator} key={indicator.key} className={`lwc-page-dot ${indicator.className}`} />
       ))}
     </DotContainer>
   );
@@ -38,13 +38,16 @@ const DotContainer = styled.div`
   }
 `;
 
-const Dot = styled.div<{ active: boolean }>`
+const Dot = styled.div`
   width: ${space._8};
   height: ${space._8};
 
   border-radius: 50%;
   background-color: ${color.gray600};
 
-  opacity: ${props => props.active ? '1' : '.325'};
-`;
+  opacity: .325;
 
+  &.lwc-current {
+    opacity: 1;
+  }
+`;

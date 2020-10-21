@@ -1,4 +1,5 @@
 import React, {
+  HTMLAttributes,
   ReactElement,
   ReactNode,
   useRef
@@ -14,16 +15,16 @@ type Props = {
   onSelect?: (nextSelected: number) => void;
   /** the children to render */
   children?: ReactNode;
-};
+} & HTMLAttributes<HTMLDivElement>;
 
-export const SingleCarousel = ({ selected = 0, onSelect = () => undefined, children }: Props): ReactElement => {
+export const SingleCarousel = ({ selected = 0, onSelect = () => undefined, children, className, ...props }: Props): ReactElement => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const numTiles = React.Children.count(children);
   const carousel = useSingleCarousel(containerRef, { selected, onSelect, numTiles });
 
   return (
-    <Container ref={containerRef} {...carousel.props}>
+    <Container {...props} ref={containerRef} className={`lwc-single-carousel ${className}`} {...carousel.props}>
       {children}
     </Container>
   );
