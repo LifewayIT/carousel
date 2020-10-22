@@ -16,6 +16,7 @@ module.exports = {
   testMatch: [
     '**/__integration_tests__/**/*.spec.[jt]s?(x)',
     '**/__tests__/**/*.spec.[jt]s?(x)',
+    '!**/*.browser.spec.[jt]s?(x)',
   ],
   moduleNameMapper: {
     '\\.(css)$': '<rootDir>/test/client/mocks/style.js',
@@ -48,6 +49,7 @@ module.exports = {
   ],
   collectCoverageFrom: [
     '<rootDir>/src/**/*.[jt]s?(x)',
+    '!*.spec.[jt]s?(x)',
     '!<rootDir>/src/index.ts',
     '!*.stories.[jt]s?(x)',
     '!<rootDir>/src/@types/**/*'
