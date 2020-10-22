@@ -9,9 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 No unreleased changes :fire: -->
 
 ## [Unreleased]
+No unreleased changes :fire:
+
+
+## v0.1.0 - (10/22/2020)
 
 ### Added
  - Added visual tests (and included them in the `validate` script)
+ - Expose hooks in the index file so they can be imported directly
+ - Allow components & hooks to be imported through `@lifeway-carousel/lib/components` and `@lifeway-carousel/lib/hooks` respectively
 
 ### Fixed
  - Allow running `npm install` without setting up an npm auth token
@@ -22,6 +28,8 @@ No unreleased changes :fire: -->
 
 ### Internal
  - Add visual tests to pipeline
+ - Moved all logic to reusable hooks
+
 
 ## v0.0.2 - (10/14/2020)
 Get README up to date
@@ -35,6 +43,7 @@ Get README up to date
 
 ### Internal
  - Fix version check in pipeline so that package actually gets deployed :grin:
+
 
 ## v0.0.1 - (10/13/2020)
 

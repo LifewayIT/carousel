@@ -63,6 +63,10 @@ const MyComponent = () => {
 
 All of the source is built with typescript so it all has intellisense :fire:
 
+This package also exports a number of hooks (both high-level and low-level) which can be used to
+build your own carousel component! In fact, all of the components' logic is encapsulated in the hooks,
+and the components just wire the hooks up to the dom elements.
+
 More complete docs will (hopefully) be coming soon :rocket:
 
 ## Development

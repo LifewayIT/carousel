@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import SingleCarousel from './SingleCarousel';
+import { SingleCarousel } from './SingleCarousel';
 
 const Layout = styled.div`
   position: relative;

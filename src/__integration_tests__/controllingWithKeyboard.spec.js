@@ -1,8 +1,8 @@
 import React from 'react';
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Carousel from '../components/Carousel';
-import SingleCarousel from '../components/SingleCarousel';
+import { Carousel } from '../components/Carousel';
+import { SingleCarousel } from '../components/SingleCarousel';
 
 describe('Carousel', () => {
   test('selects next/prev with arrow keys on the scroll container', () => {

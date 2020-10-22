@@ -1,6 +1,6 @@
 {
   "name": "@lifeway/carousel",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A reusable, responsive, and adaptive carousel for react",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -27,7 +27,7 @@
     "test:watch": "jest --watch",
     "pretest:visual": "mkdir -p ./reports/visual",
     "test:visual": "eyes-storybook --exit-code",
-    "validate": "npm-run-all --parallel build:check test test:visual audit lint",
+    "validate": "npm-run-all -c -p build:check audit lint -s test test:visual",
     "version:check": "node ./scripts/version-check.js",
     "prepack": "npm run build",
     "prepublishOnly": "npm run version:check"

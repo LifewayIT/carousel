@@ -5,6 +5,34 @@ import { color, device, shadow, space } from '../utils/styleguide';
 import ChevronLeft from '../../svg/chevron-left.svg';
 import ChevronRight from '../../svg/chevron-right.svg';
 
+
+type Props = {
+  /** shows the left arrow icon. One of 'left' or 'right' must be specified */
+  left?: boolean;
+  /** shows the right arrow icon. One of 'left' or 'right' must be specified */
+  right?: boolean;
+  /** hide the arrow */
+  hide?: boolean;
+  /** handler for when the arrow button is clicked */
+  onClick: MouseEventHandler<HTMLElement>;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
+
+export const CarouselArrow = ({ left, right, onClick, ...props }: Props): ReactElement => {
+  if (!left && !right) {
+    throw new Error('either "left" or "right" prop is required');
+  } else if (left && right) {
+    throw new Error('cannot have both "left" and "right" props');
+  }
+
+  return (
+    <Arrow left={left} right={right} onClick={onClick} {...props}>
+      {left && <img src={ChevronLeft} alt="page left" />}
+      {right && <img src={ChevronRight} alt="page right" />}
+    </Arrow>
+  );
+};
+
+
 type ArrowProps = {
   left?: boolean;
   right?: boolean;
@@ -94,31 +122,3 @@ const Arrow = styled.button<ArrowProps>`
     ${props => props.right && `right: ${space._16};`}
   }
 `;
-
-type Props = {
-  /** shows the left arrow icon. One of 'left' or 'right' must be specified */
-  left?: boolean;
-  /** shows the right arrow icon. One of 'left' or 'right' must be specified */
-  right?: boolean;
-  /** hide the arrow */
-  hide?: boolean;
-  /** handler for when the arrow button is clicked */
-  onClick: MouseEventHandler<HTMLElement>;
-} & ButtonHTMLAttributes<HTMLButtonElement>;
-
-const CarouselArrow = ({ left, right, onClick, ...props }: Props): ReactElement => {
-  if (!left && !right) {
-    throw new Error('either "left" or "right" prop is required');
-  } else if (left && right) {
-    throw new Error('cannot have both "left" and "right" props');
-  }
-
-  return (
-    <Arrow left={left} right={right} onClick={onClick} {...props}>
-      {left && <img src={ChevronLeft} alt="page left" />}
-      {right && <img src={ChevronRight} alt="page right" />}
-    </Arrow>
-  );
-};
-
-export default CarouselArrow;

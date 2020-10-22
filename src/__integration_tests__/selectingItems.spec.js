@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Carousel from '../components/Carousel';
+import { Carousel } from '../components/Carousel';
 
 test('selects an item when clicked', () => {
   const onSelect = jest.fn();

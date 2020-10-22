@@ -41,5 +41,11 @@ module.exports = {
         ]
       }
     },
+    {
+      files: ['*.tsx'],
+      rules: {
+        '@typescript-eslint/no-use-before-define': ['error', { functions: false, variables: false }]
+      }
+    },
   ]
 };
