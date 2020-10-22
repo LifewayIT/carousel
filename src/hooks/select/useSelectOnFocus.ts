@@ -3,7 +3,6 @@ import { scrollToCenter } from '../../utils/scroll';
 import { getTiles } from '../../utils/tiles';
 
 
-// TODO - pass in scrollIntoView? / scrollingStrategy?
 type useSelectOnFocus = (containerRef: RefObject<HTMLElement>, onSelect: (selected: number) => void) =>
   { onFocus: FocusEventHandler }
 
@@ -15,7 +14,6 @@ export const useSelectOnFocus: useSelectOnFocus = (containerRef, onSelect) => {
     const tiles = getTiles(container);
     const focusedNum = tiles.findIndex(tile => tile.contains(evt.target));
 
-    // TODO - is this even necessary ?? already a hook that keeps the selected in view (browser scrolls automatically though) - try preventScroll on focus()
     scrollToCenter(container, tiles[focusedNum]);
     onSelect(focusedNum);
   };
