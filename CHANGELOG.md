@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 No unreleased changes :fire: -->
 
 ## [Unreleased]
+No unreleased changes :fire:
+
+
+## v0.1.0 - (10/22/2020)
 
 ### Added
  - Added visual tests (and included them in the `validate` script)
@@ -26,6 +30,7 @@ No unreleased changes :fire: -->
  - Add visual tests to pipeline
  - Moved all logic to reusable hooks
 
+
 ## v0.0.2 - (10/14/2020)
 Get README up to date
 
@@ -38,6 +43,7 @@ Get README up to date
 
 ### Internal
  - Fix version check in pipeline so that package actually gets deployed :grin:
+
 
 ## v0.0.1 - (10/13/2020)
 

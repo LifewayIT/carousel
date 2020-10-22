@@ -1,6 +1,6 @@
 {
   "name": "@lifeway/carousel",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A reusable, responsive, and adaptive carousel for react",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
