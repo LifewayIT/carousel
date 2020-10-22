@@ -11,8 +11,8 @@ No unreleased changes :fire: -->
 ## [Unreleased]
 
 ### Added
- - Added story for `PageIndicator`
- - Added static classnames to every dom node rendered by a carousel component
+ - Add story for `PageIndicator`
+ - Add static classnames to every dom node rendered by a carousel component
 
 ### Fixed
  - Update `SingleCarousel` to forward dom attributes to the base dom node
@@ -21,7 +21,7 @@ No unreleased changes :fire: -->
 ## v0.1.0 - (10/22/2020)
 
 ### Added
- - Added visual tests (and included them in the `validate` script)
+ - Add visual tests (and included them in the `validate` script)
  - Expose hooks in the index file so they can be imported directly
  - Allow components & hooks to be imported through `@lifeway-carousel/lib/components` and `@lifeway-carousel/lib/hooks` respectively
 
@@ -34,7 +34,7 @@ No unreleased changes :fire: -->
 
 ### Internal
  - Add visual tests to pipeline
- - Moved all logic to reusable hooks
+ - Move all logic to reusable hooks
 
 
 ## v0.0.2 - (10/14/2020)
