@@ -6,6 +6,9 @@
 # testing
 /coverage
 /reports
+/.nyc_output
+/test/browser/screenshots
+/test/browser/videos
 
 # built files
 /build

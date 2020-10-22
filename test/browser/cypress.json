@@ -1,0 +1,17 @@
+{
+  "experimentalComponentTesting": true,
+  "componentFolder": "src",
+  "testFiles": [
+    "**/*.browser.spec.{js,ts,jsx,tsx}"
+  ],
+
+  "pluginsFile": "test/browser/plugins/index.js",
+  "supportFile": "test/browser/support/index.js",
+  "screenshotsFolder": "test/browser/screenshots",
+  "videosFolder": "test/browser/videos",
+  "fixturesFolder": false,
+
+  "env": {
+    "coverage": false
+  }
+}
