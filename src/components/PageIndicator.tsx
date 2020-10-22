@@ -11,7 +11,6 @@ export const PageIndicator = (pages: Props): ReactElement => {
   return (
     <DotContainer>
       {indicators.map((indicator) => (
-        // eslint-disable-next-line react/no-array-index-key
         <Dot {...indicator} key={indicator.key}  />
       ))}
     </DotContainer>
