@@ -26,7 +26,8 @@ export const useCarouselTile: useCarouselTile = (containerRef, { selected, onSel
     onClick: () => {
       onSelect(num);
     },
-    onFocus: scrollIntoView.onFocus
+    onFocus: scrollIntoView.onFocus,
+    selected: num === selected
   });
 
   return tileProps;
