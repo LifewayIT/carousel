@@ -1,5 +1,6 @@
 import React, { ButtonHTMLAttributes, ReactElement, ReactNode } from 'react';
 import styled from 'styled-components';
+import { cn } from '../utils/classnames';
 import { device } from '../utils/styleguide';
 
 type Props = {
@@ -13,7 +14,7 @@ type Props = {
 
 export const ImageTile = ({ src, alt, children, className, ...props }: Props): ReactElement => {
   return (
-    <TileButton {...props} className={`lwc-image-tile lwc-tile ${className}`}>
+    <TileButton {...props} className={cn('lwc-image-tile lwc-tile', className)}>
       <TileImage className="lwc-tile-image" src={src} alt={alt} />
       {children}
     </TileButton>

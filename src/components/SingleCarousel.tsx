@@ -6,6 +6,7 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import { useSingleCarousel } from '../hooks/carousel/useSingleCarousel';
+import { cn } from '../utils/classnames';
 
 
 type Props = {
@@ -24,7 +25,7 @@ export const SingleCarousel = ({ selected = 0, onSelect = () => undefined, child
   const carousel = useSingleCarousel(containerRef, { selected, onSelect, numTiles });
 
   return (
-    <Container {...props} ref={containerRef} className={`lwc-single-carousel ${className}`} {...carousel.props}>
+    <Container {...props} ref={containerRef} className={cn('lwc-single-carousel', className)} {...carousel.props}>
       {children}
     </Container>
   );

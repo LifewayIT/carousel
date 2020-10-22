@@ -10,6 +10,7 @@ import { device, space } from '../utils/styleguide';
 import { PageIndicator } from './PageIndicator';
 import { TargetZoneOffsets } from '../utils/layout';
 import { useCarousel } from '../hooks/carousel/useCarousel';
+import { cn } from '../utils/classnames';
 
 
 type Props = {
@@ -25,7 +26,7 @@ export const Carousel = ({ selected = 0, onSelect = () => undefined, children, c
   const carousel = useCarousel(containerRef, { selected, onSelect, numTiles }, [children]);
 
   return (
-    <Container {...props} className={`lwc-carousel ${className}`}>
+    <Container {...props} className={cn('lwc-carousel', className)}>
       <CarouselArrow {...carousel.props.arrow.left} />
       <ScrollContainer ref={containerRef} className="lwc-carousel-list" {...carousel.props.scrollContainer}>
         <Margin className="lwc-margin" data-carousel-skip />

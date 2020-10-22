@@ -1,6 +1,7 @@
 import React, { HTMLAttributes, ReactElement } from 'react';
 import styled from 'styled-components';
 import { Pages, usePageIndicator } from '../hooks/usePages';
+import { cn } from '../utils/classnames';
 import { device, space, color } from '../utils/styleguide';
 
 type Props = Pages & HTMLAttributes<HTMLDivElement>;
@@ -9,9 +10,9 @@ export const PageIndicator = ({ current, total, className, ...props }: Props): R
   const indicators = usePageIndicator({ current, total });
 
   return (
-    <DotContainer {...props} className={`lwc-page-indicator ${className}`}>
+    <DotContainer {...props} className={cn('lwc-page-indicator', className)}>
       {indicators.map((indicator) => (
-        <Dot {...indicator} key={indicator.key} className={`lwc-page-dot ${indicator.className}`} />
+        <Dot {...indicator} key={indicator.key} className={cn('lwc-page-dot', indicator.className)} />
       ))}
     </DotContainer>
   );
