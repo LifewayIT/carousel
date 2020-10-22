@@ -12,6 +12,37 @@ import { TargetZoneOffsets } from '../utils/layout';
 import { useCarousel } from '../hooks/carousel/useCarousel';
 
 
+type Props = {
+  selected?: number,
+  onSelect?: (nextSelected: number) => void,
+  children?: ReactNode
+} & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>;
+
+export const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props }: Props): ReactElement => {
+  const containerRef = useRef<HTMLUListElement>(null);
+
+  const numTiles = React.Children.count(children);
+  const carousel = useCarousel(containerRef, { selected, onSelect, numTiles }, [children]);
+
+  return (
+    <Container {...props}>
+      <CarouselArrow {...carousel.props.arrow.left} />
+      <ScrollContainer ref={containerRef} {...carousel.props.scrollContainer}>
+        <Margin data-carousel-skip />
+        {React.Children.map(children, (child, num) => (
+          <li {...carousel.props.tile(num)}>
+            {child}
+          </li>
+        ))}
+        <Margin data-carousel-skip />
+      </ScrollContainer>
+      <CarouselArrow {...carousel.props.arrow.right} />
+      <PageIndicator {...carousel.pages} />
+    </Container>
+  );
+};
+
+
 const Container = styled.div`
   position: relative;
 `;
@@ -76,34 +107,3 @@ const ScrollContainer = styled.ul<{ targetZoneOffset: TargetZoneOffsets }>`
     padding: ${space._96} 0;
   }
 `;
-
-
-type Props = {
-  selected?: number,
-  onSelect?: (nextSelected: number) => void,
-  children?: ReactNode
-} & Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>;
-
-export const Carousel = ({ selected = 0, onSelect = () => undefined, children, ...props }: Props): ReactElement => {
-  const containerRef = useRef<HTMLUListElement>(null);
-
-  const numTiles = React.Children.count(children);
-  const carousel = useCarousel(containerRef, { selected, onSelect, numTiles }, [children]);
-
-  return (
-    <Container {...props}>
-      <CarouselArrow {...carousel.props.arrow.left} />
-      <ScrollContainer ref={containerRef} {...carousel.props.scrollContainer}>
-        <Margin data-carousel-skip />
-        {React.Children.map(children, (child, num) => (
-          <li {...carousel.props.tile(num)}>
-            {child}
-          </li>
-        ))}
-        <Margin data-carousel-skip />
-      </ScrollContainer>
-      <CarouselArrow {...carousel.props.arrow.right} />
-      <PageIndicator {...carousel.pages} />
-    </Container>
-  );
-};

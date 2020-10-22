@@ -6,18 +6,6 @@ import React, {
 import styled from 'styled-components';
 import { useSingleCarousel } from '../hooks/carousel/useSingleCarousel';
 
-const Container = styled.div`
-  overflow: hidden;
-
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-
-  & > * {
-    flex: 0 0 auto;
-  }
-`;
-
 
 type Props = {
   /** the index of the child that is currently selected. defaults to 0 */
@@ -40,3 +28,16 @@ export const SingleCarousel = ({ selected = 0, onSelect = () => undefined, child
     </Container>
   );
 };
+
+
+const Container = styled.div`
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+
+  & > * {
+    flex: 0 0 auto;
+  }
+`;

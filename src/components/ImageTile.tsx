@@ -2,6 +2,25 @@ import React, { ButtonHTMLAttributes, ReactElement, ReactNode } from 'react';
 import styled from 'styled-components';
 import { device } from '../utils/styleguide';
 
+type Props = {
+  /** the source url of the image */
+  src: string;
+  /** the alt text for the image */
+  alt: string;
+  /** child nodes to render inside of the button (helpful for banners, markers, etc) */
+  children?: ReactNode;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
+
+export const ImageTile = ({ src, alt, children, ...props }: Props): ReactElement => {
+  return (
+    <TileButton {...props}>
+      <TileImage src={src} alt={alt} />
+      {children}
+    </TileButton>
+  );
+};
+
+
 const TileButton = styled.button`
   display: block;
   padding: 0;
@@ -53,21 +72,3 @@ const TileImage = styled.img`
     height: 200px;
   }
 `;
-
-type Props = {
-  /** the source url of the image */
-  src: string;
-  /** the alt text for the image */
-  alt: string;
-  /** child nodes to render inside of the button (helpful for banners, markers, etc) */
-  children?: ReactNode;
-} & ButtonHTMLAttributes<HTMLButtonElement>;
-
-export const ImageTile = ({ src, alt, children, ...props }: Props): ReactElement => {
-  return (
-    <TileButton {...props}>
-      <TileImage src={src} alt={alt} />
-      {children}
-    </TileButton>
-  );
-};
