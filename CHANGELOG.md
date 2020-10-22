@@ -9,7 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 No unreleased changes :fire: -->
 
 ## [Unreleased]
-No unreleased changes :fire:
+
+### Added
+ - Added story for `PageIndicator`
+ - Added static classnames to every dom node rendered by a carousel component
+
+### Fixed
+ - Update `SingleCarousel` to forward dom attributes to the base dom node
 
 
 ## v0.1.0 - (10/22/2020)
