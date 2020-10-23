@@ -18,4 +18,5 @@ export * from './scroll/useScrollSnapLoadingFix';
 export * from './select/useSelectOnFocus';
 export * from './select/useSelectWithArrowKeys';
 
-export * from './usePages';
+export * from './paging/usePages';
+export * from './paging/usePageIndicator';

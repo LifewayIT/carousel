@@ -5,8 +5,8 @@ import {
   rightEdgeOffset,
   getTargetZoneOffsets,
   TargetZoneOffsets
-} from '../utils/layout';
-import { getTiles } from '../utils/tiles';
+} from '../../utils/layout';
+import { getTiles } from '../../utils/tiles';
 
 
 const getRawStartPoints = (tiles: HTMLElement[], targetWidth: number, targetOffset: TargetZoneOffsets, maxPosition: number): number[] => {
@@ -144,18 +144,3 @@ export const usePages = (containerRef: React.RefObject<HTMLElement>): usePagesRe
     onScroll
   };
 };
-
-
-interface IndicatorProps {
-  key: string;
-  num: number;
-  className: string;
-}
-
-export const usePageIndicator = (pages: Pages): IndicatorProps[] =>
-  [...Array(pages.total)].map((_, num) => ({
-    key: `page-${num}`,
-    num,
-    current: num + 1 === pages.current,
-    className: num + 1 === pages.current ? 'lwc-current' : ''
-  }));

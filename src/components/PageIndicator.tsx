@@ -1,6 +1,7 @@
 import React, { HTMLAttributes, ReactElement } from 'react';
 import styled from 'styled-components';
-import { Pages, usePageIndicator } from '../hooks/usePages';
+import { Pages } from '../hooks/paging/usePages';
+import { usePageIndicator } from '../hooks/paging/usePageIndicator';
 import { cn } from '../utils/classnames';
 import { device, space, color } from '../utils/styleguide';
 

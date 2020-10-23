@@ -9,7 +9,7 @@ import { usePaging } from '../paging/usePaging';
 import { useScrollSelectedIntoView } from '../scroll/useScrollSelectedIntoView';
 import { useScrollSnapLoadingFix } from '../scroll/useScrollSnapLoadingFix';
 import { useSelectWithArrowKeys } from '../select/useSelectWithArrowKeys';
-import { Pages, usePages } from '../usePages';
+import { Pages, usePages } from '../paging/usePages';
 import { useCarouselTile, CarouselTileResult } from './useCarouselTile';
 
 export interface CarouselHookProps {
