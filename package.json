@@ -29,7 +29,7 @@
     "test:coverage": "npm test -- --coverage",
     "test:watch": "jest --watch",
     "pretest:visual": "mkdir -p ./reports/visual",
-    "test:visual": "eyes-storybook --exit-code",
+    "test:visual": "eyes-storybook --exit-code --conf ./test/visual/applitools.config.js",
     "validate": "npm-run-all -c -p build:check audit lint -s test test:visual",
     "version:check": "node ./scripts/version-check.js",
     "prepack": "npm run build",
