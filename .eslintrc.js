@@ -22,6 +22,9 @@ module.exports = {
     },
     {
       files: ['*.spec.js'],
+      rules: {
+        'react/prop-types': 'off'
+      },
       settings: {
         'import/resolver': {
           jest: {
