@@ -34,6 +34,16 @@ module.exports = {
       }
     },
     {
+      files: ['*.browser.spec.js'],
+      plugins: ['cypress'],
+      extends: ['plugin:cypress/recommended'],
+      rules: {
+        'jest/expect-expect': 'off',
+        'react/prop-types': 'off',
+        'testing-library/prefer-screen-queries': 'off'
+      }
+    },
+    {
       files: ['*.ts', '*.tsx'],
       extends: ['corinth/typescript'],
       rules: {
