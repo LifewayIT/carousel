@@ -18,5 +18,7 @@ export const cn = (...names: ClassNames[]): string => {
     return finalNames;
   }, [] as string[]);
 
-  return nameList.join(' ');
+  return nameList
+    .filter(name => name != null && name !== '')
+    .join(' ');
 };
