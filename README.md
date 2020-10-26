@@ -5,15 +5,15 @@
 
 A reusable, responsive, and adaptive carousel for react
 
-## Demo
+## :tada: Demo
 
 ![Demo Combined Carousel](docs/demo/combined-carousel.gif)
 
-## Getting Started
+## :memo: Getting Started
 
 This package is on npm: [`@lifeway/carousel`](https://www.npmjs.com/package/@lifeway/carousel) :fire:
 
-### Installation
+### :zap: Installation
 
 ```sh
 npm install @lifeway/carousel
@@ -26,10 +26,10 @@ npm install react@^16.8.0 styled-components@^5.1.0
 For more information on peer dependencies, please refer to the npm docs ([here](https://docs.npmjs.com/files/package.json#peerdependencies)).
 
 Also, this package uses the newer Web APIs [`IntersectionObserver`](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver) and [`ResizeObserver`](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver).
-If you are planning on using this in an older browser environment (I'm looking at you IE!) then you'll need to polyfill them or the carousel won't work right.
+If you are planning on using this in an older browser environment (I'm looking at you IE! :eyes:) then you'll need to polyfill them or the carousel won't work right.
 For reference, here are the compatibility charts for [`IntersectionObserver`](https://caniuse.com/intersectionobserver) and [`ResizeObserver`](https://caniuse.com/resizeobserver)
 
-### Usage
+### :notebook: Usage
 
 This is basically the code for the demo screenshot at the top of the readme:
 ```jsx
@@ -69,7 +69,7 @@ and the components just wire the hooks up to the dom elements.
 
 More complete docs will (hopefully) be coming soon :rocket:
 
-## Development
+## :wrench: Development
 
 This project uses [Storybook](https://storybook.js.org/) for developing UI components & [Jest](https://jestjs.io/) for running tests. 
 
@@ -78,7 +78,7 @@ Simply install the dependencies and you are ready to go!
 npm install
 ```
 
-### Storybook
+### :open_book: Storybook
 
 Run storybook locally using the start command:
 ```sh
@@ -90,7 +90,7 @@ You can also build a static version of storybook if you really want to:
 npm run storybook:build
 ```
 
-### Tests
+### :robot: Tests
 
 This project uses the philosophy of favoring integration tests over unit tests (as championed by [Kent C Dodds](https://kentcdodds.com/blog/write-tests) :trophy:).
 All integration tests live in the `src/__integration_tests__` folder, with the test file named `[feature].spec.js`.
@@ -108,7 +108,7 @@ npm run test:visual     # runs the visual tests
 
 **Note:** The visual tests require the environment variable `APPLITOOLS_API_KEY`.
 
-### Validation
+### :trophy: Validation
 
 There are several npm scripts that are used to check the "health" of the current commit:
 
@@ -123,9 +123,9 @@ npm run audit         # check for security vulnerabilities
 npm run validate      # runs all of the above checks
 ```
 
-All of these checks (or variants thereof) are run on PRs, since we want to keep the repo healthy!
+All of these checks (or variants thereof) are run on PRs, since we want to keep the repo healthy! :muscle:
 
-### Publishing a New Version
+### :fire: Publishing a New Version
 
 To create a new version, simply run:
 

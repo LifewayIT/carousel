@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<button
+  class="lwc-image-tile lwc-tile test-class"
+>
+  <img
+    alt="image label"
+    class="lwc-tile-image"
+    src="/src"
+  />
+  {children}
+</button>
+`;

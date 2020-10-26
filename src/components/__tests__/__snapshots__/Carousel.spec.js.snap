@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div
+  class="lwc-carousel test-class"
+>
+  <button
+    class="lwc-arrow lwc-left"
+  >
+    <img
+      alt="page left"
+      src="test-file-stub"
+    />
+  </button>
+  <ul
+    class="lwc-carousel-list"
+  >
+    <div
+      class="lwc-margin"
+      data-carousel-skip="true"
+    />
+    <li
+      class="lwc-selected"
+    >
+      {children}
+    </li>
+    <div
+      class="lwc-margin"
+      data-carousel-skip="true"
+    />
+  </ul>
+  <button
+    class="lwc-arrow lwc-right"
+  >
+    <img
+      alt="page right"
+      src="test-file-stub"
+    />
+  </button>
+  <div
+    class="lwc-page-indicator"
+  />
+</div>
+`;

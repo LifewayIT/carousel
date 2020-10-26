@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`left arrow matches snapshot 1`] = `
+<button
+  class="lwc-arrow lwc-left test-class"
+>
+  <img
+    alt="page left"
+    src="test-file-stub"
+  />
+</button>
+`;
+
+exports[`right arrow matches snapshot 1`] = `
+<button
+  class="lwc-arrow lwc-right test-class"
+>
+  <img
+    alt="page right"
+    src="test-file-stub"
+  />
+</button>
+`;

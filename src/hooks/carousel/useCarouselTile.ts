@@ -22,11 +22,12 @@ export const useCarouselTile: useCarouselTile = (containerRef, { selected, onSel
   const scrollIntoView = useScrollFocusedIntoView(containerRef);
 
   const tileProps = (num: number) => ({
-    className: num === selected ? 'selected' : '',
+    className: num === selected ? 'lwc-selected' : '',
     onClick: () => {
       onSelect(num);
     },
-    onFocus: scrollIntoView.onFocus
+    onFocus: scrollIntoView.onFocus,
+    selected: num === selected
   });
 
   return tileProps;

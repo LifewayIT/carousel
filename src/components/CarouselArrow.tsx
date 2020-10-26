@@ -1,6 +1,7 @@
 import React, { ButtonHTMLAttributes, MouseEventHandler, ReactElement } from 'react';
 import styled from 'styled-components';
 import { color, device, shadow, space } from '../utils/styleguide';
+import { cn } from '../utils/classnames';
 
 import ChevronLeft from '../../svg/chevron-left.svg';
 import ChevronRight from '../../svg/chevron-right.svg';
@@ -17,15 +18,17 @@ type Props = {
   onClick: MouseEventHandler<HTMLElement>;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-export const CarouselArrow = ({ left, right, onClick, ...props }: Props): ReactElement => {
+export const CarouselArrow = ({ left, right, onClick, className, ...props }: Props): ReactElement => {
   if (!left && !right) {
     throw new Error('either "left" or "right" prop is required');
   } else if (left && right) {
     throw new Error('cannot have both "left" and "right" props');
   }
 
+  const cls = cn('lwc-arrow', { 'lwc-left': left, 'lwc-right': right }, className);
+
   return (
-    <Arrow left={left} right={right} onClick={onClick} {...props}>
+    <Arrow {...props} className={cls} onClick={onClick}>
       {left && <img src={ChevronLeft} alt="page left" />}
       {right && <img src={ChevronRight} alt="page right" />}
     </Arrow>
@@ -103,8 +106,12 @@ const Arrow = styled.button<ArrowProps>`
   }
 
   top: calc(50% - 24px);
-  ${props => props.left && `left: ${space._8};`}
-  ${props => props.right && `right: ${space._8};`}
+  &.lwc-left {
+    left: ${space._8};
+  }
+  &.lwc-right {
+    right: ${space._8};
+  }
   z-index: 1;
 
 
@@ -118,7 +125,12 @@ const Arrow = styled.button<ArrowProps>`
     }
 
     top: calc(50% - 32px);
-    ${props => props.left && `left: ${space._16};`}
-    ${props => props.right && `right: ${space._16};`}
+
+    &.lwc-left {
+      left: ${space._16};
+    }
+    &.lwc-right {
+      right: ${space._16};
+    }
   }
 `;

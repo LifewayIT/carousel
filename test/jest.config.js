@@ -23,6 +23,10 @@ module.exports = {
       '<rootDir>/test/mocks/file.js',
   },
   transform: tsjestPreset.transform,
+  snapshotSerializers: [
+    '<rootDir>/test/snapshot-serializers/styled-classes.js',
+    '<rootDir>/test/snapshot-serializers/children-element.js',
+  ],
   watchPlugins: [
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname',

@@ -11,7 +11,8 @@
     "docs/demo",
     "!src/**/*.stories.js",
     "!src/**/__integration_tests__",
-    "!src/**/__tests__"
+    "!src/**/__tests__",
+    "!lib/*.tsbuildinfo"
   ],
   "scripts": {
     "start": "npm run storybook",
@@ -47,7 +48,7 @@
   },
   "homepage": "https://github.com/LifewayIT/carousel#readme",
   "peerDependencies": {
-    "react": "^16.8.0",
+    "react": "^16.8.0 || ^17.0.0",
     "styled-components": "^5.1.0"
   },
   "devDependencies": {
@@ -93,8 +94,8 @@
     "jest-junit": "^12.0.0",
     "jest-watch-typeahead": "^0.6.1",
     "npm-run-all": "^4.1.5",
-    "react": "^16.13.1",
-    "react-is": "^16.13.1",
+    "react": "^16.14.0",
+    "react-test-renderer": "^16.14.0",
     "styled-components": "^5.2.0",
     "ts-jest": "^26.4.1",
     "typescript": "^4.0.3",

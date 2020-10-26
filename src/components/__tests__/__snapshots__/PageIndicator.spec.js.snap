@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<div
+  class="lwc-page-indicator test-class"
+>
+  <div
+    class="lwc-page-dot"
+  />
+  <div
+    class="lwc-page-dot lwc-current"
+  />
+  <div
+    class="lwc-page-dot"
+  />
+  <div
+    class="lwc-page-dot"
+  />
+</div>
+`;
