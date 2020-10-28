@@ -7,9 +7,9 @@
     "target": "es5",
     "module": "commonjs",
     "jsx": "react",
-    "types": ["cypress"],
 
-    "allowJs": false,
+    "allowJs": true,
+    "checkJs": false,
     "isolatedModules": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

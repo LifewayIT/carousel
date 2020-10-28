@@ -4,5 +4,6 @@
     "*.stories.*",
     "__integration_tests__",
     "__tests__"
-  ]
+  ],
+  "allowJs": false
 }
