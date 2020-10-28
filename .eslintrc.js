@@ -51,7 +51,8 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': 'off',
         'import/extensions': ['error', 'ignorePackages',
           { js: 'never', jsx: 'never', ts: 'never', tsx: 'never' },
-        ]
+        ],
+        'react/prop-types': 'off'
       }
     },
     {
