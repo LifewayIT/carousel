@@ -22,6 +22,7 @@ module.exports = {
     '\\.(css)$': '<rootDir>/test/client/mocks/style.js',
     '\\.(png|jpg|jpeg|gif|ttf|eot|svg|ico|webmanifest|xml)$':
       '<rootDir>/test/client/mocks/file.js',
+    '^&test/(.*)': '<rootDir>/test/$1'
   },
   transform: tsjestPreset.transform,
   snapshotSerializers: [

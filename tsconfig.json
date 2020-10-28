@@ -16,7 +16,12 @@
 
     "strict": true,
     "noImplicitReturns": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "&test": ["test/*"]
+    }
   },
   "include": [
     "src",

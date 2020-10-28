@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { useTargetZone } from '../useTargetZone';
 import { useLayoutChange } from '../useLayoutChange';
-import { Box } from '../../../../test/browser/utils/Box';
-import { mountHookWithUI } from '../../../../test/browser/utils/mountHookWithUI';
+import { Box } from '&test/browser/utils/Box';
+import { mountHookWithUI } from '&test/browser/utils/mountHookWithUI';
 
 const TestImage = () => {
   const [width, setWidth] = useState('0px');

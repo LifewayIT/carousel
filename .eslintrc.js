@@ -22,6 +22,7 @@ module.exports = {
     },
     {
       files: ['*.spec.js'],
+      excludedFiles: ['*.browser.spec.js'],
       rules: {
         'react/prop-types': 'off'
       },
@@ -41,6 +42,13 @@ module.exports = {
         'jest/expect-expect': 'off',
         'react/prop-types': 'off',
         'testing-library/prefer-screen-queries': 'off'
+      },
+      settings: {
+        'import/resolver': {
+          webpack: {
+            config: './test/browser/webpack.config.js'
+          }
+        }
       }
     },
     {

@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useScrolledToEdge } from '../useScrolledToEdge';
-import { Box } from '../../../../test/browser/utils/Box';
-import { mountHookWithUI } from '../../../../test/browser/utils/mountHookWithUI';
+import { Box } from '&test/browser/utils/Box';
+import { mountHookWithUI } from '&test/browser/utils/mountHookWithUI';
 
 const mainStyle = `
   #base {
