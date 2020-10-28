@@ -88,6 +88,7 @@
     "babel-plugin-styled-components": "^1.11.1",
     "core-js": "^3.6.5",
     "cypress": "^5.4.0",
+    "cypress-jest-adapter": "^0.1.1",
     "cypress-react-unit-test": "^4.16.4",
     "eslint": "^7.10.0",
     "eslint-config-corinth": "github:LifewayIT/eslint-config-corinth",

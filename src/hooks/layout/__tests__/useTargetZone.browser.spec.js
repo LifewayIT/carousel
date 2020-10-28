@@ -88,17 +88,17 @@ it('tracks the target zone', () => {
     </>
   ).as('mounted');
 
-  cy.get('@mounted').its('result.current').should('deep.equal',
+  cy.get('@mounted').its('result.current').should('toEqual',
     { left: 150, right: 150 }
   );
 
   cy.viewport(700, 500);
-  cy.get('@mounted').its('result.current').should('deep.equal',
+  cy.get('@mounted').its('result.current').should('toEqual',
     { left: 200, right: 200 }
   );
 
   cy.get('.test-image').trigger('load', { force: true });
-  cy.get('@mounted').its('result.current').should('deep.equal',
+  cy.get('@mounted').its('result.current').should('toEqual',
     { left: 150, right: 150 }
   );
 
@@ -110,7 +110,7 @@ it('tracks the target zone', () => {
       <Margin width="200px" data-carousel-skip />
     </>
   );
-  cy.get('@mounted').its('result.current').should('deep.equal',
+  cy.get('@mounted').its('result.current').should('toEqual',
     { left: 250, right: 250 }
   );
 });

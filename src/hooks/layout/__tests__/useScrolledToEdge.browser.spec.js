@@ -36,12 +36,12 @@ const mountTest = (width) =>
 it('tracks if container is scrolled to the edge', () => {
   mountTest('200px').its('result').as('result');
 
-  cy.get('@result').its('current').should('deep.equal',
+  cy.get('@result').its('current').should('toEqual',
     { left: true, right: false, both: false }
   );
 
   cy.get('#base').scrollTo('right');
-  cy.get('@result').its('current').should('deep.equal',
+  cy.get('@result').its('current').should('toEqual',
     { left: false, right: true, both: false }
   );
 });
@@ -49,7 +49,7 @@ it('tracks if container is scrolled to the edge', () => {
 it('tracks if on both edges (not scrollable)', () => {
   mountTest('300px').its('result').as('result');
 
-  cy.get('@result').its('current').should('deep.equal',
+  cy.get('@result').its('current').should('toEqual',
     { left: true, right: true, both: true }
   );
 });

@@ -20,3 +20,4 @@ import './commands';
 // require('./commands')
 
 import 'cypress-react-unit-test/support';
+import 'cypress-jest-adapter';
