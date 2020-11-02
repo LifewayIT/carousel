@@ -13,7 +13,7 @@
     "!src/**/*.stories.js",
     "!src/**/__integration_tests__",
     "!src/**/__tests__",
-    "!lib/*.tsbuildinfo"
+    "!*.tsbuildinfo"
   ],
   "scripts": {
     "start": "npm run storybook",
