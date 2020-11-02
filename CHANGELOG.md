@@ -16,6 +16,7 @@ No unreleased changes :fire: -->
 
 ### :hammer_and_wrench: Fixed
  - Update `SingleCarousel` to forward dom attributes to the base dom node
+ - Fix `pageByVisibility` strategy to directly check if scroll snapping is enabled on the element when paging (checking for `scroll-snap-type`)
 
 
 ## v0.1.0 - (10/22/2020)
