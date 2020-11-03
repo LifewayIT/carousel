@@ -35,7 +35,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LifewayIT/carousel.git"
+    "url": "https://github.com/LifewayIT/carousel.git"
   },
   "keywords": [
     "react",

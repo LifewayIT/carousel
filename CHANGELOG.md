@@ -18,6 +18,9 @@ No unreleased changes :fire: -->
  - Update `SingleCarousel` to forward dom attributes to the base dom node
  - Fix `pageByVisibility` strategy to directly check if scroll snapping is enabled on the element when paging (checking for `scroll-snap-type`)
 
+### :open_book: Docs
+ - Fix relative path links & images in README on NPM
+
 
 ## v0.1.0 - (10/22/2020)
 
