@@ -1,4 +1,3 @@
-import { scrollSnapEnabled } from '../../../utils/featureQueries';
 import {
   alignAtTargetZoneLeftEdge,
   alignAtTargetZoneRightEdge,
@@ -14,6 +13,12 @@ import { getTiles } from '../../../utils/tiles';
 import { PagingStrategy } from './common';
 
 
+const scrollSnapEnabled = (container: HTMLElement): boolean => {
+  const snapRule = getComputedStyle(container).getPropertyValue('scroll-snap-type') ?? 'none';
+
+  return snapRule !== 'none';
+};
+
 const pageLeft = (container: HTMLElement): void => {
   const targetOffset = getTileTargetZoneOffsets(container);
   const targetLeftEdge = targetZoneLeftEdge(container, targetOffset);
@@ -26,7 +31,7 @@ const pageLeft = (container: HTMLElement): void => {
 
   if (nextTile == null) {
     scrollTo(container, 0, true);
-  } else if (scrollSnapEnabled()) {
+  } else if (scrollSnapEnabled(container)) {
     const projectedLeftEdge = projectTargetZoneLeftEdge(alignAtTargetZoneRightEdge(container, targetOffset, nextTile), targetOffset);
     const nextLeftTile = leftTiles.find(tile => leftEdgeOffset(tile) >= projectedLeftEdge) ?? nextTile;
     scrollTo(container, alignAtTargetZoneLeftEdge(container, targetOffset, nextLeftTile), true);

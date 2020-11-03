@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 No unreleased changes :fire: -->
 
 ## :package: [Unreleased]
+No unreleased changes :fire:
+
+
+## v0.1.1 - (11/3/2020)
 
 ### :rocket: Added
  - Add story for `PageIndicator`
@@ -16,6 +20,10 @@ No unreleased changes :fire: -->
 
 ### :hammer_and_wrench: Fixed
  - Update `SingleCarousel` to forward dom attributes to the base dom node
+ - Fix `pageByVisibility` strategy to directly check if scroll snapping is enabled on the element when paging (checking for `scroll-snap-type`)
+
+### :open_book: Docs
+ - Fix relative path links & images in README on NPM
 
 
 ## v0.1.0 - (10/22/2020)

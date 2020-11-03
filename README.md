@@ -69,7 +69,7 @@ and the components just wire the hooks up to the dom elements.
 
 More complete docs will (hopefully) be coming soon :rocket:
 
-## :wrench: Development
+## :computer: Development
 
 This project uses [Storybook](https://storybook.js.org/) for developing UI components & [Jest](https://jestjs.io/) for running tests. 
 
