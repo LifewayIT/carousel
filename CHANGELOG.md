@@ -14,6 +14,7 @@ No unreleased changes :fire: -->
  - Rename carousel list props returned from `useCarousel` from `scrollContainer` to `list`
  - Rename `onLayoutUpdate` to `onLayoutChange` (in `useTargetZone` and `usePages`)
  - Separate `pages` from other dom props in return of `usePages`
+ - Rename attribute used to ignore elements (eg margin divs) from `data-carousel-skip` to `data-lwc-ignore`
 
 ### :rocket: Added
  - Add `lwc-hide` class name to `CarouselArrow` when it is being hidden
