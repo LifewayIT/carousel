@@ -13,12 +13,14 @@ No unreleased changes :fire: -->
 ### :warning: BREAKING CHANGE :warning:
  - Rename carousel list props returned from `useCarousel` from `scrollContainer` to `list`
  - Rename `onLayoutUpdate` to `onLayoutChange` (in `useTargetZone` and `usePages`)
+ - Separate `pages` from other dom props in return of `usePages`
 
 ### :rocket: Added
  - Add `lwc-hide` class name to `CarouselArrow` when it is being hidden
 
 ### :hammer_and_wrench: Fixed
  - Make `onClick` prop on `CarouselArrow` optional
+ - Fix non-dom props being passed to `PageIndicator` inside `Carousel`
 
 
 ## v0.1.1 - (11/3/2020)

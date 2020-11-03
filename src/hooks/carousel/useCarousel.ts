@@ -51,7 +51,7 @@ export interface CarouselResult {
 type useCarousel = (containerRef: RefObject<HTMLElement>, hookProps: CarouselHookProps, layoutDeps: DependencyList) => CarouselResult;
 
 export const useCarousel: useCarousel = (containerRef, { selected, onSelect, numTiles }, layoutDeps) => {
-  const pages = usePages(containerRef);
+  const [pages, pagesDomProps] = usePages(containerRef);
   const paging = usePaging(containerRef, pageByVisibility);
   const pageArrowKeys = usePageWithArrowKeys(containerRef, pageByVisibility);
 
@@ -64,7 +64,7 @@ export const useCarousel: useCarousel = (containerRef, { selected, onSelect, num
 
 
   const layout = useLayoutChange(containerRef, () => {
-    pages.onLayoutChange();
+    pagesDomProps.onLayoutChange();
     targetZone.onLayoutChange();
   }, layoutDeps);
 
@@ -74,7 +74,7 @@ export const useCarousel: useCarousel = (containerRef, { selected, onSelect, num
   };
 
   const onScroll: UIEventHandler = () => {
-    pages.onScroll();
+    pagesDomProps.onScroll();
   };
 
   const tileProps = useCarouselTile(containerRef, { selected, onSelect });
