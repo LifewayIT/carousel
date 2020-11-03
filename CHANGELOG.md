@@ -10,6 +10,9 @@ No unreleased changes :fire: -->
 
 ## :package: [Unreleased]
 
+### :warning: BREAKING CHANGE :warning:
+ - Rename carousel list props returned from `useCarousel` from `scrollContainer` to `list`
+
 ### :rocket: Added
  - Add `lwc-hide` class name to `CarouselArrow` when it is being hidden
 

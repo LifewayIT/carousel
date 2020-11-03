@@ -21,22 +21,22 @@ export interface CarouselHookProps {
 export interface CarouselResult {
   props: {
     arrow: {
-        left: {
-            left: boolean;
-            hide: boolean;
-            disabled: boolean;
-            onClick: () => void;
-            onKeyDown: KeyboardEventHandler;
-        };
-        right: {
-            right: boolean;
-            hide: boolean;
-            disabled: boolean;
-            onClick: () => void;
-            onKeyDown: KeyboardEventHandler;
-        };
+      left: {
+        left: boolean;
+        hide: boolean;
+        disabled: boolean;
+        onClick: () => void;
+        onKeyDown: KeyboardEventHandler;
+      };
+      right: {
+        right: boolean;
+        hide: boolean;
+        disabled: boolean;
+        onClick: () => void;
+        onKeyDown: KeyboardEventHandler;
+      };
     };
-    scrollContainer: {
+    list: {
       onKeyDown: KeyboardEventHandler;
       onScroll: UIEventHandler;
       onLoad: ReactEventHandler;
@@ -97,7 +97,7 @@ export const useCarousel: useCarousel = (containerRef, { selected, onSelect, num
           onKeyDown: pageArrowKeys.onKeyDown
         }
       },
-      scrollContainer: {
+      list: {
         onKeyDown: arrowKeys.onKeyDown,
         onScroll,
         onLoad,
