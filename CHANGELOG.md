@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 No unreleased changes :fire: -->
 
 ## :package: [Unreleased]
+No unreleased changes :fire:
+
+
+## v0.1.1 - (11/3/2020)
 
 ### :rocket: Added
  - Add story for `PageIndicator`
