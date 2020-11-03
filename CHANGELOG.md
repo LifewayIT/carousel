@@ -9,7 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 No unreleased changes :fire: -->
 
 ## :package: [Unreleased]
-No unreleased changes :fire:
+
+### :rocket: Added
+ - Add `lwc-hide` class name to `CarouselArrow` when it is being hidden
+
+### :hammer_and_wrench: Fixed
+ - Make `onClick` prop on `CarouselArrow` optional
 
 
 ## v0.1.1 - (11/3/2020)
