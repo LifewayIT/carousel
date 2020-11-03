@@ -2,12 +2,12 @@ import { useState, RefObject } from 'react';
 import { getTileTargetZoneOffsets, TargetZoneOffsets } from '../../utils/layout';
 
 type useTargetZone = (containerRef: RefObject<HTMLElement>) =>
-  readonly [TargetZoneOffsets, { onLayoutUpdate: () => void }];
+  readonly [TargetZoneOffsets, { onLayoutChange: () => void }];
 
 export const useTargetZone: useTargetZone = (containerRef) => {
   const [targetOffset, setTargetOffset] = useState({ left: 0, right: 0 });
 
-  const onLayoutUpdate = () => {
+  const onLayoutChange = () => {
     const newTargetOffset = containerRef.current
       ? getTileTargetZoneOffsets(containerRef.current)
       : { left: 0, right: 0 };
@@ -17,5 +17,5 @@ export const useTargetZone: useTargetZone = (containerRef) => {
     }
   };
 
-  return [targetOffset, { onLayoutUpdate }] as const;
+  return [targetOffset, { onLayoutChange }] as const;
 };

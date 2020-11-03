@@ -64,8 +64,8 @@ export const useCarousel: useCarousel = (containerRef, { selected, onSelect, num
 
 
   const layout = useLayoutChange(containerRef, () => {
-    pages.onLayoutUpdate();
-    targetZone.onLayoutUpdate();
+    pages.onLayoutChange();
+    targetZone.onLayoutChange();
   }, layoutDeps);
 
   const onLoad: ReactEventHandler = () => {

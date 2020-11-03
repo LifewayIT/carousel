@@ -102,7 +102,7 @@ export interface Pages {
 }
 
 type usePagesResult = Pages & {
-  onLayoutUpdate: () => void;
+  onLayoutChange: () => void;
   onScroll: () => void;
 };
 
@@ -129,7 +129,7 @@ export const usePages = (containerRef: React.RefObject<HTMLElement>): usePagesRe
     }
   };
 
-  const onLayoutUpdate = () => {
+  const onLayoutChange = () => {
     const newPagePoints = updatePagePoints();
     updatePages(newPagePoints);
   };
@@ -140,7 +140,7 @@ export const usePages = (containerRef: React.RefObject<HTMLElement>): usePagesRe
 
   return {
     ...pages,
-    onLayoutUpdate,
+    onLayoutChange,
     onScroll
   };
 };
