@@ -4,6 +4,7 @@
   "description": "A reusable, responsive, and adaptive carousel for react",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "sideEffects": false,
   "files": [
     "lib",
     "svg",

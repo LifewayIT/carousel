@@ -17,6 +17,7 @@ No unreleased changes :fire: -->
 
 ### :rocket: Added
  - Add `lwc-hide` class name to `CarouselArrow` when it is being hidden
+ - Enable tree-shaking for Webpack 4 (using the (`sideEffects` flag)[https://webpack.js.org/configuration/optimization/#optimizationsideeffects])
 
 ### :hammer_and_wrench: Fixed
  - Make `onClick` prop on `CarouselArrow` optional
