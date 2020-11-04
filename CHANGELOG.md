@@ -23,6 +23,9 @@ No unreleased changes :fire: -->
  - Make `onClick` prop on `CarouselArrow` optional
  - Fix non-dom props being passed to `PageIndicator` inside `Carousel`
 
+### :ghost: Internal
+ - Stop producing source maps on build (and stop publishing them)
+
 
 ## v0.1.1 - (11/3/2020)
 
