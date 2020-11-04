@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 No unreleased changes :fire: -->
 
 ## :package: [Unreleased]
+No unreleased changes :fire:
+
+
+## v0.2.0 - (11/4/2020)
 
 ### :warning: BREAKING CHANGES :warning:
  - Rename carousel list props returned from `useCarousel` from `scrollContainer` to `list`
