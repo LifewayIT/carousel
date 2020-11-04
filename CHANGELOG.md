@@ -10,7 +10,7 @@ No unreleased changes :fire: -->
 
 ## :package: [Unreleased]
 
-### :warning: BREAKING CHANGE :warning:
+### :warning: BREAKING CHANGES :warning:
  - Rename carousel list props returned from `useCarousel` from `scrollContainer` to `list`
  - Rename `onLayoutUpdate` to `onLayoutChange` (in `useTargetZone` and `usePages`)
  - Separate `pages` from other dom props in return of `usePages`
