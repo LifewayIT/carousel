@@ -12,6 +12,26 @@ No unreleased changes :fire: -->
 No unreleased changes :fire:
 
 
+## v0.2.0 - (11/4/2020)
+
+### :warning: BREAKING CHANGES :warning:
+ - Rename carousel list props returned from `useCarousel` from `scrollContainer` to `list`
+ - Rename `onLayoutUpdate` to `onLayoutChange` (in `useTargetZone` and `usePages`)
+ - Separate `pages` from other dom props in return of `usePages`
+ - Rename attribute used to ignore elements (eg margin divs) from `data-carousel-skip` to `data-lwc-ignore`
+
+### :rocket: Added
+ - Add `lwc-hide` class name to `CarouselArrow` when it is being hidden
+ - Enable tree-shaking for Webpack 4 (using the (`sideEffects` flag)[https://webpack.js.org/configuration/optimization/#optimizationsideeffects])
+
+### :hammer_and_wrench: Fixed
+ - Make `onClick` prop on `CarouselArrow` optional
+ - Fix non-dom props being passed to `PageIndicator` inside `Carousel`
+
+### :ghost: Internal
+ - Stop producing source maps on build (and stop publishing them)
+
+
 ## v0.1.1 - (11/3/2020)
 
 ### :rocket: Added

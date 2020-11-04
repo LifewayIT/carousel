@@ -28,14 +28,14 @@ export const Carousel = ({ selected = 0, onSelect = () => undefined, children, c
   return (
     <Container {...props} className={cn('lwc-carousel', className)}>
       <CarouselArrow {...carousel.props.arrow.left} />
-      <ScrollContainer ref={containerRef} className="lwc-carousel-list" {...carousel.props.scrollContainer}>
-        <Margin className="lwc-margin" data-carousel-skip />
+      <ScrollContainer ref={containerRef} className="lwc-carousel-list" {...carousel.props.list}>
+        <Margin className="lwc-margin" data-lwc-ignore />
         {React.Children.map(children, (child, num) => (
           <li {...carousel.props.tile(num)}>
             {child}
           </li>
         ))}
-        <Margin className="lwc-margin" data-carousel-skip />
+        <Margin className="lwc-margin" data-lwc-ignore />
       </ScrollContainer>
       <CarouselArrow {...carousel.props.arrow.right} />
       <PageIndicator {...carousel.pages} />

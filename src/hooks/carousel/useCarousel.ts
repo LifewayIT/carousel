@@ -21,22 +21,22 @@ export interface CarouselHookProps {
 export interface CarouselResult {
   props: {
     arrow: {
-        left: {
-            left: boolean;
-            hide: boolean;
-            disabled: boolean;
-            onClick: () => void;
-            onKeyDown: KeyboardEventHandler;
-        };
-        right: {
-            right: boolean;
-            hide: boolean;
-            disabled: boolean;
-            onClick: () => void;
-            onKeyDown: KeyboardEventHandler;
-        };
+      left: {
+        left: boolean;
+        hide: boolean;
+        disabled: boolean;
+        onClick: () => void;
+        onKeyDown: KeyboardEventHandler;
+      };
+      right: {
+        right: boolean;
+        hide: boolean;
+        disabled: boolean;
+        onClick: () => void;
+        onKeyDown: KeyboardEventHandler;
+      };
     };
-    scrollContainer: {
+    list: {
       onKeyDown: KeyboardEventHandler;
       onScroll: UIEventHandler;
       onLoad: ReactEventHandler;
@@ -51,7 +51,7 @@ export interface CarouselResult {
 type useCarousel = (containerRef: RefObject<HTMLElement>, hookProps: CarouselHookProps, layoutDeps: DependencyList) => CarouselResult;
 
 export const useCarousel: useCarousel = (containerRef, { selected, onSelect, numTiles }, layoutDeps) => {
-  const pages = usePages(containerRef);
+  const [pages, pagesDomProps] = usePages(containerRef);
   const paging = usePaging(containerRef, pageByVisibility);
   const pageArrowKeys = usePageWithArrowKeys(containerRef, pageByVisibility);
 
@@ -64,8 +64,8 @@ export const useCarousel: useCarousel = (containerRef, { selected, onSelect, num
 
 
   const layout = useLayoutChange(containerRef, () => {
-    pages.onLayoutUpdate();
-    targetZone.onLayoutUpdate();
+    pagesDomProps.onLayoutChange();
+    targetZone.onLayoutChange();
   }, layoutDeps);
 
   const onLoad: ReactEventHandler = () => {
@@ -74,7 +74,7 @@ export const useCarousel: useCarousel = (containerRef, { selected, onSelect, num
   };
 
   const onScroll: UIEventHandler = () => {
-    pages.onScroll();
+    pagesDomProps.onScroll();
   };
 
   const tileProps = useCarouselTile(containerRef, { selected, onSelect });
@@ -97,7 +97,7 @@ export const useCarousel: useCarousel = (containerRef, { selected, onSelect, num
           onKeyDown: pageArrowKeys.onKeyDown
         }
       },
-      scrollContainer: {
+      list: {
         onKeyDown: arrowKeys.onKeyDown,
         onScroll,
         onLoad,

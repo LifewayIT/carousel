@@ -15,17 +15,17 @@ type Props = {
   /** hide the arrow */
   hide?: boolean;
   /** handler for when the arrow button is clicked */
-  onClick: MouseEventHandler<HTMLElement>;
+  onClick?: MouseEventHandler<HTMLElement>;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-export const CarouselArrow = ({ left, right, onClick, className, ...props }: Props): ReactElement => {
+export const CarouselArrow = ({ left, right, onClick, hide, className, ...props }: Props): ReactElement => {
   if (!left && !right) {
     throw new Error('either "left" or "right" prop is required');
   } else if (left && right) {
     throw new Error('cannot have both "left" and "right" props');
   }
 
-  const cls = cn('lwc-arrow', { 'lwc-left': left, 'lwc-right': right }, className);
+  const cls = cn('lwc-arrow', { 'lwc-left': left, 'lwc-right': right, 'lwc-hide': hide }, className);
 
   return (
     <Arrow {...props} className={cls} onClick={onClick}>
@@ -36,13 +36,7 @@ export const CarouselArrow = ({ left, right, onClick, className, ...props }: Pro
 };
 
 
-type ArrowProps = {
-  left?: boolean;
-  right?: boolean;
-  hide?: boolean;
-};
-
-const Arrow = styled.button<ArrowProps>`
+const Arrow = styled.button`
   position: absolute;
   display: block;
 
@@ -88,14 +82,14 @@ const Arrow = styled.button<ArrowProps>`
     opacity: .6;
   }
 
-  ${props => props.hide && `
+  &.lwc-hide {
     visibility: hidden;
     transform: scale(0);
 
     @media (prefers-reduced-motion: no-preference) {
       transition: all .15s ease-in;
     }
-  `}
+  }
 
   width: 48px;
   height: 48px;

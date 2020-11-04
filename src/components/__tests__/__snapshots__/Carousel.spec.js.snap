@@ -17,7 +17,7 @@ exports[`matches snapshot 1`] = `
   >
     <div
       class="lwc-margin"
-      data-carousel-skip="true"
+      data-lwc-ignore="true"
     />
     <li
       class="lwc-selected"
@@ -26,7 +26,7 @@ exports[`matches snapshot 1`] = `
     </li>
     <div
       class="lwc-margin"
-      data-carousel-skip="true"
+      data-lwc-ignore="true"
     />
   </ul>
   <button
