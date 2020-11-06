@@ -1,5 +1,5 @@
 import { KeyboardEventHandler, RefObject } from 'react';
-import { PagingStrategy } from './strategies/common';
+import { PagingStrategy } from './strategies';
 
 type usePageWithArrowKeys = (containerRef: RefObject<HTMLElement>, pagingStrategy: PagingStrategy) =>
   { onKeyDown: KeyboardEventHandler };

@@ -1,5 +1,5 @@
 import { RefObject } from 'react';
-import { PagingStrategy } from './strategies/common';
+import { PagingStrategy } from './strategies';
 
 export interface Paging {
   pageLeft: () => void;
