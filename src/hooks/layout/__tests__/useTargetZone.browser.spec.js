@@ -1,24 +1,13 @@
 import '&test/browser/styles/main.css';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Box } from '&test/browser/utils/Box';
+import { Image } from '&test/browser/utils/Image';
 import { mountHookWithUI } from '&test/browser/utils/mountHookWithUI';
 import { useTargetZone } from '../useTargetZone';
 import { useLayoutChange } from '../useLayoutChange';
 
-const TestImage = () => {
-  const [width, setWidth] = useState('0px');
-
-  const onLoad = () => {
-    setWidth('100px');
-  };
-
-  return (
-    <img className="test-image" style={{ width }} onLoad={onLoad} alt="" />
-  );
-};
-
-const Margin = ({ width, ...props }) => {
-  return <div style={{ width, height: '100px', margin: '0 auto' }} {...props} />;
+const Margin = ({ width }) => {
+  return <div className="margin" style={{ width }} data-carousel-skip />;
 };
 
 
@@ -35,6 +24,11 @@ const mainStyle = `
   .list > *:not([data-carousel-skip]) {
     width: 100px;
     height: 100px;
+  }
+
+  .margin {
+    height: 100px;
+    margin: 0 auto;
   }
 `;
 
@@ -72,10 +66,10 @@ it('tracks the target zone', () => {
 
   mountTest(
     <>
-      <Margin width="100px" data-carousel-skip />
-      <TestImage />
+      <Margin width="100px" />
+      <Image loadedWidth="100px" />
       <Box />
-      <Margin width="100px" data-carousel-skip />
+      <Margin width="100px" />
     </>
   ).as('mounted');
 
@@ -88,17 +82,17 @@ it('tracks the target zone', () => {
     { left: 200, right: 200 }
   );
 
-  cy.get('.test-image').trigger('load', { force: true });
+  cy.get('.image').trigger('load', { force: true });
   cy.get('@mounted').its('result.current').should('toEqual',
     { left: 150, right: 150 }
   );
 
   cy.get('@mounted').invoke('rerender',
     <>
-      <Margin width="200px" data-carousel-skip />
-      <TestImage />
+      <Margin width="200px" />
+      <Image loadedWidth="100px" />
       <Box />
-      <Margin width="200px" data-carousel-skip />
+      <Margin width="200px" />
     </>
   );
   cy.get('@mounted').its('result.current').should('toEqual',
