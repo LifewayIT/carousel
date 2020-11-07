@@ -1,8 +1,9 @@
+import '&test/browser/styles/main.css';
 import React, { useRef, useState } from 'react';
-import { useTargetZone } from '../useTargetZone';
-import { useLayoutChange } from '../useLayoutChange';
 import { Box } from '&test/browser/utils/Box';
 import { mountHookWithUI } from '&test/browser/utils/mountHookWithUI';
+import { useTargetZone } from '../useTargetZone';
+import { useLayoutChange } from '../useLayoutChange';
 
 const TestImage = () => {
   const [width, setWidth] = useState('0px');
@@ -26,24 +27,14 @@ const mainStyle = `
     margin: 50px;
   }
 
-  #base {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    overflow: scroll;
-
+  .list {
     border: 1px solid black;
     margin: -1px;
   }
 
-  #base > * {
-    flex: 0 0 auto;
-  }
-
-  #base > *:not([data-carousel-skip]) {
+  .list > *:not([data-carousel-skip]) {
     width: 100px;
     height: 100px;
-    margin: 50px;
   }
 `;
 
@@ -56,7 +47,7 @@ const useWrappedHook = (resultRef, { children }) => {
   const { onLoad } = useLayoutChange(ref, onLayoutChange, [children]);
 
   return (
-    <div id="base" ref={ref} onLoad={onLoad}>
+    <div className="list" ref={ref} onLoad={onLoad}>
       {children}
     </div>
   );

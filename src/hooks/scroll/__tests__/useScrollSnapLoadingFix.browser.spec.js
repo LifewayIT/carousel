@@ -1,19 +1,11 @@
+import '&test/browser/styles/main.css';
 import React, { useRef } from 'react';
 import { mountHookWithUI } from '&test/browser/utils/mountHookWithUI';
 import { Image } from '&test/browser/utils/Image';
 import { useScrollSnapLoadingFix } from '../useScrollSnapLoadingFix';
 
 const mainStyle = `
-  body {
-    margin: 16px;
-  }
-
-  #base {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    overflow: scroll;
-
+  .list {
     width: 400px;
 
     scroll-snap-type: x mandatory;
@@ -21,18 +13,8 @@ const mainStyle = `
     scroll-padding-right: 50px;
   }
 
-  #base > * {
-    flex: 0 0 auto;
-    height: 200px;
-    margin: 50px;
+  .list > .image {
     scroll-snap-align: center;
-  }
-
-  #base .margin-fix {
-    display: block;
-    width: 1px;
-    height: 1px;
-    margin: 0 0 -1px -1px;
   }
 `;
 
@@ -42,7 +24,7 @@ const useWrappedHook = (result, { selected }) => {
   const domProps = useScrollSnapLoadingFix(ref, selected);
 
   return (
-    <div id="base" ref={ref} {...domProps}>
+    <div className="list" ref={ref} {...domProps}>
       <Image id="img-1" loadedWidth="200px" />
       <Image id="img-2" loadedWidth="200px" />
       <Image id="img-3" loadedWidth="200px" />
@@ -63,5 +45,5 @@ it('centers selected tile', () => {
   cy.get('#img-4').trigger('load', { force: true });
   cy.get('#img-3').trigger('load', { force: true });
 
-  cy.get('#base').invoke('scrollLeft').should('toEqual', 250);
+  cy.get('.list').invoke('scrollLeft').should('toEqual', 250);
 });

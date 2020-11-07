@@ -1,4 +1,5 @@
 import React, { DetailedHTMLProps, HTMLAttributes, ReactElement, ReactEventHandler, useState } from 'react';
+import { cn } from '../../../src/utils/classnames';
 import { useRandomColor } from './useRandomColor';
 
 type Props = {
@@ -9,6 +10,7 @@ type Props = {
 export const Image = ({
   initialWidth = '0px',
   loadedWidth = '100px',
+  className,
   ...domProps
 }: Props): ReactElement => {
   const [width, setWidth] = useState(initialWidth);
@@ -26,6 +28,12 @@ export const Image = ({
   };
 
   return (
-    <img alt="" {...domProps} style={style} onLoad={onLoad} />
+    <img
+      alt=""
+      className={cn('image', className)}
+      {...domProps}
+      style={style}
+      onLoad={onLoad}
+    />
   );
 };

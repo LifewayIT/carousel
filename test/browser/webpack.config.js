@@ -12,7 +12,11 @@ module.exports = {
             configFile: path.resolve(__dirname, 'babel.config.js')
           }
         },
-      }
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
   resolve: {
