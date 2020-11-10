@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 No unreleased changes :fire: -->
 
 ## :package: [Unreleased]
-No unreleased changes :fire:
+
+### :hammer_and_wrench: Fixed
+ - Add missing `selected` field to `useCarouselTile` return type
 
 
 ## v0.2.0 - (11/4/2020)
