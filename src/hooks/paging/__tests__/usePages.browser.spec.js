@@ -43,7 +43,7 @@ const useWrappedHook = (result, { listWidth, additionalChildren }) => {
 const mountTest = (props) =>
   mountHookWithUI(useWrappedHook, props);
 
-it('pages using provided page strategy', () => {
+it('calculates the current and total pages', () => {
   mountTest({ width: '800px', additionalChildren: false }).as('mounted');
   cy.get('@mounted').its('result.current').should('toEqual', { current: 1, total: 4 });
 
