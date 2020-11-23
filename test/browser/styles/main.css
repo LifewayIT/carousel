@@ -13,7 +13,7 @@ body {
   flex: 0 0 auto;
 }
 
-.list > :not([data-carousel-skip]) {
+.list > :not([data-lwc-ignore]) {
   margin: 50px;
 }
 

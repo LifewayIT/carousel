@@ -29,7 +29,7 @@ const useWrappedHook = (result, { selected }) => {
       <Image id="img-2" loadedWidth="200px" />
       <Image id="img-3" loadedWidth="200px" />
       <Image id="img-4" loadedWidth="200px" />
-      <div className="margin-fix" data-carousel-skip />
+      <div className="margin-fix" data-lwc-ignore />
     </div>
   );
 };

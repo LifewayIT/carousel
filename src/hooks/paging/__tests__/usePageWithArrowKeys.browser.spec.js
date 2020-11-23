@@ -24,7 +24,7 @@ const useWrappedHook = () => {
         <Box />
         <Box />
         <Box />
-        <div className="margin-fix" data-carousel-skip />
+        <div className="margin-fix" data-lwc-ignore />
       </div>
     </>
   );

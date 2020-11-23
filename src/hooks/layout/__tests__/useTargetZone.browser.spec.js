@@ -7,7 +7,7 @@ import { useTargetZone } from '../useTargetZone';
 import { useLayoutChange } from '../useLayoutChange';
 
 const Margin = ({ width }) => {
-  return <div className="margin" style={{ width }} data-carousel-skip />;
+  return <div className="margin" style={{ width }} data-lwc-ignore />;
 };
 
 
@@ -21,7 +21,7 @@ const mainStyle = `
     margin: -1px;
   }
 
-  .list > *:not([data-carousel-skip]) {
+  .list > *:not([data-lwc-ignore]) {
     width: 100px;
     height: 100px;
   }

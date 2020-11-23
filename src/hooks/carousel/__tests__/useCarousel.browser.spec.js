@@ -29,7 +29,7 @@ const useWrappedHook = (result) => {
         <Box id="box-2" {...carousel.props.tile(1)}><button type="button">yolo</button></Box>
         <Box id="box-3" {...carousel.props.tile(2)}><button type="button">yolo</button></Box>
         <Box id="box-4" {...carousel.props.tile(3)}><button type="button">yolo</button></Box>
-        <div className="margin-fix" data-carousel-skip />
+        <div className="margin-fix" data-lwc-ignore />
       </div>
       <p>
         {carousel.pages.current} / {carousel.pages.total}

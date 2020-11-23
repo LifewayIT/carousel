@@ -33,7 +33,7 @@ const useWrappedHook = (result, { listWidth, additionalChildren }) => {
             <Box width="500px" />
             <Box width="300px" />
           </>}
-        <div className="margin-fix" data-carousel-skip />
+        <div className="margin-fix" data-lwc-ignore />
       </div>
       <div>{pages.current} / {pages.total}</div>
     </>
