@@ -9,6 +9,7 @@
   "supportFile": "test/browser/support/index.js",
   "screenshotsFolder": "test/browser/screenshots",
   "videosFolder": "test/browser/videos",
+  "video": false,
   "fixturesFolder": false,
 
   "env": {
