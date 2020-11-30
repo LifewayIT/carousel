@@ -12,6 +12,10 @@ No unreleased changes :fire: -->
 
 ### :hammer_and_wrench: Fixed
  - Add missing `selected` field to `useCarouselTile` return type
+ - Fix `usePages` to return updated pages on immediately after an update
+
+### :ghost: Internal
+ - Add tests for all of the exported hooks (using cypress)
 
 
 ## v0.2.0 - (11/4/2020)
