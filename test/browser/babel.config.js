@@ -1,5 +1,4 @@
 module.exports = {
-  // extends
   presets: [
     [
       '@babel/preset-env',
@@ -14,13 +13,6 @@ module.exports = {
   plugins: [
     '@babel/plugin-transform-runtime',
     'babel-plugin-styled-components',
-    // 'babel-plugin-istanbul',
-    // [
-    //   '@babel/plugin-transform-modules-commonjs',
-    //   {
-    //     loose: true,
-    //   },
-    // ],
   ],
   retainLines: true
 };
