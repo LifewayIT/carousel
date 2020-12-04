@@ -80,6 +80,9 @@ jobs:
       - store_artifacts:
           path: ./reports/coverage
           destination: coverage
+      - store_artifacts:
+          path: ./test/browser/screenshots
+          destination: screenshots
       - store_test_results:
           path: ./reports/tests
 
