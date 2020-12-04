@@ -1,3 +1,11 @@
+/*
+  on ci, scrollbars throw off the layout assertions
+  because they are not overlays (take up actual space)
+*/
+::-webkit-scrollbar {
+  width: 0px;
+}
+
 body {
   margin: 16px;
 }
