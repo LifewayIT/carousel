@@ -1,8 +1,17 @@
 {
   "extends": "./tsconfig.json", 
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./lib/",
+    "tsBuildInfoFile": "./lib/tscofing.build.tsbuildinfo"
+  },
+  "include": [
+    "src/**/*"
+  ],
   "exclude": [
-    "*.stories.*",
-    "__integration_tests__",
-    "__tests__"
-  ]
+    "**/*.stories.*",
+    "**/__integration_tests__/**/*",
+    "**/__tests__/**/*"
+  ],
+  "allowJs": false
 }

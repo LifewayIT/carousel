@@ -118,7 +118,7 @@ export const usePages = (containerRef: React.RefObject<HTMLElement>): usePagesRe
       : undefined;
 
     setPagePoints(newPagePoints);
-    return pagePoints;
+    return newPagePoints;
   };
 
   const updatePages = (pagePnts: PagePoints) => {

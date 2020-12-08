@@ -8,6 +8,9 @@ executors:
   node:
     docker:
       - image: circleci/node:12
+  cypress:
+    docker:
+      - image: cypress/base:12
 
 common:
   run-on-pr: &run-on-pr
@@ -34,11 +37,41 @@ jobs:
           command: |
             ! git diff -s --exit-code upstream/master -- CHANGELOG.md
 
-  client-test:
+  install:
     executor: node
+    environment:
+      CYPRESS_INSTALL_BINARY: 0
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - npm/npm-install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./
+
+  client-test:
+    executor: cypress
     steps:
       - attach_workspace:
           at: ./
+      - restore_cache:
+          key: cypress-binary-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: verify cypress binary is installed
+          command: |
+            if ! npx cypress verify; then
+              npx cypress install
+            fi
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.cache/Cypress
       - npm/npm-run-script:
           script: test:ci
       - store_artifacts:
@@ -47,6 +80,9 @@ jobs:
       - store_artifacts:
           path: ./reports/coverage
           destination: coverage
+      - store_artifacts:
+          path: ./test/browser/screenshots
+          destination: screenshots
       - store_test_results:
           path: ./reports/tests
 
@@ -55,6 +91,8 @@ jobs:
       - image: circleci/node:12
         environment:
           NODE_ENV: development
+    environment:
+      CYPRESS_INSTALL_BINARY: 0
     steps:
       - checkout
       - puppeteer/install

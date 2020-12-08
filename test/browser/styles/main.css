@@ -1,0 +1,38 @@
+/*
+  on ci, scrollbars throw off the layout assertions
+  because they are not overlays (take up actual space)
+*/
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+body {
+  margin: 16px;
+}
+
+.list {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  overflow: scroll;
+}
+
+.list > * {
+  flex: 0 0 auto;
+}
+
+.list > :not([data-lwc-ignore]) {
+  margin: 50px;
+}
+
+.box {
+  height: 200px;
+  width: 200px;
+}
+
+.margin-fix {
+  display: block;
+  width: 1px;
+  height: 1px;
+  margin: 0 0 -1px -1px; 
+}

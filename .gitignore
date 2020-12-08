@@ -6,11 +6,15 @@
 # testing
 /coverage
 /reports
+/.nyc_output
+/test/browser/screenshots
+/test/browser/videos
 
 # built files
 /build
 /lib
 /dist
+*.tsbuildinfo
 
 # logs
 npm-debug.log*

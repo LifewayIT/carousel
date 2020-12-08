@@ -22,6 +22,7 @@ module.exports = {
     },
     {
       files: ['*.spec.js'],
+      excludedFiles: ['*.browser.spec.js'],
       rules: {
         'react/prop-types': 'off'
       },
@@ -34,6 +35,23 @@ module.exports = {
       }
     },
     {
+      files: ['*.browser.spec.js'],
+      plugins: ['cypress'],
+      extends: ['plugin:cypress/recommended'],
+      rules: {
+        'jest/expect-expect': 'off',
+        'react/prop-types': 'off',
+        'testing-library/prefer-screen-queries': 'off'
+      },
+      settings: {
+        'import/resolver': {
+          webpack: {
+            config: './test/browser/webpack.config.js'
+          }
+        }
+      }
+    },
+    {
       files: ['*.ts', '*.tsx'],
       extends: ['corinth/typescript'],
       rules: {
@@ -41,7 +59,8 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': 'off',
         'import/extensions': ['error', 'ignorePackages',
           { js: 'never', jsx: 'never', ts: 'never', tsx: 'never' },
-        ]
+        ],
+        'react/prop-types': 'off'
       }
     },
     {

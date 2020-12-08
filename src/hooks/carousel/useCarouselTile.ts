@@ -11,6 +11,7 @@ export interface TileProps {
   className: string;
   onClick: () => void;
   onFocus: FocusEventHandler;
+  selected: boolean;
 }
 
 export type CarouselTileResult = (num: number) => TileProps;
