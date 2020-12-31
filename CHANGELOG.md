@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 No unreleased changes :fire: -->
 
 ## :package: [Unreleased]
-No unreleased changes :fire:
+
+### :closed_lock_with_key: Security
+ - Update `node-notifier` (nested dependency)
 
 
 ## v0.2.1 - (12/1/2020)
