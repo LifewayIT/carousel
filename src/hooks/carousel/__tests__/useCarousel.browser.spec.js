@@ -117,3 +117,29 @@ it('scrolls selected or focused tile into view', () => {
   cy.get('#box-2 button').focus();
   cy.get('.list').invoke('scrollLeft').should('be.within', 0, 300);
 });
+
+it('renders the carousel properly if there are no meaningful children', () => {
+  const useWrappedHook = () => {
+    const ref = useRef();
+    const carousel = useCarousel(ref, { selected: 0, onSelect: () => {}, numTiles: 0 }, []);
+
+    return (
+      <>
+        <div>
+          <button type="button" {...carousel.props.arrow.left}>left</button>
+          <button type="button" {...carousel.props.arrow.right}>right</button>
+        </div>
+        <div className="list" ref={ref} {...carousel.props.list}>
+          <div className="margin-fix" data-lwc-ignore />
+        </div>
+        <p>
+          {carousel.pages.current} / {carousel.pages.total}
+        </p>
+      </>
+    );
+  };
+
+  mountHookWithUI(useWrappedHook, undefined, mainStyle);
+
+  cy.get('.list').should('exist');
+});

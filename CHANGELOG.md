@@ -10,6 +10,9 @@ No unreleased changes :fire: -->
 
 ## :package: [Unreleased]
 
+### :hammer_and_wrench: Fixed
+ - Fix error when carousel had no meaningful children (affected multiple hooks including: `useCarousel`, `usePages`, `useTargetZone`)
+
 ### :closed_lock_with_key: Security
  - Update `node-notifier` (nested dependency)
 

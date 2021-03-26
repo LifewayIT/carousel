@@ -12,10 +12,10 @@ export const scrollPosition = (el: HTMLElement): number => Math.round(el.scrollL
 
 export const leftEdgeOffset = (el: HTMLElement): number => el.offsetLeft;
 
-export const rightEdgeOffset = (el: HTMLElement): number => el &&
+export const rightEdgeOffset = (el: HTMLElement): number =>
   (el.offsetLeft + el.offsetWidth);
 
-export const centerOffset = (el: HTMLElement): number => el &&
+export const centerOffset = (el: HTMLElement): number =>
   (el.offsetLeft + el.offsetWidth / 2);
 
 
@@ -30,12 +30,19 @@ export interface TargetZoneOffsets {
 }
 
 export const getTargetZoneOffsets = (container: HTMLElement, meaningfulChildren: HTMLElement[]): TargetZoneOffsets => {
+  if (meaningfulChildren.length < 1) {
+    return {
+      left: 0,
+      right: container.scrollWidth
+    };
+  }
+
   const first = meaningfulChildren[0];
   const last = meaningfulChildren[meaningfulChildren.length - 1];
 
   return {
-    left: leftEdgeOffset(first) ?? 0,
-    right: container.scrollWidth - (rightEdgeOffset(last) ?? 0)
+    left: leftEdgeOffset(first),
+    right: container.scrollWidth - rightEdgeOffset(last)
   };
 };
 
