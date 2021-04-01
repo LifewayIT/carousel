@@ -12,6 +12,7 @@ No unreleased changes :fire: -->
 
 ### :closed_lock_with_key: Security
  - Update `node-notifier` (nested dependency)
+ - Run `npm audit fix` to resolve 65 vulnerabilities
 
 
 ## v0.2.1 - (12/1/2020)
