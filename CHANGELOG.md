@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 No unreleased changes :fire: -->
 
 ## :package: [Unreleased]
+No unreleased changes :fire:
+
+
+## v0.2.2 - (3/26/2021)
+
+### :hammer_and_wrench: Fixed
+ - Fix error when carousel had no meaningful children (affected multiple hooks including: `useCarousel`, `usePages`, `useTargetZone`)
 
 ### :closed_lock_with_key: Security
  - Update `node-notifier` (nested dependency)
