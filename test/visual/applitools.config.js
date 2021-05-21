@@ -25,6 +25,7 @@ const getBatchName = () => {
 
 module.exports = {
   viewportSize: desktopViewport,
+  layoutBreakpoints: true,
   browser: [
     { ...desktopViewport, name: 'chrome' },
     { ...desktopViewport, name: 'firefox' },

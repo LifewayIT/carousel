@@ -11,6 +11,9 @@ No unreleased changes :fire: -->
 ## :package: [Unreleased]
 No unreleased changes :fire:
 
+### :ghost: Internal
+ - Use applitool's `layoutBreakpoint` config to properly test mobile viewports
+
 
 ## v0.2.2 - (3/26/2021)
 
