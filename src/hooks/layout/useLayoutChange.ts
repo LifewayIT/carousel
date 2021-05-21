@@ -5,7 +5,7 @@ type useLayoutChange = (containerRef: RefObject<HTMLElement>, fn: EffectCallback
   { onLoad: () => void };
 
 export const useLayoutChange: useLayoutChange = (containerRef, fn, deps) => {
-  useLayoutEffect(fn, deps);
+  useLayoutEffect(fn, deps);  // eslint-disable-line react-hooks/exhaustive-deps
 
   useResizeEffect(containerRef, fn);
 

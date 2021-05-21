@@ -1,5 +1,5 @@
 import React, { MutableRefObject, ReactElement, useState } from 'react';
-import { mount } from 'cypress-react-unit-test';
+import { mount } from '@cypress/react';
 
 type WrappedHook<R = unknown, P = unknown> = (result: MutableRefObject<R | undefined>, props: P) => ReactElement | null;
 type MountedResult<R = unknown, P = unknown> = Cypress.Chainable<{

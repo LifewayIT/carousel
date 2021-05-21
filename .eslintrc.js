@@ -10,7 +10,7 @@ module.exports = {
     'node_modules/**'
   ],
   rules: {
-    'import/extensions': ['error', 'ignorePackages',
+    'import/extensions': ['error', 'always',
       { js: 'never', jsx: 'never', ts: 'never', tsx: 'never' },
     ]
   },
@@ -18,7 +18,12 @@ module.exports = {
     {
       files: ['**/*.js'],
       excludedFiles: ['src/**/*.js'],
-      extends: ['corinth/node']
+      extends: ['corinth/node'],
+      rules: {
+        'import/extensions': ['error', 'always',
+          { js: 'never', jsx: 'never', ts: 'never', tsx: 'never' },
+        ]
+      },
     },
     {
       files: ['*.spec.js'],
